@@ -1,0 +1,42 @@
+! acc-rel.edp   by X. Cai Zhang, 010602
+! calculate percentage solvent accessibilty in the context of the protein, 
+!  but excluding solvent molecules.
+! syntax: 
+! @acc-rel.edp  chainName ligandToBeExcluded 
+! example:
+! @acc-rel  a 'BME NAG' 
+
+initialize ; chain $(p1) | ca ; group t1 ; more
+exclude residue sol wat tip $(p2) 
+! it is okay if the above listed molecules do not exist
+
+access , 1.4 0.2 
+
+initialize ; load t1 | ca ; blank ; seta acc ; more ; sumw x 
+exclude side ; sumw y
+more ; exclude main ; sumw z 
+
+initialize ; load t1 | residue ala ; set weight 108 ; set weight x / 
+initialize ; load t1 | residue cys ; set weight 102 ; set weight x / 
+initialize ; load t1 | residue asp ; set weight 118 ; set weight x / 
+initialize ; load t1 | residue glu ; set weight 153 ; set weight x / 
+initialize ; load t1 | residue phe ; set weight 173 ; set weight x / 
+initialize ; load t1 | residue gly ; set weight  86 ; set weight x /
+initialize ; load t1 | residue his ; set weight  73 ; set weight x /
+initialize ; load t1 | residue ile ; set weight 124 ; set weight x / 
+initialize ; load t1 | residue lys ; set weight 202 ; set weight x /
+initialize ; load t1 | residue leu ; set weight 167 ; set weight x / 
+initialize ; load t1 | residue met ; set weight 200 ; set weight x /
+initialize ; load t1 | residue asn ; set weight 118 ; set weight x / 
+initialize ; load t1 | residue pro ; set weight 146 ; set weight x /
+initialize ; load t1 | residue gln ; set weight 130 ; set weight x / 
+initialize ; load t1 | residue arg ; set weight 235 ; set weight x / 
+initialize ; load t1 | residue ser ; set weight 102 ; set weight x / 
+initialize ; load t1 | residue thr ; set weight 152 ; set weight x / 
+initialize ; load t1 | residue val ; set weight 152 ; set weight x / 
+initialize ; load t1 | residue trp ; set weight 117 ; set weight x / 
+initialize ; load t1 | residue tyr ; set weight 192 ; set weight x /
+
+initialize ; load t1 
+! the occs field of CA atoms has been changed to 
+!   % solvent accisibility of the corresponding residue.

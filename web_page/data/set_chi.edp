@@ -1,0 +1,127 @@
+! set_chi.edp   by X. Cai Zhang, 000602
+! set the side chain chi angles to the given values, one residue at a time. 
+! this macro can handle the 20 natural a.a. residues 
+! (while almost 20 if you count gly and ala).
+ 
+! syntax:
+! @set_chi.edp id chi_1 chi_2 ... 
+! you are expected to supply values for all chi angles
+
+! example: to set the side chain torsional angles (chi_1, chi_2) of residue A10
+!  to  -60 (gauge+) and 180 (trans)
+! @set_chi  A10 -60 180 
+
+setenv -s maxerr 1 exit
+dfmain n ca c o
+
+{initialize ; ca | zone $(p1) ; group resn} 
+parameter resn resn residue exit
+
+initialize ; side | zone $(p1)
+goto $(resn)
+
+ala:
+! nothing is done for ala
+goto end
+
+cys:
+rtn abcd $(p1) n $(p1) ca $(p1) cb $(p1) sg $(p2)
+goto end
+
+asp:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) cg  $(p2)
+rtn abcd $(p1) ca $(p1) cb $(p1) cg $(p1) od1 $(p3)
+goto end
+
+glu:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) cg  $(p2)
+rtn abcd $(p1) ca $(p1) cb $(p1) cg $(p1) cd  $(p3)
+exclude atom cb
+rtn abcd $(p1) cb $(p1) cg $(p1) cd $(p1) oe1 $(p4)
+goto end
+
+phe:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) cg  $(p2)
+rtn abcd $(p1) ca $(p1) cb $(p1) cg $(p1) cd1 $(p3)
+goto end
+
+gly:
+! nothing is done for gly
+goto end
+
+his:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) cg  $(p2)
+rtn abcd $(p1) ca $(p1) cb $(p1) cg $(p1) nd1 $(p3)
+goto end
+
+ile:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb  $(p1) cg1 $(p2)
+exclude atom cg2
+rtn abcd $(p1) ca $(p1) cb $(p1) cg1 $(p1) cd1 $(p3)
+goto end 
+
+lys:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) cg  $(p2)
+rtn abcd $(p1) ca $(p1) cb $(p1) cg $(p1) cd  $(p3)
+exclude atom cb
+rtn abcd $(p1) cb $(p1) cg $(p1) cd $(p1) ce  $(p4)
+exclude atom cg
+rtn abcd $(p1) cg $(p1) cd $(p1) ce $(p1) nz  $(p5)
+goto end
+
+leu:
+goto phe
+
+met:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) cg  $(p2)
+rtn abcd $(p1) ca $(p1) cb $(p1) cg $(p1) sd  $(p3)
+exclude atom cb
+rtn abcd $(p1) cb $(p1) cg $(p1) sd $(p1) ce  $(p4)
+goto end
+
+asn:
+goto asp
+
+pro:
+! nothing is done for pro
+goto end
+
+gln:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) cg  $(p2)
+rtn abcd $(p1) ca $(p1) cb $(p1) cg $(p1) cd  $(p3)
+exclude atom cb
+rtn abcd $(p1) cb $(p1) cg $(p1) cd $(p1) oe1 $(p4)
+goto end
+
+arg:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) cg  $(p2)
+rtn abcd $(p1) ca $(p1) cb $(p1) cg $(p1) cd  $(p3)
+exclude atom cb
+rtn abcd $(p1) cb $(p1) cg $(p1) cd $(p1) ne  $(p4)
+exclude atom cg
+rtn abcd $(p1) cg $(p1) cd $(p1) ne $(p1) cz  $(p5)
+!!exclude atom cd
+!!rtn abcd $(p1) cd $(p1) ne $(p1) cz $(p1) nh1 $(p6)
+goto end
+
+ser:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) og  $(p2)
+goto end
+
+thr:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) og1  $(p2)
+goto end
+
+val:
+rtn abcd $(p1) n  $(p1) ca $(p1) cb $(p1) cg1  $(p2)
+goto end
+
+trp:
+goto phe
+
+tyr:
+goto phe
+
+end:
+setenv -r maxerr
+

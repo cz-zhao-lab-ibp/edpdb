@@ -1,0 +1,1347 @@
+!! <beginning of sg.edp>
+! This macro file contains space group symmetry operators.
+! The symmetry operator files in TNT program package was used as the
+!   template when this file was made.
+! example: to define a space group p3121, type
+! parameter sg = p3121
+! @sg 
+ 
+setenv -s echo 0
+setenv -s maxerr 1 exit
+cell; symmetry initialize
+goto $(sg)
+
+C121:
+C2:
+!  c2 monoclinic  pat sym: c12/m 1 neq=2 s.g.no:5                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, +y, -z                    ! 2* (ord= 2) 
+goto endc
+
+C222:
+!  c222 orthorhombic  pat sym:c m m m  neq=4  s.g.no:21                 
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+goto endc
+
+C2221:
+!  c2221 orthorhombic  pat sym:c m m m  neq=4  s.g.no:20                
+symm x, +y, +z                       ! 1  (ord= 1)
+symm -x, -y, +z+1/2                  ! 2* (ord= 2)
+symm -x, +y, -z+1/2                  ! 3* (ord= 2)
+symm x, -y, -z                       ! 4  (ord= 2)
+symm x+1/2, +y+1/2, +z               ! 5* (ord= 2)
+symm -x+1/2, -y+1/2, +z+1/2          ! 6  (ord= 2) s( 2)s( 5)
+symm -x+1/2, +y+1/2, -z+1/2          ! 7  (ord= 2) s( 3)s( 5)
+symm x+1/2, -y+1/2, -z               ! 8  (ord= 2) s( 2)s( 7) 
+goto endc
+
+C2B:
+!  c2 monoclinic  pat sym: c12/m 1 neq=2 s.g.no:5                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, +y, -z                    ! 2* (ord= 2) 
+goto endc
+
+C2C:
+!  c2 monoclinic  pat sym: c12/m 1 neq=2 s.g.no:5                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+goto endc
+
+C2OVRM:
+!  c2 monoclinic  pat sym: c12/m 1 neq=2 s.g.no:5                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm x, -y, +z                     ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+goto endc
+
+C2OVRMA:
+!  c2 monoclinic  pat sym: c12/m 1 neq=2 s.g.no:5                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, +y, +z                    ! 2* (ord= 2) 
+symm x, -y, -z                     ! 3* (ord= 2) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+goto endc
+
+C2OVRMB:
+!  c2 monoclinic  pat sym: c12/m 1 neq=2 s.g.no:5                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm x, -y, +z                     ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+goto endc
+
+C2OVRMC:
+!  c2 monoclinic  pat sym: c12/m 1 neq=2 s.g.no:5                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm x, +y, -z                     ! 2* (ord= 2) 
+symm -x, -y, +z                    ! 3* (ord= 2) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+goto endc
+
+CMMM:
+!  c2 monoclinic  pat sym: c12/m 1 neq=2 s.g.no:5                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm -x, -y, -z                    ! 5* (ord= 2) 
+symm x, +y, -z                     ! 6  (ord= 2) 
+symm x, -y, +z                     ! 7  (ord= 2) 
+symm -x, +y, +z                    ! 8  (ord= 2) 
+goto endc
+
+F222:
+!  f222 orthorhombic  pat sym:f m m m  neq=4  s.g.no:22                 
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+goto endf
+
+F23:
+!  f23 cubic  pat sym: f m 3b  neq=12  s.g.no:196                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+goto endf
+
+F4132:
+!  f4132 cubic  pat sym: f m 3b m  neq=24  s.g.no:210                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y+1/2, +z+1/2            ! 2  (ord= 2) 
+symm -x+1/2, +y+1/2, -z            ! 3  (ord= 2) 
+symm x+1/2, -y, -z+1/2             ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z+1/2, -x, -y+1/2            ! 6  (ord= 3) 
+symm -z, -x+1/2, +y+1/2            ! 7  (ord= 3) 
+symm -z+1/2, x+1/2, -y             ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y+1/2, +z+1/2, -x            !10  (ord= 3) 
+symm +y+1/2, -z, -x+1/2            !11  (ord= 3) 
+symm -y, -z+1/2, x+1/2             !12  (ord= 3) 
+symm +y+3/4, x+1/4, -z+3/4         !13* (ord= 2) 
+symm -y+1/4, -x+1/4, -z+1/4        !14  (ord= 2) 
+symm +y+1/4, -x+3/4, +z+3/4        !15* (ord= 4) 
+symm -y+3/4, x+3/4, +z+1/4         !16  (ord= 4) 
+symm x+3/4, +z+1/4, -y+3/4         !17  (ord= 4) 
+symm -x+3/4, +z+3/4, +y+1/4        !18  (ord= 2) 
+symm -x+1/4, -z+1/4, -y+1/4        !19  (ord= 2) 
+symm x+1/4, -z+3/4, +y+3/4         !20  (ord= 4) 
+symm +z+3/4, +y+1/4, -x+3/4        !21  (ord= 4) 
+symm +z+1/4, -y+3/4, x+3/4         !22  (ord= 2) 
+symm -z+3/4, +y+3/4, x+1/4         !23  (ord= 4) 
+symm -z+1/4, -y+1/4, -x+1/4        !24  (ord= 2) 
+goto endf
+
+F432:
+!  f432 cubic  pat sym: f m 3b m  neq=24  s.g. : 209                    
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -x, +y, -z                    ! 3  (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+symm +y, x, -z                     !13* (ord= 2) 
+symm -y, -x, -z                    !14  (ord= 2) 
+symm +y, -x, +z                    !15* (ord= 4) 
+symm -y, x, +z                     !16  (ord= 4) 
+symm x, +z, -y                     !17  (ord= 4) 
+symm -x, +z, +y                    !18  (ord= 2) 
+symm -x, -z, -y                    !19  (ord= 2) 
+symm x, -z, +y                     !20  (ord= 4) 
+symm +z, +y, -x                    !21  (ord= 4) 
+symm +z, -y, x                     !22  (ord= 2) 
+symm -z, +y, x                     !23  (ord= 4) 
+symm -z, -y, -x                    !24  (ord= 2) 
+goto endf
+
+FM3BAR:
+!  f432 cubic  pat sym: f m 3b m  neq=24  s.g. : 209                    
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5  (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+symm -x, -y, -z                    !13  (ord= 2) 
+symm x, +y, -z                     !14  (ord= 2) 
+symm x, -y, +z                     !15  (ord= 2) 
+symm -x, +y, +z                    !16  (ord= 2) 
+symm -z, -x, -y                    !17* (ord= 6) 
+symm -z, x, +y                     !18  (ord= 6) 
+symm +z, x, -y                     !19  (ord= 6) 
+symm +z, -x, +y                    !20  (ord= 6) 
+symm -y, -z, -x                    !21  (ord= 6) 
+symm +y, -z, x                     !22  (ord= 6) 
+symm -y, +z, x                     !23  (ord= 6) 
+symm +y, +z, -x                    !24  (ord= 6) 
+goto endf
+
+FMMM:
+!  f432 cubic  pat sym: f m 3b m  neq=24  s.g. : 209                    
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm -x, -y, -z                    ! 5* (ord= 2) 
+symm x, +y, -z                     ! 6  (ord= 2) 
+symm x, -y, +z                     ! 7  (ord= 2) 
+symm -x, +y, +z                    ! 8  (ord= 2) 
+goto endf
+
+I212121:
+!  i212121 orthorhombic  pat sym: i m m m neq=42 s.g.no:24              
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x+1/2, -y, +z+1/2            ! 2* (ord= 2) 
+symm -x, +y+1/2, -z+1/2            ! 3* (ord= 2) 
+symm x+1/2, -y+1/2, -z             ! 4  (ord= 2) 
+goto endi
+
+I213:
+!   i213    cubic        pat sym: i m 3b  neq=12 s.g.no:199             
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x+1/2, -y, +z+1/2            ! 2* (ord= 2) 
+symm -x, +y+1/2, -z+1/2            ! 3* (ord= 2) 
+symm x+1/2, -y+1/2, -z             ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z+1/2, -x+1/2, -y            ! 6  (ord= 3) 
+symm -z+1/2, -x, +y+1/2            ! 7  (ord= 3) 
+symm -z, x+1/2, -y+1/2             ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z+1/2, -x+1/2            !10  (ord= 3) 
+symm +y+1/2, -z+1/2, -x            !11  (ord= 3) 
+symm -y+1/2, -z, x+1/2             !12  (ord= 3) 
+goto endi
+
+I222:
+!  i222 orthorhombic  pat sym:i m m m  neq=4  s.g.no:23                 
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+goto endi
+
+I23:
+!  i23 cubic  pat sym: i m 3b  neq=12  s.g.no:197                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+goto endi
+
+I4:
+!  i4   tetragonal pat sym: i 4/m   neq=4  s.g.no:79                    
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -y, x, +z                     ! 3* (ord= 4) 
+symm +y, -x, +z                    ! 4  (ord= 4) 
+goto endi
+
+I41:
+!  i41   tetragonal pat sym: i 4/m   neq=4  s.g.no:80                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x+1/2, -y+1/2, +z+1/2        ! 2  (ord= 2) 
+symm -y, x+1/2, +z+1/4             ! 3* (ord= 4) 
+symm +y+1/2, -x, +z+3/4            ! 4  (ord= 4) 
+goto endi
+
+I4122:
+!  i4122    tetragonal pat sym:i 4/mmm   neq=8  s.g.no:98               
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x+1/2, -y+1/2, +z+1/2        ! 2  (ord= 2) 
+symm -y, x+1/2, +z+1/4             ! 3* (ord= 4) 
+symm +y+1/2, -x, +z+3/4            ! 4  (ord= 4) 
+symm -x+1/2, +y, -z+3/4            ! 5* (ord= 2) 
+symm x, -y+1/2, -z+1/4             ! 6  (ord= 2) 
+symm +y+1/2, x+1/2, -z+1/2         ! 7  (ord= 2) 
+symm -y, -x, -z                    ! 8  (ord= 2) 
+goto endi
+
+I4132:
+!  i4132 cubic  pat sym: i m 3b m  neq=24  s.g.no:214                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x+1/2, -y, +z+1/2            ! 2  (ord= 2) 
+symm -x, +y+1/2, -z+1/2            ! 3  (ord= 2) 
+symm x+1/2, -y+1/2, -z             ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z+1/2, -x+1/2, -y            ! 6  (ord= 3) 
+symm -z+1/2, -x, +y+1/2            ! 7  (ord= 3) 
+symm -z, x+1/2, -y+1/2             ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z+1/2, -x+1/2            !10  (ord= 3) 
+symm +y+1/2, -z+1/2, -x            !11  (ord= 3) 
+symm -y+1/2, -z, x+1/2             !12  (ord= 3) 
+symm +y+3/4, x+1/4, -z+1/4         !13* (ord= 2) 
+symm -y+3/4, -x+3/4, -z+3/4        !14  (ord= 2) 
+symm +y+1/4, -x+1/4, +z+3/4        !15* (ord= 4) 
+symm -y+1/4, x+3/4, +z+1/4         !16  (ord= 4) 
+symm x+3/4, +z+1/4, -y+1/4         !17  (ord= 4) 
+symm -x+1/4, +z+3/4, +y+1/4        !18  (ord= 2) 
+symm -x+3/4, -z+3/4, -y+3/4        !19  (ord= 2) 
+symm x+1/4, -z+1/4, +y+3/4         !20  (ord= 4) 
+symm +z+3/4, +y+1/4, -x+1/4        !21  (ord= 4) 
+symm +z+1/4, -y+1/4, x+3/4         !22  (ord= 2) 
+symm -z+1/4, +y+3/4, x+1/4         !23  (ord= 4) 
+symm -z+3/4, -y+3/4, -x+3/4        !24  (ord= 2) 
+goto endi
+
+I422:
+!  i422    tetragonal pat sym:i 4/mmm   neq=8  s.g.no:97                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -y, x, +z                     ! 3* (ord= 4) 
+symm +y, -x, +z                    ! 4  (ord= 4) 
+symm -x, +y, -z                    ! 5* (ord= 2) 
+symm x, -y, -z                     ! 6  (ord= 2) 
+symm +y, x, -z                     ! 7  (ord= 2) 
+symm -y, -x, -z                    ! 8  (ord= 2) 
+goto endi
+
+I432:
+!  i432 cubic  pat sym: i m 3b m  neq=24  s.g.no: 211                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -x, +y, -z                    ! 3  (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+symm +y, x, -z                     !13* (ord= 2) 
+symm -y, -x, -z                    !14  (ord= 2) 
+symm +y, -x, +z                    !15* (ord= 4) 
+symm -y, x, +z                     !16  (ord= 4) 
+symm x, +z, -y                     !17  (ord= 4) 
+symm -x, +z, +y                    !18  (ord= 2) 
+symm -x, -z, -y                    !19  (ord= 2) 
+symm x, -z, +y                     !20  (ord= 4) 
+symm +z, +y, -x                    !21  (ord= 4) 
+symm +z, -y, x                     !22  (ord= 2) 
+symm -z, +y, x                     !23  (ord= 4) 
+symm -z, -y, -x                    !24  (ord= 2) 
+goto endi
+
+I4OVRM:
+!  i432 cubic  pat sym: i m 3b m  neq=24  s.g.no: 211                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x, +z                     ! 2* (ord= 4) 
+symm -x, -y, +z                    ! 3  (ord= 2) 
+symm +y, -x, +z                    ! 4  (ord= 4) 
+symm -x, -y, -z                    ! 5* (ord= 2) 
+symm +y, -x, -z                    ! 6  (ord= 4) 
+symm x, +y, -z                     ! 7  (ord= 2) 
+symm -y, x, -z                     ! 8  (ord= 4) 
+goto endi
+
+I4OVRMMM:
+!  i432 cubic  pat sym: i m 3b m  neq=24  s.g.no: 211                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -x, +y, -z                    ! 3  (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm -y, -x, -z                    ! 5  (ord= 2) 
+symm +y, x, -z                     ! 6  (ord= 2) 
+symm +y, -x, +z                    ! 7* (ord= 4) 
+symm -y, x, +z                     ! 8  (ord= 4) 
+symm -x, -y, -z                    ! 9  (ord= 2) 
+symm x, +y, -z                     !10  (ord= 2) 
+symm x, -y, +z                     !11  (ord= 2) 
+symm -x, +y, +z                    !12  (ord= 2) 
+symm +y, x, +z                     !13  (ord= 2) 
+symm -y, -x, +z                    !14  (ord= 2) 
+symm -y, x, -z                     !15* (ord= 4) 
+symm +y, -x, -z                    !16  (ord= 4) 
+goto endi
+
+IM3BAR:
+!  i432 cubic  pat sym: i m 3b m  neq=24  s.g.no: 211                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5  (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+symm -x, -y, -z                    !13  (ord= 2) 
+symm x, +y, -z                     !14  (ord= 2) 
+symm x, -y, +z                     !15  (ord= 2) 
+symm -x, +y, +z                    !16  (ord= 2) 
+symm -z, -x, -y                    !17* (ord= 6) 
+symm -z, x, +y                     !18  (ord= 6) 
+symm +z, x, -y                     !19  (ord= 6) 
+symm +z, -x, +y                    !20  (ord= 6) 
+symm -y, -z, -x                    !21  (ord= 6) 
+symm +y, -z, x                     !22  (ord= 6) 
+symm -y, +z, x                     !23  (ord= 6) 
+symm +y, +z, -x                    !24  (ord= 6) 
+goto endi
+
+IMMM:
+!  i432 cubic  pat sym: i m 3b m  neq=24  s.g.no: 211                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm -x, -y, -z                    ! 5* (ord= 2) 
+symm x, +y, -z                     ! 6  (ord= 2) 
+symm x, -y, +z                     ! 7  (ord= 2) 
+symm -x, +y, +z                    ! 8  (ord= 2) 
+goto endi
+
+P1:
+!  p1 triclinic  pat sym: p1b    neq=1 s.g.no:1                         
+symm x, +y, +z                     ! 1* (ord= 1) 
+goto end
+
+P1BAR:
+!  p1 triclinic  pat sym: p1b    neq=1 s.g.no:1                         
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, -z                    ! 2* (ord= 2) 
+goto end
+
+P121:
+P2:
+!  p2 monoclinic  pat sym: p12/m 1 neq=2 s.g.no:3                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, +y, -z                    ! 2* (ord= 2) 
+goto end
+
+P1211:
+!  p21 monoclinic  pat sym: p12/m 1 neq=2 s.g.no:4                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, +y+1/2, -z                ! 2* (ord= 2) 
+goto end
+
+P21212:
+!  p21212 orthorhombic  pat sym:p m m m  neq=4  s.g.no:18               
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x+1/2, +y+1/2, -z            ! 3* (ord= 2) 
+symm x+1/2, -y+1/2, -z             ! 4  (ord= 2) 
+goto end
+
+P212121:
+!  p212121 orthorhombic  pat sym: p m m m neq=42 s.g.no:19              
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x+1/2, -y, +z+1/2            ! 2* (ord= 2) 
+symm -x, +y+1/2, -z+1/2            ! 3* (ord= 2) 
+symm x+1/2, -y+1/2, -z             ! 4  (ord= 2) 
+goto end
+
+P213:
+!  p213    cubic        pat sym: p m 3b  neq=12 s.g.no:198              
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x+1/2, -y, +z+1/2            ! 2* (ord= 2) 
+symm -x, +y+1/2, -z+1/2            ! 3* (ord= 2) 
+symm x+1/2, -y+1/2, -z             ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z+1/2, -x+1/2, -y            ! 6  (ord= 3) 
+symm -z+1/2, -x, +y+1/2            ! 7  (ord= 3) 
+symm -z, x+1/2, -y+1/2             ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z+1/2, -x+1/2            !10  (ord= 3) 
+symm +y+1/2, -z+1/2, -x            !11  (ord= 3) 
+symm -y+1/2, -z, x+1/2             !12  (ord= 3) 
+goto end
+
+P21B:
+!  p21 monoclinic  pat sym: p12/m 1 neq=2 s.g.no:4                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, +y+1/2, -z                ! 2* (ord= 2) 
+goto end
+
+P21C:
+!  p21 monoclinic  pat sym: p12/m 1 neq=2 s.g.no:4                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z+1/2                ! 2* (ord= 2) 
+goto end
+
+P222:
+!  p222 orthorhombic  pat sym: m m m  neq=4  s.g.no:16                  
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+goto end
+
+P2221:
+!  p2221 orthorhombic  pat sym:p m m m  neq=4  s.g.no:17                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z+1/2                ! 2* (ord= 2) 
+symm -x, +y, -z+1/2                ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+goto end
+
+P23:
+!  p23 cubic  pat sym: p m 3b  neq=12  s.g.no:195                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+goto end
+
+P2B:
+!  p2 monoclinic  pat sym: p12/m 1 neq=2 s.g.no:3                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, +y, -z                    ! 2* (ord= 2) 
+goto end
+
+P2C:
+!  p2  monoclinic  pat sym: p 1 1 2/m  neq=2 s.g.no:3                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+goto end
+
+P2OVRM:
+!  p2  monoclinic  pat sym: p 1 1 2/m  neq=2 s.g.no:3                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm x, -y, +z                     ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+goto end
+
+P2OVRMA:
+!  p2  monoclinic  pat sym: p 1 1 2/m  neq=2 s.g.no:3                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, +y, +z                    ! 2* (ord= 2) 
+symm x, -y, -z                     ! 3* (ord= 2) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+goto end
+
+P2OVRMB:
+!  p2  monoclinic  pat sym: p 1 1 2/m  neq=2 s.g.no:3                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm x, -y, +z                     ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+goto end
+
+P2OVRMC:
+!  p2  monoclinic  pat sym: p 1 1 2/m  neq=2 s.g.no:3                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm x, +y, -z                     ! 2* (ord= 2) 
+symm -x, -y, +z                    ! 3* (ord= 2) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+goto end
+
+P3:
+!  p3    trigonal pat sym: p3b   neq=3  s.g.no:143                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2* (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+goto end
+
+P31:
+!  p31    trigonal pat sym: p3b   neq=3 s.g.no:144                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+1/3               ! 2* (ord= 3) 
+symm -x+y, -x, +z+2/3              ! 3  (ord= 3) 
+goto end
+
+P3112:
+!  p3112   trigonal  pat sym: p 3b 1 m  neq=6 s.g.no:151                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+1/3               ! 2* (ord= 3) 
+symm -x+y, -x, +z+2/3              ! 3  (ord= 3) 
+symm -y, -x, -z+2/3                ! 4* (ord= 2) 
+symm -x+y, +y, -z+1/3              ! 5  (ord= 2) 
+symm x, x-y, -z                    ! 6  (ord= 2) 
+goto end
+
+P312:
+!  p312   trigonal  pat sym: p 3b 1 m  neq=6 s.g.no:149                 
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2* (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -y, -x, -z                    ! 4* (ord= 2) 
+symm -x+y, +y, -z                  ! 5  (ord= 2) 
+symm x, x-y, -z                    ! 6  (ord= 2) 
+goto end
+
+P3121:
+!  p3121 trigonal patterson symmetry: p 3b m 1 neq=6 s.g.no:152         
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+1/3               ! 2* (ord= 3) 
+symm -x+y, -x, +z+2/3              ! 3  (ord= 3) 
+symm +y, x, -z                     ! 4* (ord= 2) 
+symm x-y, -y, -z+2/3               ! 5  (ord= 2) 
+symm -x, -x+y, -z+1/3              ! 6  (ord= 2) 
+goto end
+
+P32:
+!  p32    trigonal pat sym: p3b   neq=3 s.g.no:145                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+1/3               ! 2* (ord= 3) 
+symm -x+y, -x, +z+2/3              ! 3  (ord= 3) 
+goto end
+
+P321:
+!  p321 trigonal pat sym: p3bm1 neq=6 s.g.no:150                        
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2* (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm +y, x, -z                     ! 4* (ord= 2) 
+symm x-y, -y, -z                   ! 5  (ord= 2) 
+symm -x, -x+y, -z                  ! 6  (ord= 2) 
+goto end
+
+P3212:
+!  p3212   trigonal  pat sym: p 3b 1 m  neq=6 s.g.no:153                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+2/3               ! 2* (ord= 3) 
+symm -x+y, -x, +z+1/3              ! 3  (ord= 3) 
+symm -y, -x, -z+1/3                ! 4* (ord= 2) 
+symm -x+y, +y, -z+2/3              ! 5  (ord= 2) 
+symm x, x-y, -z                    ! 6  (ord= 2) 
+goto end
+
+P3221:
+!  p3221 trigonal pat sym: p3bm1 neq=6 s.g.no:154                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+2/3               ! 2* (ord= 3) 
+symm -x+y, -x, +z+1/3              ! 3  (ord= 3) 
+symm +y, x, -z                     ! 4* (ord= 2) 
+symm x-y, -y, -z+1/3               ! 5  (ord= 2) 
+symm -x, -x+y, -z+2/3              ! 6  (ord= 2) 
+goto end
+
+P3BAR:
+!  p3221 trigonal pat sym: p3bm1 neq=6 s.g.no:154                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+symm +y, -x+y, -z                  ! 5* (ord= 6) 
+symm x-y, x, -z                    ! 6  (ord= 6) 
+goto end
+
+P3BAR1M:
+!  p3221 trigonal pat sym: p3bm1 neq=6 s.g.no:154                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+symm +y, -x+y, -z                  ! 5* (ord= 6) 
+symm x-y, x, -z                    ! 6  (ord= 6) 
+symm +y, x, +z                     ! 7* (ord= 2) 
+symm -x, -x+y, +z                  ! 8  (ord= 2) 
+symm x-y, -y, +z                   ! 9  (ord= 2) 
+symm -y, -x, -z                    !10  (ord= 2) 
+symm x, x-y, -z                    !11  (ord= 2) 
+symm -x+y, +y, -z                  !12  (ord= 2) 
+goto end
+
+P3BARM1:
+!  p3221 trigonal pat sym: p3bm1 neq=6 s.g.no:154                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+symm +y, -x+y, -z                  ! 5* (ord= 6) 
+symm x-y, x, -z                    ! 6  (ord= 6) 
+symm -y, -x, +z                    ! 7* (ord= 2) 
+symm x, x-y, +z                    ! 8  (ord= 2) 
+symm -x+y, +y, +z                  ! 9  (ord= 2) 
+symm +y, x, -z                     !10  (ord= 2) 
+symm -x, -x+y, -z                  !11  (ord= 2) 
+symm x-y, -y, -z                   !12  (ord= 2) 
+goto end
+
+P4:
+!  p4   tetragonal pat sym: p4/m   neq=4  s.g.no:75                     
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -y, x, +z                     ! 3* (ord= 4) 
+symm +y, -x, +z                    ! 4  (ord= 4) 
+goto end
+
+P41:
+!  p41   tetragonal pat sym: p4/m   neq=4  s.g.no:76                    
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z+1/2                ! 2  (ord= 2) 
+symm -y, x, +z+1/4                 ! 3* (ord= 4) 
+symm +y, -x, +z+3/4                ! 4  (ord= 4) 
+goto end
+
+P41212:
+!  p41212   tetragonal pat sym: p 4/ m m m   neq=8  s.g.no:92           
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z+1/2                ! 2  (ord= 2) 
+symm -y+1/2, x+1/2, +z+1/4         ! 3* (ord= 4) 
+symm +y+1/2, -x+1/2, +z+3/4        ! 4  (ord= 4) 
+symm -x+1/2, +y+1/2, -z+1/4        ! 5* (ord= 2) 
+symm x+1/2, -y+1/2, -z+3/4         ! 6  (ord= 2) 
+symm +y, x, -z                     ! 7  (ord= 2) 
+symm -y, -x, -z+1/2                ! 8  (ord= 2) 
+goto end
+
+P4122:
+!  p4122   tetragonal pat sym: p4/mmm   neq=8  s.g.no:91                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z+1/2                ! 2  (ord= 2) 
+symm -y, x, +z+1/4                 ! 3* (ord= 4) 
+symm +y, -x, +z+3/4                ! 4  (ord= 4) 
+symm -x, +y, -z                    ! 5* (ord= 2) 
+symm x, -y, -z+1/2                 ! 6  (ord= 2) 
+symm +y, x, -z+3/4                 ! 7  (ord= 2) 
+symm -y, -x, -z+1/4                ! 8  (ord= 2) 
+goto end
+
+P4132:
+!  p4132 cubic  pat sym: p m 3b m  neq=24  s.g.no:213                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x+1/2, -y, +z+1/2            ! 2  (ord= 2) 
+symm -x, +y+1/2, -z+1/2            ! 3  (ord= 2) 
+symm x+1/2, -y+1/2, -z             ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z+1/2, -x+1/2, -y            ! 6  (ord= 3) 
+symm -z+1/2, -x, +y+1/2            ! 7  (ord= 3) 
+symm -z, x+1/2, -y+1/2             ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z+1/2, -x+1/2            !10  (ord= 3) 
+symm +y+1/2, -z+1/2, -x            !11  (ord= 3) 
+symm -y+1/2, -z, x+1/2             !12  (ord= 3) 
+symm +y+3/4, x+1/4, -z+1/4         !13* (ord= 2) 
+symm -y+3/4, -x+3/4, -z+3/4        !14  (ord= 2) 
+symm +y+1/4, -x+1/4, +z+3/4        !15* (ord= 4) 
+symm -y+1/4, x+3/4, +z+1/4         !16  (ord= 4) 
+symm x+3/4, +z+1/4, -y+1/4         !17  (ord= 4) 
+symm -x+1/4, +z+3/4, +y+1/4        !18  (ord= 2) 
+symm -x+3/4, -z+3/4, -y+3/4        !19  (ord= 2) 
+symm x+1/4, -z+1/4, +y+3/4         !20  (ord= 4) 
+symm +z+3/4, +y+1/4, -x+1/4        !21  (ord= 4) 
+symm +z+1/4, -y+1/4, x+3/4         !22  (ord= 2) 
+symm -z+1/4, +y+3/4, x+1/4         !23  (ord= 4) 
+symm -z+3/4, -y+3/4, -x+3/4        !24  (ord= 2) 
+goto end
+
+P42:
+!  p42   tetragonal pat sym: p4/m   neq=4  s.g.no:77                    
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -y, x, +z+1/2                 ! 3* (ord= 4) 
+symm +y, -x, +z+1/2                ! 4  (ord= 4) 
+goto end
+
+P4212:
+!  p4212   tetragonal pat sym: p4/mmm   neq=8  s.g.no:90                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -y+1/2, x+1/2, +z             ! 3* (ord= 4) 
+symm +y+1/2, -x+1/2, +z            ! 4  (ord= 4) 
+symm -x+1/2, +y+1/2, -z            ! 5* (ord= 2) 
+symm x+1/2, -y+1/2, -z             ! 6  (ord= 2) 
+symm +y, x, -z                     ! 7  (ord= 2) 
+symm -y, -x, -z                    ! 8  (ord= 2) 
+goto end
+
+P422:
+!  p422    tetragonal pat sym: p4/mmm   neq=8  s.g.no:89                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -y, x, +z                     ! 3* (ord= 4) 
+symm +y, -x, +z                    ! 4  (ord= 4) 
+symm -x, +y, -z                    ! 5* (ord= 2) 
+symm x, -y, -z                     ! 6  (ord= 2) 
+symm +y, x, -z                     ! 7  (ord= 2) 
+symm -y, -x, -z                    ! 8  (ord= 2) 
+goto end
+
+P42212:
+!  p42212   tetragonal pat sym: p4/mmm   neq=8  s.g.no:94               
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -y+1/2, x+1/2, +z+1/2         ! 3* (ord= 4) 
+symm +y+1/2, -x+1/2, +z+1/2        ! 4  (ord= 4) 
+symm -x+1/2, +y+1/2, -z+1/2        ! 5* (ord= 2) 
+symm x+1/2, -y+1/2, -z+1/2         ! 6  (ord= 2) 
+symm +y, x, -z                     ! 7  (ord= 2) 
+symm -y, -x, -z                    ! 8  (ord= 2) 
+goto end
+
+P4222:
+!  p4222   tetragonal pat sym: p4/mmm   neq=8  s.g.no:93                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -y, x, +z+1/2                 ! 3* (ord= 4) 
+symm +y, -x, +z+1/2                ! 4  (ord= 4) 
+symm -x, +y, -z                    ! 5* (ord= 2) 
+symm x, -y, -z                     ! 6  (ord= 2) 
+symm +y, x, -z+1/2                 ! 7  (ord= 2) 
+symm -y, -x, -z+1/2                ! 8  (ord= 2) 
+goto end
+
+P4232:
+!  p4232 cubic  pat sym: p m 3b m  neq=24  s.g.no:208                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -x, +y, -z                    ! 3  (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+symm +y+1/2, x+1/2, -z+1/2         !13* (ord= 2) 
+symm -y+1/2, -x+1/2, -z+1/2        !14  (ord= 2) 
+symm +y+1/2, -x+1/2, +z+1/2        !15* (ord= 4) 
+symm -y+1/2, x+1/2, +z+1/2         !16  (ord= 4) 
+symm x+1/2, +z+1/2, -y+1/2         !17  (ord= 4) 
+symm -x+1/2, +z+1/2, +y+1/2        !18  (ord= 2) 
+symm -x+1/2, -z+1/2, -y+1/2        !19  (ord= 2) 
+symm x+1/2, -z+1/2, +y+1/2         !20  (ord= 4) 
+symm +z+1/2, +y+1/2, -x+1/2        !21  (ord= 4) 
+symm +z+1/2, -y+1/2, x+1/2         !22  (ord= 2) 
+symm -z+1/2, +y+1/2, x+1/2         !23  (ord= 4) 
+symm -z+1/2, -y+1/2, -x+1/2        !24  (ord= 2) 
+goto end
+
+P43:
+!  p43   tetragonal pat sym: p4/m   neq=4  s.g.no:78                    
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z+1/2                ! 2  (ord= 2) 
+symm -y, x, +z+3/4                 ! 3* (ord= 4) 
+symm +y, -x, +z+1/4                ! 4  (ord= 4) 
+goto end
+
+P432:
+!  p432 cubic  pat sym: p m 3b m  neq=24  s.g.no:207                    
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -x, +y, -z                    ! 3  (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+symm +y, x, -z                     !13* (ord= 2) 
+symm -y, -x, -z                    !14  (ord= 2) 
+symm +y, -x, +z                    !15* (ord= 4) 
+symm -y, x, +z                     !16  (ord= 4) 
+symm x, +z, -y                     !17  (ord= 4) 
+symm -x, +z, +y                    !18  (ord= 2) 
+symm -x, -z, -y                    !19  (ord= 2) 
+symm x, -z, +y                     !20  (ord= 4) 
+symm +z, +y, -x                    !21  (ord= 4) 
+symm +z, -y, x                     !22  (ord= 2) 
+symm -z, +y, x                     !23  (ord= 4) 
+symm -z, -y, -x                    !24  (ord= 2) 
+goto end
+
+P43212:
+!  p43212   tetragonal pat sym: p4/mmm   neq=8  s.g.no:96               
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z+1/2                ! 2  (ord= 2) 
+symm -y+1/2, x+1/2, +z+3/4         ! 3* (ord= 4) 
+symm +y+1/2, -x+1/2, +z+1/4        ! 4  (ord= 4) 
+symm -x+1/2, +y+1/2, -z+3/4        ! 5* (ord= 2) 
+symm x+1/2, -y+1/2, -z+1/4         ! 6  (ord= 2) 
+symm +y, x, -z                     ! 7  (ord= 2) 
+symm -y, -x, -z+1/2                ! 8  (ord= 2) 
+goto end
+
+P4322:
+!  p4322   tetragonal pat sym: p4/mmm   neq=8  s.g.no:95                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z+1/2                ! 2  (ord= 2) 
+symm -y, x, +z+3/4                 ! 3* (ord= 4) 
+symm +y, -x, +z+1/4                ! 4  (ord= 4) 
+symm -x, +y, -z                    ! 5* (ord= 2) 
+symm x, -y, -z+1/2                 ! 6  (ord= 2) 
+symm +y, x, -z+1/4                 ! 7  (ord= 2) 
+symm -y, -x, -z+3/4                ! 8  (ord= 2) 
+goto end
+
+P4332:
+!  p4332 cubic  pat sym: p m 3b m  neq=24  s.g.no:212                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x+1/2, -y, +z+1/2            ! 2  (ord= 2) 
+symm -x, +y+1/2, -z+1/2            ! 3  (ord= 2) 
+symm x+1/2, -y+1/2, -z             ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5* (ord= 3) 
+symm +z+1/2, -x+1/2, -y            ! 6  (ord= 3) 
+symm -z+1/2, -x, +y+1/2            ! 7  (ord= 3) 
+symm -z, x+1/2, -y+1/2             ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z+1/2, -x+1/2            !10  (ord= 3) 
+symm +y+1/2, -z+1/2, -x            !11  (ord= 3) 
+symm -y+1/2, -z, x+1/2             !12  (ord= 3) 
+symm +y+1/4, x+3/4, -z+3/4         !13* (ord= 2) 
+symm -y+1/4, -x+1/4, -z+1/4        !14  (ord= 2) 
+symm +y+3/4, -x+3/4, +z+1/4        !15* (ord= 4) 
+symm -y+3/4, x+1/4, +z+3/4         !16  (ord= 4) 
+symm x+1/4, +z+3/4, -y+3/4         !17  (ord= 4) 
+symm -x+3/4, +z+1/4, +y+3/4        !18  (ord= 2) 
+symm -x+1/4, -z+1/4, -y+1/4        !19  (ord= 2) 
+symm x+3/4, -z+3/4, +y+1/4         !20  (ord= 4) 
+symm +z+1/4, +y+3/4, -x+3/4        !21  (ord= 4) 
+symm +z+3/4, -y+3/4, x+1/4         !22  (ord= 2) 
+symm -z+3/4, +y+1/4, x+3/4         !23  (ord= 4) 
+symm -z+1/4, -y+1/4, -x+1/4        !24  (ord= 2) 
+goto end
+
+P4OVRM:
+!  p4332 cubic  pat sym: p m 3b m  neq=24  s.g.no:212                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x, +z                     ! 2* (ord= 4) 
+symm -x, -y, +z                    ! 3  (ord= 2) 
+symm +y, -x, +z                    ! 4  (ord= 4) 
+symm -x, -y, -z                    ! 5* (ord= 2) 
+symm +y, -x, -z                    ! 6  (ord= 4) 
+symm x, +y, -z                     ! 7  (ord= 2) 
+symm -y, x, -z                     ! 8  (ord= 4) 
+goto end
+
+P4OVRMMM:
+!  p4332 cubic  pat sym: p m 3b m  neq=24  s.g.no:212                   
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm -x, +y, -z                    ! 3  (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm -y, -x, -z                    ! 5  (ord= 2) 
+symm +y, x, -z                     ! 6  (ord= 2) 
+symm +y, -x, +z                    ! 7* (ord= 4) 
+symm -y, x, +z                     ! 8  (ord= 4) 
+symm -x, -y, -z                    ! 9  (ord= 2) 
+symm x, +y, -z                     !10  (ord= 2) 
+symm x, -y, +z                     !11  (ord= 2) 
+symm -x, +y, +z                    !12  (ord= 2) 
+symm +y, x, +z                     !13  (ord= 2) 
+symm -y, -x, +z                    !14  (ord= 2) 
+symm -y, x, -z                     !15* (ord= 4) 
+symm +y, -x, -z                    !16  (ord= 4) 
+goto end
+
+P6:
+!  p6  hexagonal  pat sym: p6/m  neq=6 s.g.no:168                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, +z                    ! 4  (ord= 2) 
+symm +y, -x+y, +z                  ! 5* (ord= 6) 
+symm x-y, x, +z                    ! 6  (ord= 6) 
+goto end
+
+P61:
+!  p61 hexagonal  pat sym: p6/m  neq=6 s.g.no:169                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+1/3               ! 2  (ord= 3) 
+symm -x+y, -x, +z+2/3              ! 3  (ord= 3) 
+symm -x, -y, +z+1/2                ! 4  (ord= 2) 
+symm +y, -x+y, +z+5/6              ! 5* (ord= 6) 
+symm x-y, x, +z+1/6                ! 6  (ord= 6) 
+goto end
+
+P6122:
+!  p6122  hexagonal  pat sym: p6/m m m neq=12 s.g.no:178"               
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+1/3               ! 2  (ord= 3) 
+symm -x+y, -x, +z+2/3              ! 3  (ord= 3) 
+symm -x, -y, +z+1/2                ! 4  (ord= 2) 
+symm +y, -x+y, +z+5/6              ! 5* (ord= 6) 
+symm x-y, x, +z+1/6                ! 6  (ord= 6) 
+symm +y, x, -z+1/3                 ! 7* (ord= 2) 
+symm x-y, -y, -z                   ! 8  (ord= 2) 
+symm -x, -x+y, -z+2/3              ! 9  (ord= 2) 
+symm -y, -x, -z+5/6                !10  (ord= 2) 
+symm -x+y, +y, -z+1/2              !11  (ord= 2) 
+symm x, x-y, -z+1/6                !12  (ord= 2) 
+goto end
+
+P62:
+!  p62 hexagonal  pat sym: p6/m  neq=6 s.g.no:171                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+2/3               ! 2  (ord= 3) 
+symm -x+y, -x, +z+1/3              ! 3  (ord= 3) 
+symm -x, -y, +z                    ! 4  (ord= 2) 
+symm +y, -x+y, +z+2/3              ! 5* (ord= 6) 
+symm x-y, x, +z+1/3                ! 6  (ord= 6) 
+goto end
+
+P622:
+!  p622  hexagonal  pat sym: p6/m m m  neq=12 s.g.no:177                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, +z                    ! 4  (ord= 2) 
+symm +y, -x+y, +z                  ! 5* (ord= 6) 
+symm x-y, x, +z                    ! 6  (ord= 6) 
+symm +y, x, -z                     ! 7* (ord= 2) 
+symm x-y, -y, -z                   ! 8  (ord= 2) 
+symm -x, -x+y, -z                  ! 9  (ord= 2) 
+symm -y, -x, -z                    !10  (ord= 2) 
+symm -x+y, +y, -z                  !11  (ord= 2) 
+symm x, x-y, -z                    !12  (ord= 2) 
+goto end
+
+P6222:
+!  p6222  hexagonal  pat sym: p6/m m m  neq=12 s.g.no:180               
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+2/3               ! 2  (ord= 3) 
+symm -x+y, -x, +z+1/3              ! 3  (ord= 3) 
+symm -x, -y, +z                    ! 4  (ord= 2) 
+symm +y, -x+y, +z+2/3              ! 5* (ord= 6) 
+symm x-y, x, +z+1/3                ! 6  (ord= 6) 
+symm +y, x, -z+2/3                 ! 7* (ord= 2) 
+symm x-y, -y, -z                   ! 8  (ord= 2) 
+symm -x, -x+y, -z+1/3              ! 9  (ord= 2) 
+symm -y, -x, -z+2/3                !10  (ord= 2) 
+symm -x+y, +y, -z                  !11  (ord= 2) 
+symm x, x-y, -z+1/3                !12  (ord= 2) 
+goto end
+
+P63:
+!  p63 hexagonal  pat sym: p6/m  neq=6 s.g.no:173                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, +z+1/2                ! 4  (ord= 2) 
+symm +y, -x+y, +z+1/2              ! 5* (ord= 6) 
+symm x-y, x, +z+1/2                ! 6  (ord= 6) 
+goto end
+
+P6322:
+!  p6322  hexagonal  pat sym: p6/m m m  neq=12 s.g.no:182               
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, +z+1/2                ! 4  (ord= 2) 
+symm +y, -x+y, +z+1/2              ! 5* (ord= 6) 
+symm x-y, x, +z+1/2                ! 6  (ord= 6) 
+symm +y, x, -z                     ! 7* (ord= 2) 
+symm x-y, -y, -z                   ! 8  (ord= 2) 
+symm -x, -x+y, -z                  ! 9  (ord= 2) 
+symm -y, -x, -z+1/2                !10  (ord= 2) 
+symm -x+y, +y, -z+1/2              !11  (ord= 2) 
+symm x, x-y, -z+1/2                !12  (ord= 2) 
+goto end
+
+P64:
+!  p64 hexagonal  pat sym: p6/m  neq=6 s.g.no:172                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+1/3               ! 2  (ord= 3) 
+symm -x+y, -x, +z+2/3              ! 3  (ord= 3) 
+symm -x, -y, +z                    ! 4  (ord= 2) 
+symm +y, -x+y, +z+1/3              ! 5* (ord= 6) 
+symm x-y, x, +z+2/3                ! 6  (ord= 6) 
+goto end
+
+P6422:
+!  p6422  hexagonal  pat sym: p6/m m m  neq=12 s.g.no:181               
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+1/3               ! 2  (ord= 3) 
+symm -x+y, -x, +z+2/3              ! 3  (ord= 3) 
+symm -x, -y, +z                    ! 4  (ord= 2) 
+symm +y, -x+y, +z+1/3              ! 5* (ord= 6) 
+symm x-y, x, +z+2/3                ! 6  (ord= 6) 
+symm +y, x, -z+1/3                 ! 7* (ord= 2) 
+symm x-y, -y, -z                   ! 8  (ord= 2) 
+symm -x, -x+y, -z+2/3              ! 9  (ord= 2) 
+symm -y, -x, -z+1/3                !10  (ord= 2) 
+symm -x+y, +y, -z                  !11  (ord= 2) 
+symm x, x-y, -z+2/3                !12  (ord= 2) 
+goto end
+
+P65:
+!  p65 hexagonal  pat sym: p6/m  neq=6 s.g.no:170                       
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+2/3               ! 2  (ord= 3) 
+symm -x+y, -x, +z+1/3              ! 3  (ord= 3) 
+symm -x, -y, +z+1/2                ! 4  (ord= 2) 
+symm +y, -x+y, +z+1/6              ! 5* (ord= 6) 
+symm x-y, x, +z+5/6                ! 6  (ord= 6) 
+goto end
+
+P6522:
+!  p6522  hexagonal  pat sym: p6/m m m neq=12 s.g.no:179                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z+2/3               ! 2  (ord= 3) 
+symm -x+y, -x, +z+1/3              ! 3  (ord= 3) 
+symm -x, -y, +z+1/2                ! 4  (ord= 2) 
+symm +y, -x+y, +z+1/6              ! 5* (ord= 6) 
+symm x-y, x, +z+5/6                ! 6  (ord= 6) 
+symm +y, x, -z+2/3                 ! 7* (ord= 2) 
+symm x-y, -y, -z                   ! 8  (ord= 2) 
+symm -x, -x+y, -z+1/3              ! 9  (ord= 2) 
+symm -y, -x, -z+1/6                !10  (ord= 2) 
+symm -x+y, +y, -z+1/2              !11  (ord= 2) 
+symm x, x-y, -z+5/6                !12  (ord= 2) 
+goto end
+
+P6MM:
+!  p6522  hexagonal  pat sym: p6/m m m neq=12 s.g.no:179                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2  (ord= 2) 
+symm x-y, x, +z                    ! 3* (ord= 6) 
+symm -y, x-y, +z                   ! 4  (ord= 3) 
+symm -x+y, -x, +z                  ! 5  (ord= 3) 
+symm +y, -x+y, +z                  ! 6  (ord= 6) 
+symm x-y, -y, -z                   ! 7* (ord= 2) 
+symm -x+y, +y, -z                  ! 8  (ord= 2) 
+symm -y, -x, -z                    ! 9  (ord= 2) 
+symm -x, -x+y, -z                  !10  (ord= 2) 
+symm +y, x, -z                     !11  (ord= 2) 
+symm x, x-y, -z                    !12  (ord= 2) 
+symm -x, -y, -z                    !13  (ord= 2) 
+symm x, +y, -z                     !14  (ord= 2) 
+symm -x+y, -x, -z                  !15  (ord= 6) 
+symm +y, -x+y, -z                  !16  (ord= 6) 
+symm x-y, x, -z                    !17  (ord= 6) 
+symm -y, x-y, -z                   !18  (ord= 6) 
+symm -x+y, +y, +z                  !19  (ord= 2) 
+symm x-y, -y, +z                   !20  (ord= 2) 
+symm +y, x, +z                     !21  (ord= 2) 
+symm x, x-y, +z                    !22  (ord= 2) 
+symm -y, -x, +z                    !23  (ord= 2) 
+symm -x, -x+y, +z                  !24  (ord= 2) 
+goto end
+
+P6OVRM:
+!  p6522  hexagonal  pat sym: p6/m m m neq=12 s.g.no:179                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, +z                    ! 4  (ord= 2) 
+symm +y, -x+y, +z                  ! 5* (ord= 6) 
+symm x-y, x, +z                    ! 6  (ord= 6) 
+symm -x, -y, -z                    ! 7  (ord= 2) 
+symm +y, -x+y, -z                  ! 8  (ord= 6) 
+symm x-y, x, -z                    ! 9  (ord= 6) 
+symm x, +y, -z                     !10  (ord= 2) 
+symm -y, x-y, -z                   !11  (ord= 6) 
+symm -x+y, -x, -z                  !12  (ord= 6) 
+goto end
+
+PM:
+!  p6522  hexagonal  pat sym: p6/m m m neq=12 s.g.no:179                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm x, -y, +z                     ! 2* (ord= 2) 
+goto end
+
+PM3BAR:
+!  p6522  hexagonal  pat sym: p6/m m m neq=12 s.g.no:179                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm +z, x, +y                     ! 5  (ord= 3) 
+symm +z, -x, -y                    ! 6  (ord= 3) 
+symm -z, -x, +y                    ! 7  (ord= 3) 
+symm -z, x, -y                     ! 8  (ord= 3) 
+symm +y, +z, x                     ! 9  (ord= 3) 
+symm -y, +z, -x                    !10  (ord= 3) 
+symm +y, -z, -x                    !11  (ord= 3) 
+symm -y, -z, x                     !12  (ord= 3) 
+symm -x, -y, -z                    !13  (ord= 2) 
+symm x, +y, -z                     !14  (ord= 2) 
+symm x, -y, +z                     !15  (ord= 2) 
+symm -x, +y, +z                    !16  (ord= 2) 
+symm -z, -x, -y                    !17* (ord= 6) 
+symm -z, x, +y                     !18  (ord= 6) 
+symm +z, x, -y                     !19  (ord= 6) 
+symm +z, -x, +y                    !20  (ord= 6) 
+symm -y, -z, -x                    !21  (ord= 6) 
+symm +y, -z, x                     !22  (ord= 6) 
+symm -y, +z, x                     !23  (ord= 6) 
+symm +y, +z, -x                    !24  (ord= 6) 
+goto end
+
+PMA:
+!  p6522  hexagonal  pat sym: p6/m m m neq=12 s.g.no:179                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, +y, +z                    ! 2* (ord= 2) 
+goto end
+
+PMB:
+!  p6522  hexagonal  pat sym: p6/m m m neq=12 s.g.no:179                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm x, -y, +z                     ! 2* (ord= 2) 
+goto end
+
+PMC:
+!  p6522  hexagonal  pat sym: p6/m m m neq=12 s.g.no:179                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm x, +y, -z                     ! 2* (ord= 2) 
+goto end
+
+PMMM:
+!  p6522  hexagonal  pat sym: p6/m m m neq=12 s.g.no:179                
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -x, -y, +z                    ! 2* (ord= 2) 
+symm -x, +y, -z                    ! 3* (ord= 2) 
+symm x, -y, -z                     ! 4  (ord= 2) 
+symm -x, -y, -z                    ! 5* (ord= 2) 
+symm x, +y, -z                     ! 6  (ord= 2) 
+symm x, -y, +z                     ! 7  (ord= 2) 
+symm -x, +y, +z                    ! 8  (ord= 2) 
+goto end
+
+R3-RHOM:
+!  r3    trigonal pat sym: r3b   neq=3  s.g.no:146                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm +z, x, +y                     ! 2* (ord= 3) 
+symm +y, +z, x                     ! 3  (ord= 3) 
+goto end
+
+R3:
+!  r3 (hexagonal axes) trigonal pat sym: r3b   neq=3  s.g.no:146        
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2* (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+goto end
+
+R32-RHOM:
+!  r32   trigonal pat sym: r3bm   neq=6  s.g.no:155                     
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm +z, x, +y                     ! 2* (ord= 3) 
+symm +y, +z, x                     ! 3  (ord= 3) 
+symm -y, -x, -z                    ! 4* (ord= 2) 
+symm -x, -z, -y                    ! 5  (ord= 2) 
+symm -z, -y, -x                    ! 6  (ord= 2) 
+goto end
+
+R32:
+!  r32  (hexagonal axes) trigonal pat sym:r3bm   neq=6x3  s.g.no:155      
+symm    X,   Y,  Z !!IDENTITY
+symm   -Y, X-Y,  Z !!0B
+symm  Y-X,  -X,  Z !!0C
+symm    Y,   X, -Z !!0D
+symm   -X, Y-X, -Z !!0E
+symm  X-Y,  -Y, -Z !!0F
+symm x+1/3, y-1/3, z-1/3 
+@complete_sg
+goto end
+
+R3BAR-RHOM:
+!  r3    trigonal pat sym: r3b   neq=3  s.g.no:146                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm +z, x, +y                     ! 2  (ord= 3) 
+symm +y, +z, x                     ! 3  (ord= 3) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+symm -z, -x, -y                    ! 5* (ord= 6) 
+symm -y, -z, -x                    ! 6  (ord= 6) 
+goto end
+
+R3BAR:
+!  r3    trigonal pat sym: r3b   neq=3  s.g.no:146                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+symm +y, -x+y, -z                  ! 5* (ord= 6) 
+symm x-y, x, -z                    ! 6  (ord= 6) 
+goto end
+
+R3BARM-RHOM:
+!  r3    trigonal pat sym: r3b   neq=3  s.g.no:146                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm +z, x, +y                     ! 2  (ord= 3) 
+symm +y, +z, x                     ! 3  (ord= 3) 
+symm -y, -x, -z                    ! 4* (ord= 2) 
+symm -x, -z, -y                    ! 5  (ord= 2) 
+symm -z, -y, -x                    ! 6  (ord= 2) 
+symm -y, -z, -x                    ! 7* (ord= 6) 
+symm -x, -y, -z                    ! 8  (ord= 2) 
+symm -z, -x, -y                    ! 9  (ord= 6) 
+symm +y, x, +z                     !10  (ord= 2) 
+symm x, +z, +y                     !11  (ord= 2) 
+symm +z, +y, x                     !12  (ord= 2) 
+goto end
+
+R3BARM:
+!  r3    trigonal pat sym: r3b   neq=3  s.g.no:146                      
+symm x, +y, +z                     ! 1  (ord= 1) 
+symm -y, x-y, +z                   ! 2  (ord= 3) 
+symm -x+y, -x, +z                  ! 3  (ord= 3) 
+symm -x, -y, -z                    ! 4  (ord= 2) 
+symm +y, -x+y, -z                  ! 5* (ord= 6) 
+symm x-y, x, -z                    ! 6  (ord= 6) 
+symm -y, -x, +z                    ! 7* (ord= 2) 
+symm x, x-y, +z                    ! 8  (ord= 2) 
+symm -x+y, +y, +z                  ! 9  (ord= 2) 
+symm +y, x, -z                     !10  (ord= 2) 
+symm -x, -x+y, -z                  !11  (ord= 2) 
+symm x-y, -y, -z                   !12  (ord= 2) 
+goto end
+
+endc:
+symm x+1/2, y+1/2, z
+@complete_sg
+goto end
+
+endf:
+symm x+1/2, y+1/2, z
+symm x, y+1/2, z+1/2
+symm x+1/2, y, z+1/2
+@complete_sg
+goto end
+
+endi:
+symm x+1/2, y+1/2, z+1/2
+@complete_sg
+goto end
+
+
+end:
+setenv -r maxerr
+setenv -r echo
+symmetry
+!! <end of sg.edp>
+

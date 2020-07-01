@@ -1,0 +1,17 @@
+! acc.edp   by X. Cai Zhang, 000602
+! calculate solvent accessible surface area of a given residue in the context
+!  of the protein, but excluding solvent molecules.
+! syntax: 
+! @acc.edp residueId ligandToBeExcluded
+! example:
+! @acc A64 'BME NAG'
+
+initialize ; naybr 7. $(p1) 
+exclude residue sol wat tip $(p2) 
+! it is okay if the above listed molecules do not exist
+group bg
+
+initialize ; zone $(p1) ; access bg 1.4 0.2 
+list
+! the occ field is the solvent accessible surface for each listed atoms
+

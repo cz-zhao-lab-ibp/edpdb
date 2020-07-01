@@ -1,0 +1,25 @@
+! <beginning of se-sd.edp> 
+!   by X. Cai Zhang, (040827) 
+! This macro searches for matches between Se and Met/SD
+ 
+! Syntax:
+!   @se-sd # 
+! Example: 
+!   @se-sd 5
+
+setenv verbose 1
+! initializing ...
+!  the cell parameter and SG are stored in the header of the PDB file
+reset 
+
+! expand Se atoms around a given one according to symmetry
+init; zone x$(p1) ; gr t
+init; write t.pdb ; ch x ; setw
+sdist t 1 45 punch_all 
+close; read t.pdb x
+
+! find cliques
+init; ch x | atom s* ; gr se
+init; ch a | residue met | atom sd 
+setenv verbose 2
+clique se 5 4 5  	!<end of se-sd.edp>

@@ -1,0 +1,57 @@
+
+!! this file works for v99a or higher version of edpdb. 990110
+DFRES ALA :A mw=71.1	N   CA  C   O   CB 
+DFRES ARG :R mw=156.2	N   CA  C   O   CB  CG  CD  NE  CZ  NH1 NH2
+DFRES ASN :N mw=114.1	N   CA  C   O   CB  CG  OD1 ND2
+DFRES ASP :D mw=115.1	N   CA  C   O   CB  CG  OD1 OD2
+DFRES ASX :B mw=114.6	N   CA  C   O   CB  CG  AD1 AD2
+DFRES CYS :C mw=103.2	N   CA  C   O   CB  SG 
+DFRES GLN :Q mw=128.2	N   CA  C   O   CB  CG  CD  OE1 NE2
+DFRES GLU :E mw=129.1	N   CA  C   O   CB  CG  CD  OE1 OE2
+DFRES GLX :X mw=128.7	N   CA  C   O   CB  CG  CD  AE1 AE2
+DFRES GLY :G mw=57.1	N   CA  C   O  
+DFRES HIS :H mw=137.2	N   CA  C   O   CB  CG  ND1 CD2 CE1 NE2
+DFRES ILE :I mw=113.2	N   CA  C   O   CB  CG1 CG2 CD1
+DFRES LEU :L mw=113.2	N   CA  C   O   CB  CG  CD1 CD2
+DFRES LYS :K mw=128.2	N   CA  C   O   CB  CG  CD  CE  NZ 
+DFRES MET :M mw=131.2	N   CA  C   O   CB  CG  SD  CE 
+DFRES PHE :F mw=147.2	N   CA  C   O   CB  CG  CD1 CD2 CE1 CE2 CZ 
+DFRES PRO :P mw=97.1	N   CA  C   O   CB  CG  CD 
+DFRES SER :S mw=87.1	N   CA  C   O   CB  OG 
+DFRES THR :T mw=101.1	N   CA  C   O   CB  OG1 CG2
+DFRES TRP :W mw=186.2	N   CA  C   O   CB  CG  CD1 CD2 NE1 CE2 CE3 CZ2 CZ3 CH2
+DFRES TYR :Y mw=163.2	N   CA  C   O   CB  CG  CD1 CD2 CE1 CE2 CZ  OH 
+DFRES VAL :V mw=99.2	N   CA  C   O   CB  CG1 CG2
+!! molecular weights of common amino acids are 
+!! from the handbook of chemistry and physics, 
+!! subtracting 18 (the molecular weight of a water molecule).
+
+DFRES BME S3 C2 C1 O1
+DFRES CME N   CA  C   O   CB  SG SD CE CZ OH 
+DFRES SOL 
+DFRES HOH 
+DFRES GDP O1B O2B O3B PB O1A O2A O3A PA O5* C5* O4* C4* O3* C3* O2* C2* C1* N9 C8 N7 O6 C6 C5 C4 N3 N2 C2 N1
+DFRES GTP O1G O2G O3G PG O1B O2B O3B PB O1A O2A O3A PA O5* C5* O4* C4* O3* C3* O2* C2* C1* N9 C8 N7 O6 C6 C5 C4 N3 N2 C2 N1
+
+!!dfork, define a fork
+!!dfork residue-name, 4-torsion-atoms, 2-atoms to be flipped if necessary,
+!!  the normal x1 angle range, flip? (yes/no)
+DFORK ILE CG2 CA CB CG1 CG2 CG1   0. 180. NO
+DFORK VAL CG1 CA CB CG2 CG2 CG1   0. 180. YES
+DFORK THR CG2 CA CB OG1 CG2 OG1   0. 180. NO
+DFORK LEU CD1 CB CG CD2 CD2 CD1   0. 180. YES
+DFORK ARG CD  NE CZ NH1 NH1 NH2 -90.  90. YES
+DFORK ASP CA  CB CG OD1 OD1 OD2   0. 180. YES
+DFORK GLU CB  CG CD OE1 OE1 OE2 -90.  90. YES
+DFORK PHE CA  CB CG CD1 CE1 CE2   0. 180. YES   ! Note that the order for 
+DFORK PHE CA  CB CG CD1 CD1 CD2   0. 180. YES   ! PHE and Tyr is critical.
+DFORK TYR CA  CB CG CD1 CE1 CE2   0. 180. YES   
+DFORK TYR CA  CB CG CD1 CD1 CD2   0. 180. YES   
+DFORK GDP C5* O5* PA O1A O1A O2A  0. 120. YES
+DFORK GDP PA  O3A PB O1B O1B O2B  0. 120. YES
+DFORK GDP PA  O3A PB O3B O2B O3B -120. 0. YES
+DFORK GTP C5* O5* PA O1A O1A O2A   0 120. YES
+DFORK GTP PA  O3A PB O1B O1B O2B   0 120. YES
+DFORK GTP PA  O3A PB O3B O2B O3B -120. 0. YES
+DFORK GTP PB  O3B PG O1G O1G O2G   0 120. YES
+DFORK GTP PB  O3B PG O3G O2G O3G -120. 0. YES

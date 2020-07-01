@@ -1,0 +1,48 @@
+! This script is for MFS thansporters, MP01 and 4APS
+! edpdb 2xut_a.pdb hlx-m4.pdb -c x
+
+! chian a is the search model
+! for non TMs, OCC=0; TMs, OCC=1
+init; chain a ; setw 0.
+init; zone a12-a46  ; setw 1
+init; zone a53-a79  ; setw 1 
+init; zone a84-a105 ; setw 1 
+init; zone a108-a137; setw 1
+init; zone a144-a171; setw 1
+init; zone a175-a199; setw 1
+init; zone a213-a241; setw 2
+init; zone a246-a268; setw 2
+init; zone a282-a312; setw 1  
+init; zone a321-a349; setw 1
+init; zone a351-a377; setw 1
+init; zone a385-a414; setw 1
+init; zone a422-a447; setw 1
+init; zone a451-a471; setw 1.
+
+! chain x is the density direverted model (i.e. helices only, OCC=1)
+! Each TM helix should be continuous.
+! TMs need to be seperated by residues of OCC=0
+init; ch x; setw 1
+init; zone x111-x130; setw 2
+init; zone x271     ; setw 0
+init; zone x283     ; setw 0
+init; zone x132     ; setw 0
+init; zone x160     ; setw 0
+init; zone x42      ; setw 0
+init; zone x18      ; setw 0 
+init; zone x294     ; setw 0
+init; zone x75      ; setw 0
+init; zone x238     ; setw 0
+init; zone x1       ; setw 0
+init; zone x111     ; setw 0
+init; zone x207     ; setw 0
+init; zone x222     ; setw 0
+
+
+init; ca | chain x; group x
+init; ca | chain a
+
+setenv verbose 12
+!match3d x 10 9.2 rtn_.txt nonsequ
+match3d x 10 8.5 rtn_.txt nonsequ
+! rtn polar   159   11   98  194   32   49 !  10 vectors w/ rms=   7.928     

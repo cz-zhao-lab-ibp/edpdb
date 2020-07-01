@@ -1,0 +1,5 @@
+!<beginning of symmetry.edp>, by X .Cai Zhang, 000602
+! syntax: @symmetry sg_name  
+parameter sg = $(p1)
+@sg.edp
+

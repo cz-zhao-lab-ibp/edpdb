@@ -1,0 +1,841 @@
+<html>
+<head>  <title> About EdPDB </title> </head>
+
+<BODY background="trebuche2.gif">
+<hr><a name="top"></a><a name="about_edpdb">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1> 	About the Program	</h1>
+
+1) This <i>06A</i> version of EdPDB is available FREE OF CHARGE 
+TO ACADEMIC AND NON-COMMERCIAL USAGES under the condition that the program
+package is used as a whole. Direct contact to the author for a permission is
+required before any other usages may take action, including taking codes from
+this package.
+<hr>
+2) The current version of EdPDB, <i>v06a</i>, runs on SGI unix, linux and Window
+PC computers.It is distributed as a tar.gz file, 
+which was created using the following unix command.
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"tar -zcf edpdb_v999-sgi.tar.gz edpdb"</p>
+Click  <A href="../edpdb_tar/edpdb_v06a-sgi.tar.gz">here</A> to download a 1.2
+MB tar.gz 
+file of the SGI package (<A href="../edpdb_tar/edpdb_v06a-sgi-beta.tar.gz">a beta version</A>).
+After unzipping the file (using "tar -zxf edpdb_v999-sgi.tar.gz"),
+one can find a ReadMe file which describes the installation. 
+Contact the
+<A href="mailto:zhangc@omega.omrf.ouhsc.edu"> author </a>
+to report installation problems. 
+<br><br>
+Click  <A href="../edpdb_tar/edpdb_v06a-linux.tar.gz">here</A> to download a 0.8 MB
+tar.gz 
+file of the Linux package (version 06a) 
+(<A href="../edpdb_tar/edpdb_v06a-linux-beta.tar.gz">a beta version</A>). See <a href='install.txt'> tips </a> on installation. 
+<br><br>   
+Click  <A href="../edpdb_tar/edpdb_v06a-win.rar"
+>here</A> to download a 0.5 MB
+rar file of the MS Window package (version 06a). 
+<br><br>   
+Click  <A href="../edpdb_tar/edpdb_v06a-osx.tar.gz"
+title="The code compiles using gcc4.2 (which uses gfortran rather than g77) under OSX 10.4 (Tiger) on either ppc or intel chips." 
+>here</A> to download a 1 MB tar.gz 
+file of the Mac OSX</a> package (version 06a) 
+(thanks  Dr. <A href="mailto:juersdh@whitman.edu">Doug Juers</A> for the porting). 
+<br>
+
+<hr>
+3) Document tar files of the current and some previous versions of EdPDB:
+<ul> 
+<li><a href="../edpdb_tar/edpdb_v03c-doc.tar.gz">edpdb_v06a</a> (current),
+<li><a href="../edpdb_tar/edpdb_v03c-doc.tar.gz">edpdb_v03c</a>,
+<li><a href="../edpdb_tar/edpdb_v03b-doc.tar.gz">edpdb_v03b</a>,
+<li><a href="../edpdb_tar/edpdb_v03a-doc.tar.gz">edpdb_v03a</a>,
+<li><a href="../edpdb_tar/edpdb_v01b-doc.tar.gz">edpdb_v01b</a>,
+<li><a href="../edpdb_tar/edpdb_v01a-doc.tar.gz">edpdb_v01a</a>,
+<li><a href="../edpdb_tar/edpdb_v00a-doc.tar.gz">edpdb_v00a</a>,
+<li><a href="../edpdb_tar/edpdb_v99b-doc.tar.gz">edpdb_v99b</a>,
+<li><a href="../edpdb_tar/edpdb_v99a-doc.tar.gz">edpdb_v99a</a>, 
+<li><a href="../edpdb_tar/edpdb_v97c-doc.tar.gz">edpdb_v97c</a> and
+<li><a href="../edpdb_tar/edpdb_v97b-doc.tar.gz">edpdb_v97b</a>. </ul>
+
+<hr>  
+4) The reference of EdPDB is <a href="edp_p.html"> 
+ 	EdPDB: A Multi-Functional Tool for Protein Structure Analysis. 
+  </a> (Zhang &amp Matthews (1995). <i>J. Appl. Cryst.</i>).<br>
+
+<hr>
+<a name="knownbugs">5) Improvement, Known Bugs and Fixes</a>
+<p>070502<br>
+Fix a bug in MOVECENTER, which affects the window version and maybe others.</p>
+<p>060525<br>
+Add <a href="edp_c.html#dock">DOCK</a> command to measure 
+the negative curvature of a protein surface.</p>
+<p>060428<br>
+It seems that the compilor on SuSe operating system does not like 
+the "unknown" parameter in an "open" statment.  </p>
+<p>060420<br>
+Start version 06a. </p>
+<p>050304<br>
+Add MORPH option to <a href="edp_c.html#diff">DIFF</a>. </p>
+<p>050301<br>
+Modify <a href="edp_e.html#update">UPDATE</a> 
+so that <a href="edp_g.html#display">displayed</a>
+text in the X,Y,Z, W, B fields can be converted
+into internal data.</p>
+<p>040827<br>
+The v03c version has a bug which may affects the display of atom records 
+if the input records do not contain extra column beyond the B-factor field.   
+</p>
+<p>040408<br>
+Added <a href="edp_ctr.html#parameter">in-line parameter</a>. Good for repeating
+similar input lines.      
+</p>
+<p>040401<br>
+Fixed a bug that may affect command interpretation when tab(s) included.     
+</p>
+<p>031230<br>
+Modified <a href="edp_s.html#match">MATCH</a> command such that it can now
+match records based on selected text ('atom-names' remains as the default).     
+</p>
+<p>031125<br>
+Modified ACCESS command such that less frequently used parameters 
+(probe_radus, step_size) are moved to back.
+</p>
+<p>031006<br>
+Started version 03c.
+Starting from this version, the text of a PDB coordinate records (ATOM and HETA)
+are read as a 72-character text string (i.e. 1-72), 
+instead of a 47-character text string (i.e. 8-54).
+Added <a href="edp_i.html#remark">REMARK</a> command.     
+</p>
+<p>030829<br>
+Add <a href="edp_c.html#eigen"> 
+EIGEN</a> command.
+</p>
+<p>030709<br>
+Modified window_size setting so that in case that the physical window size is
+equal or less than one line (e.g. in batch job mode), the default window_size
+will be set to 20. </p>
+<p>030703<br>
+Fixed a bug affecting macro (.edp) file) reading. It affected version 03B.</p>
+<p>030430<br>
+Added commands 
+<a href="edp_c.html#pdist">	PDIST</a>, 
+<a href="edp_c.html#poverlay">	POVERLAY</a>, 
+<a href="edp_c.html#pclique">	PCLIQUE</a>, 
+<a href="edp_c.html#pdoit">	PDOIT</a>, 
+<a href="edp_c.html#psdist">	PSDIST</a>, and
+<a href="edp_c.html#sclique">	SCLIQUE</a>.  
+Modified
+<a href="edp_c.html#mw">MW</a>. 
+ 
+</p>
+<p>030317<br>
+Start version 03B, returning to Fortran 77 for protability</p>
+<p>030228<br>
+Added 'X,Y,Z,W,B,T' option to the <a href="edp_e.html#copy">COPY</a> 
+command.<br>
+Fixed a bug in the <a href="edp_e.html#sete">SET ENTRY</a> command, which may
+cause misbehaving under unix and window.</p>
+<p>030128<br>
+Added  <a href="edp_c.html#doit">DOIT</a>  command,
+which is a combination of ANALYSIS, DIST, AB, ABC, ABCD and BRIDGE.<br>
+Added 'initialize' option to the <a href="edp_d.html#symmetry">SYMMETRY</a> 
+command.<br>
+<p>021230<br>
+Modify   <a href="edp_c.html#bridge">BRIDGE</a> 
+so that one can simultaneousely save atoms from different groups 
+(i.e. w,x,y or z) which meet the calculation criterion. </p>
+<p>021221<br>
+Start the version 03A.<br>
+Modified <a href="edp_e.html#sett"> SET TEXT</a> (SETT) 
+so that it is now consistent with the command
+<a href="edp_s.html#text">TEXT</a>.
+Fixed a bug in SET TEXT (which did not affect SETT).</p>
+<p>021220<br>
+Fixed a bug in ACCESS, which affect <b>buried</b> solvent accessible surface
+of individual atoms.</p>
+<p>021219<br>
+Modified BRIDGE and DEFINE BRIDGE. DEFINE BRIDGE now accepts wildcards 
+at the end of an atom name(default wild card is '*').
+BRIDE can now calculate elevation angles.If wildcards are used in DEFINE BRIDGE, 
+BRIDGE will list multiple matches for both atom_x and atom_y, 
+but will list only the first match for both atom_w and atom_z. </p>
+<p>021218<br>
+Modified DISTANCE. If the selection switch is currently set to OFF (i.e. an EXCLUDE command is used), the atoms
+in the ON group that satisfy the distace criterion is turned OFF after the first time the criterion is
+met.Previously, it is the atom from the specified group is turned OFF.</p>
+<p>021217<br>
+Modified PLANAR such that it does not require a vector ID and, on the other 
+hand, it can take a vector ID to pre-define the ideal plane. </p>
+<p>021122<br>
+Modified (x,y,z,w,b) such that it can take "equals" as an option. </p>
+<p>021114<br>
+Modified MORE such that it functions as a 'shift' command. </p>
+<p>020923<br>
+Fixed a bug in the &quot;planar&quot; command, which may give a wrong normal.</p>
+<p>020918<br>
+Fixed a bug in the &quot;copy&quot; option in &quot;distance&quot; command.</p>
+<p>011001<br>
+change the get_commands subroutine so that a label statement can be followed by other 
+commands in a pipe line, provided the label is at the beginning of the pipe line.  
+<p>010829<br>
+fixed a bug in the sort command. now it is okay to do multiple sorts 
+(e.g. sort b ; l<p>010928<br>
+add a parameter &quot;<i>status</i>&quot;. Currently, it is set to zero if the previous command is successful, 
+to -1 if the command is invalid, and to -2 if the parameter(s) is invalid. This parameter,
+<i>status</i>,
+is set only by the program. It can be displayed, tested, but not changed by the user. 
+<p>010928<br>
+add a parameter &quot;<i>status</i>&quot;. Currently, it is set to zero if the previous command is successful, 
+to -1 if the command is invalid, and to -2 if the parameter(s) is invalid. This parameter,
+<i>status</i>,
+is set only by the program. It can be displayed, tested, but not changed by the user. 
+ist ; sort -b ; list ).
+<p>010823<br>
+started version v01b. main features: <br>
+1) comments start with "!" only. <br>
+2) semicolon ";" is used as command separators (i.e. logical OR)to replace
+backslash "\". A backslash may cause problems in Windows' filename system. 
+<p>010822<br>
+Allow variable substitutions in a comment
+<p>010514<br>
+Reset verbose levels as the following:<br>
+verbose 0 shut up<br>
+1 normal, including to list .out file<br>
+2 describe output in more details<br>
+3 warning (-W-), information (-I-) and command syntax<br>
+4 describe input line interpretation, talky output<br>
+5 more talky output<br>
+6 list references, more talky output<br>
+To make the file types compatible with the DOS convention, '.dat' is changed
+to&nbsp;<br>
+'.txt', and '.scr' is changed to '.out'.&nbsp;<br>
+<br>
+010511<br>
+start version v01a. one goal is to make edpdb more portable.<br>
+it now can be compiled with the fortran-90 (sgi) compiler.&nbsp;<br>
+fixed a bug which may cause crash when outputting a rtn file.&nbsp;<br>
+<br>
+010427<br>
+Fix a bug which may cause a crash when the second pdb file contains a hyphen.<br>
+<br>
+010330<br>
+Add AVW and CA options to SET WEIGHT command.<br>
+<br>
+010221<br>
+Move PROMPT into SETENV.<br>
+Add DEFINE command which now combines DFCA, DFMAIN, DFAB, DFABC, DFABCD,&nbsp;<br>
+DFBDG, DFNEWX and DFRES.<br>
+<br>
+010126<br>
+Add and modify COPY and MARK options in DISTANCE.<br>
+<br>
+000706<br>
+fixed a bug in calculating (de)-orthogonal matrix for unit cell of angles&nbsp;<br>
+less than 90 degrees.<br>
+<br>
+000705<br>
+fixed a bug in &quot;distance&quot; which occurred after 000531.<br>
+<br>
+000630<br>
+for P1 cell, there is a bug when calculating orthogonal matrix&nbsp;<br>
+(fixed on 000706).&nbsp;<br>
+add &quot;r&quot; option in the &quot;sequence&quot; command to output the
+three-letter&nbsp;<br>
+sequence.<br>
+<br>
+000602<br>
+fixed a bug which affects pipe-line commands if ALIAS is used before.<br>
+fixed a bug in the typelist subroutine which may affect .scr file&nbsp;<br>
+output in some unusual cases.<br>
+&nbsp;<br>
+000601<br>
+modify SETENV to take -s and -r options.<br>
+change the edpdb input line to the 'unix convention'.<br>
+set internally parameters file1, sg, cm1 and cm2.&nbsp;<br>
+<br>
+000531<br>
+deactivate the HELP command (the on-line help has become too old, and I am not<br>
+interested in updating it).&nbsp;<br>
+rename MMIG to SDISTANCE, (MMIG still works).&nbsp;<br>
+rename MMIR to SNAYBR,&nbsp;&nbsp;&nbsp; (MMIR still works).&nbsp;<br>
+rename MMI&nbsp; to SNAYB,&nbsp;&nbsp;&nbsp;&nbsp; (MMI&nbsp; still
+works).&nbsp;<br>
+make RESIDUE, ATOM and CHAIN selection commands tolerable to 'wrong' inputs<br>
+as long as some part of selection is correct.<br>
+<br>
+000515<br>
+Start V00A version.&nbsp;<br>
+Add syntax prompt for interactive mode and verbose (level 6).<br>
+<br>
+000427<br>
+BUG: When the ACCESS (and SORT dfres) command is used for the first time&nbsp;<br>
+within a pipe-line command structure, its following command(s) will be ignored.<br>
+FIXED (000504).&nbsp;<br>
+<br>
+000221<br>
+Add a COPY command.<br>
+<br>
+991229<br>
+Change &quot;maxerr&quot; from a command to an option for the &quot;setenv&quot;
+command.<br>
+<br>
+991228<br>
+Add the &quot;seq2pdb&quot; command which creates a pseudo pdb file according to
+an input<br>
+sequence file, useful for sequence alignment.<br>
+<br>
+991207<br>
+Associated with &quot;match1d&quot;, the occupancy field of the selected ON
+atoms&nbsp;<br>
+will be changed to the alignment score, useful for coloring residues<br>
+according to conservativity.&nbsp;<br>
+<br>
+991118<br>
+Add the &quot;match1d&quot; command which can be used for structural
+alignment&nbsp;<br>
+based on sequence homology.<br>
+<br>
+991014<br>
+Fix a bug in the &quot;sort dfres&quot; command. Now, one does not have to
+use&nbsp;<br>
+&quot;sort dfres&quot; twice to make sure that records are correctly ordered.<br>
+<br>
+990713<br>
+Fix a bug in the &quot;label:&quot; statement. Now, one can proceed the label
+with<br>
+blank character(s) and add comments after the label.<br>
+<br>
+990515<br>
+Modified the DIFF command to include a 'shifting' function.&nbsp;<br>
+<br>
+990423<br>
+Set 'iskip' default to 1 in DISTANCE command.<br>
+<br>
+990413<br>
+Fixed a problem that makes the orthoganization matrix in the header&nbsp;<br>
+created by x-plor unreadable.&nbsp;<br>
+<br>
+990322<br>
+Fixed a bug that abolishes inputting molecular weight to VM command.<br>
+<br>
+990210<br>
+Fixed a bug that caused MKFILE command fail on a unix computer.<br>
+<br>
+990108<br>
+Add MW command to calculate the molecular weight of a selected&nbsp;<br>
+part of the structure.<br>
+<br>
+980610<br>
+Fix a problem in the main program; now the unix edpdb can read a&nbsp;<br>
+file with a filename containing capital letters.<br>
+<br>
+980407<br>
+Add 'angle' option in 'X,Y,Z,W and B' so that the values at these<br>
+column can be judged as &quot;periodical&quot; angles.<br>
+<br>
+980402<br>
+Fix a bug which cause &quot;from-phrase&quot; dysfunctional since 970421.<br>
+<br>
+980115<br>
+Modify the &quot;get_command&quot; subroutine so that the end of the PDB output<br>
+file will be marked with &quot;END&quot; if the CLOSE or EXIT command is used.<br>
+<br>
+980101<br>
+Change the SORT command such that the options (W,-W, B and -B) now<br>
+work on the ON atoms only.<br>
+<br>
+971229<br>
+Add &quot;MKFILE&quot; command which can be used to define a macro within&nbsp;<br>
+another macro.<br>
+<br>
+971214<br>
+Fix a bug in the subroutines read_ar and read_ai, which causes&nbsp;<br>
+unexpected input if a comma is used to indicate a default value.<br>
+<br>
+971203<br>
+Modify READF subroutine. If multiple chain markers are given when&nbsp;<br>
+reading a PDB file, the chain markers change at positions where&nbsp;<br>
+a residue id number becomes smaller than the previous one.&nbsp;<br>
+<br>
+971119<br>
+Add VM command -- given molecular weight calculating possible<br>
+Vm (Matthews coef.).<br>
+<br>
+971014<br>
+Start working on V97C. Make COS as the default of the WRITE command.<br>
+UNIX will overwrite existing files with the WRITE command.<br>
+Modify CLIQUE such that two atoms will not match if they share the same<br>
+entry number.<br>
+<br>
+971010<br>
+rename MOVE_ALL option in MMIG as PUNCH_ALL.<br>
+fix a bug in piping -- now {a command} should work.<br>
+<br>
+970523<br>
+fix one bug in RTN which causes a problem when the option keyword<br>
+SYMMETRY is spelled completely, (pointed out by Dr. S.J. Remington.)<br>
+<br>
+970421<br>
+*start working on v97b version.&nbsp;<br>
+*build pipe (unix-like) command interpreter. Characters&nbsp;<br>
+'|' (vertical line) and '\' (backslash) are used for logical&nbsp;<br>
+'and' and 'or'. Hopefully this method may eventually replace<br>
+the &quot;from&quot; sub-selection, which uses recursion of subroutine<br>
+calling and is inconsistent when used for different commands.<br>
+*delete the 'recall' command whose function has been replaced&nbsp;<br>
+by the arrow keys.<br>
+<br>
+970418<br>
+add 'if ()' statement.<br>
+<br>
+970325<br>
+add 'match3d' macro in the library.<br>
+<br>
+fix a bug in the subroutine 'dfgroup', which causes problem in the&nbsp;<br>
+unix version of edpdb when a previous command contains '/'.<br>
+<br>
+delete 'monitor' subroutine which is not useful any more<br>
+for a fast modern computer.<br>
+<br>
+970227<br>
+The unix version gets the window size (i.e..<br>
+the number of lines in the x-window) from the system.<br>
+<br>
+970214<br>
+fix a bug in CLIQUE that may make a result non-reproducible.<br>
+<br>
+970211<br>
+started a new version of edpdb (v97a).<br>
+<br>
+added commands ALIGN3D, PATTERN.&nbsp;<br>
+modified MATCH3D.<br>
+made macro overlay.edp for homologous structural overlay.<br>
+<br>
+961231<br>
+The unix version sometimes has problems in defining a GROUP.&nbsp;<br>
+The reason is unknown yet.<br>
+<br>
+960822<br>
+Mr. Ben Goodsteen wrote a subroutine for unix EdPDB, so that now on&nbsp;<br>
+an SGI computer one can use the up/down arrows to recall a typed-in&nbsp;<br>
+command and edit it.<br>
+<br>
+960716<br>
+fix a bug in setw.<br>
+<br>
+960712<br>
+start a new version of edpdb (v96a). all the difference in the code&nbsp;<br>
+between the vms and unix versions have been move to one file. in<br>
+vms it is called vms_subrtn.for; in unix, it is called unixsubrtn.f.<br>
+<br>
+960701<br>
+problem: multiple selection does not work correctly<br>
+if the first command is longer than 16 characters.<br>
+fix: change the string length of txt_s in get_zone from 16&nbsp;<br>
+to 'max_num_chars'.<br>
+<br>
+960123<br>
+problem: a bug in the unix version which occurs when the<br>
+program code is converted from VMS to unix. one problem&nbsp;<br>
+that this bug causes is that the symmetry card would not&nbsp;<br>
+work properly when a translational component was given.<br>
+<br>
+fix: the edit command (s/'+/' /w) has been changed to (s/'+/' /all
+&quot;&gt;&quot;).<br>
+new code is needed to recompile the program.<br>
+<br>
+951116<br>
+fix a bug in rtn.for (edp_rtn subroutine) which affects some&nbsp;<br>
+unix version of v95a.<br>
+<br>
+950616<br>
+fix a bug in readf.for&nbsp; for alpha-version &quot;exit , <cr>&quot; command.<br>
+<br>
+950615<br>
+fix a bug in &quot;setc<cr>&quot; command for &quot;a1&quot; like residue.<br>
+<br>
+950610<br>
+merge sys$input and .edp command interpretation so that parameter
+substitution&nbsp;<br>
+can be used for sys$input too.<br>
+<br>
+950504<br>
+add MATCH3D command: Yes, for structure homology search.<br>
+<br>
+950501<br>
+fix a bug in sett. now &quot;sett i0 i1 ' '&quot; should work.<br>
+<br>
+950420<br>
+add wildcard % in ATOM command.<br>
+<br>
+950418<br>
+parameterize the length of the input line.<br>
+<br>
+950414<br>
+use a generic open_file statement, so that unix<br>
+system can use a file type suffix (such as .pdb).<br>
+<br>
+950406<br>
+generalize the&nbsp; vector names.&nbsp;<br>
+create a &quot;VECTOR&quot; command that combines the old commands VV, VP, and
+PV.<br>
+<br>
+950405<br>
+fix a bug in &quot;subroutine root&quot;, which may affect commands<br>
+&quot;momentuminertia&quot; and &quot;overlay&quot; in the unix version.<br>
+<br>
+950404<br>
+add a selection command &quot;text&quot;.<br>
+<br>
+950330<br>
+add &quot;polar srf_red&quot; to analyze the rotation function.<br>
+convert the online help to HTML file to be read with mosaic/www.<br>
+promote the program to version v95a.<br>
+<br>
+950320<br>
+modify subroutine &quot;monitor&quot; to show % completeness of input for a
+large&nbsp;<br>
+PDB file.<br>
+<br>
+Bug: for very large pdb file (e.g.. B-gal), sometimes MMIG&nbsp;<br>
+does not work symmetrically. (unsolved).<br>
+<br>
+950301<br>
+add &quot;update t&quot; option.<br>
+<br>
+950105<br>
+fix a potential bug in read_txt subroutine. Now the &quot;tolower&quot; option
+of&nbsp;<br>
+setenv command should work more reliably.<br>
+<br>
+941127<br>
+fix a bug in &quot;axis&nbsp; file_name&nbsp; Vn&quot;.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^^<br>
+941114<br>
+fix delimiter problem in code files &quot;pair&quot;, &quot;readf&quot;<br>
+fix wildcard&nbsp; problem in code files &quot;get_command&quot;<br>
+<br>
+941111<br>
+change &quot;polar&quot; and &quot;euler&quot; commands, using
+&quot;TO_POLAR&quot;, &quot;TO_EULER&quot;<br>
+&quot;SYMMETRY&quot;, &quot;ASYMM&quot; and &quot;MOVE_TO_O&quot; options.<br>
+<br>
+941108<br>
+Fix a bug in syntax &quot;exclude 'command' from { ... }&quot;<br>
+<br>
+941101<br>
+*Add &quot;polar move &quot; and &quot;euler move&quot; options.<br>
+<br>
+940922<br>
+*modify &quot;main_chain&quot; subroutine -- ca, main, side commands, to fix the<br>
+problem like &quot; main 1-162 from { residue met}&quot;. Now the program will
+expend<br>
+it to &quot; main from {zone 1-162 from { residue met}}&quot;<br>
+<br>
+940811<br>
+Bug:&nbsp;<br>
+exit file_name cos (in case of no cell parameters defined)<br>
+<br>
+940726<br>
+* add chain mark abbreviation, e.g. 'a-d' stands for 'abcd' for the
+&quot;chain&quot;&nbsp;<br>
+command<br>
+<br>
+940721<br>
+* add chain mark abbreviation, e.g. 'a-d' stands for 'abcd' for the
+&quot;read&quot;<br>
+command<br>
+* modify 'correlation' command, now it calculates correlation between<br>
+specified column of the ON atoms and a given group.<br>
+<br>
+940714<br>
+fix a bug in &quot;rtn ... mult file1 file2 &quot; command<br>
+add &quot;verbose&quot; env_option<br>
+add &quot;tolower&quot; env_option, to replace &quot;&quot; quotations.<br>
+ignore starting * characters<br>
+<br>
+940504<br>
+1) user-definable variables<br>
+2) define parameter from the records in a group, add character increments/<br>
+decrements in parameter command.<br>
+3) delete igroupa(2,,), add sequence() array<br>
+4) add looped &quot;goto&quot;<br>
+5) change &quot;type&quot; to &quot;write(6, )&quot;<br>
+6) add log file<br>
+<br>
+94022<br>
+1) modify euler and polar. If is there is only ON record, all its symmetry&nbsp;<br>
+&nbsp; mates will be listed.<br>
+<br>
+2) Adjustable delimiter, wildcard.<br>
+3) rename the unnamed group as SCR.<br>
+4) fix a reading problem in read_ar, which may effect nayb.<br>
+<br>
+940106<br>
+add &quot;goto&quot; &quot;return&quot; and label_statement.<br>
+change &quot;command ?&quot; to &quot;command /?&quot;<br>
+<br>
+931108<br>
+add &quot;command ?&quot; HELP<br>
+add multiple chain markers.<br>
+change :Pn to $(Pn)<br>
+add symmcheck subroutine.<br>
+<br>
+930701<br>
+create edpdb_v93b,<br>
+generalize group names, (user definable)<br>
+vms commanderize EdPDB.<br>
+<br>
+930630<br>
+modify edpdb.inc and some subroutines to include adjustable groups.<br>
+the current version will accept a-z 26 groups.<br>
+<br>
+930622<br>
+add SORT SWAP option.<br>
+<br>
+930617<br>
+fix a bug in MXINV subroutine.<br>
+<br>
+930615<br>
+modify RTN to accept (RTN 2 -'#symm' fx, fy,fz)<br>
+<br>
+<br>
+930606<br>
+fix MMIG, a bigbig problem that may cause lost of neighboring atoms.<br>
+modify (RTN 2 0 fx, fy,fz)<br>
+<br>
+930604<br>
+fix CHAIN, and EdPDB_V93A,&nbsp; '&nbsp;&nbsp; ' ==&gt; :px<br>
+fix MMIG (in DIST), a bigbig problem that may cause lost of neighboring atoms.<br>
+<br>
+930602<br>
+bgt ==&gt; b_gt, b_lt, b_btw, b_not_bwt, ....<br>
+<br>
+920528<br>
+CHAIN A B<br>
+CHAIN A FROM ...<br>
+NAYB Dmax ;<br>
+B max from ...<br>
+<br>
+930524<br>
+weighted OVERLAY.<br>
+<br>
+930524<br>
+unitary operator in MMIG.<br>
+<br>
+930415<br>
+create v93a version<br>
+change to lower case.<br>
+<br>
+930126<br>
+modify AXISDIST, ROTOUT, EdPDB_V92E to accept axis id for axis command.<br>
+<br>
+930114<br>
+fix the coupling of DFGROUP and DFGROUPR in ATOM.FOR.<br>
+<br>
+921215<br>
+fix DIST problem: group A can not include ON atoms.<br>
+<br>
+921111<br>
+1) modify DIST to fix phi-acc plot.<br>
+2) modify FIND to accept default.<br>
+<br>
+921012<br>
+1) modify DIST to output phi-acc plot<br>
+2) modify RTN 8 to transform the coordinate to &quot;standard orientation&quot;.<br>
+<br>
+920903<br>
+1) modify MORE to have from option<br>
+2) modify DFGROUP subroutine (from option) to accept {} sub-command<br>
+<br>
+920832<br>
+modify edpdb_v92d.for to call smg$ system service (recall input line)<br>
+<br>
+920827<br>
+1) modify edpdb_x92d.for to report fetal when a new file can not be opened.<br>
+<br>
+920823<br>
+add W option in SETW command.<br>
+<br>
+<br>
+920821<br>
+add UDK.for<br>
+<br>
+920820<br>
+1) change &quot;exit(16**7*4)&quot; to &quot;exit( 4)&quot;.<br>
+2) modify readp.for to allow incomplete input.<br>
+<br>
+920808<br>
+change the command name DCL to SYSTEM to make it more general.<br>
+<br>
+920804<br>
+do not change the letter case in the input PDB&nbsp; file text (e.g. ca is<br>
+now different from CA).<br>
+<br>
+920803<br>
+1) the case of text string within &quot;&quot; will not be change.<br>
+2) new function for FILE option.<br>
+3) add `edp_file.inc', and `edp_data.inc' files.<br>
+&nbsp;&nbsp; Rename `edpdb.cmm' to `edpdb.inc'.<br>
+<br>
+920801<br>
+1) change ENCODE to WRITE, DECODE to READ<br>
+2) modify write(...'(...)') and read(....'(...)') statements<br>
+3) file name set to UPCASE.<br>
+4) delete DEFAULTFILE option in OPEN statements.<br>
+5) modify some of the 'NEW' file status in OPEN&nbsp; statements.<br>
+<br>
+920707<br>
+1)modify order.for (SORT DFRES)<br>
+2) modify brg.for, to include the iskip option.<br>
+<br>
+920625<br>
+NBE option is deleted.<br>
+<br>
+920619<br>
+modify EXCLUDE command. now it can works just for one selecting command.<br>
+Add NO_CELL() function to read cell parameters from the input PDB file.<br>
+<br>
+920617<br>
+modify the zone selection so that A1-A2, A1:A2, A1 to A2 works in the same way.<br>
+<br>
+920512<br>
+add ROTMOMENTUM command to calculate the rotation momentum of the ON<br>
+atoms about the x, y and z axes, the principle rotation momentum and&nbsp;<br>
+the matrix which brings the principle axes to coincide with&nbsp;<br>
+the x, y and z axes.<br>
+FORMAT:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ROTMOMENTUM<br>
+EXAMPLE:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ZONE 1 - 162&nbsp;&nbsp;&nbsp; ! select the
+region&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ROTMOMENTUM&nbsp;&nbsp;&nbsp;&nbsp; ! calculate
+the momentum and the matrix&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RTN 1 rtn_.txt&nbsp;&nbsp; ! apply the matrix<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ROTMOMENTUM&nbsp;&nbsp;&nbsp;&nbsp; ! to check
+the effect of the rotation/translation<br>
+<br>
+920507<br>
+add PREKIN option in DIST command to create KINEMAGE vector list.<br>
+<br>
+920430<br>
+modify the blinking error message.<br>
+<br>
+920408<br>
+fix a problem in&nbsp; RTNOUT.FOR.<br>
+<br>
+920401<br>
+add FROM option to ATOM,RESIDUE,ZONE,MATCH,BGT commands<br>
+add RECALL, EXTRACT commands<br>
+edit EdPDB.HLP with help of Dirk.<br>
+<br>
+920318<br>
+modify MMI.FOR, initializing NUM_SYMM=-1.<br>
+<br>
+920207<br>
+Add EULAR and POLAR commands. modify MMI, EdPDB, AXISDIST to make EULAR/POLAR<br>
+work.<br>
+<br>
+920201<br>
+Add HARKER command.<br>
+<br>
+920128<br>
+Add MULT option for RTN output.<br>
+modify POLAR.FOR, AXISDIST.FOR<br>
+<br>
+920117<br>
+Add eulerian (Z, Y*,Z**) angle in AXISDIST.FOR.<br>
+<br>
+911227<br>
+Add chain selection (CHAIN.FOR)<br>
+Add&nbsp; warning output in RTN (RTN.FOR) whenever there is no ON atom.<br>
+change max_symm from 12 to 18.<br>
+<br>
+911223<br>
+modify DFCELL (in MMI.FOR). If cell(4)=90./cell(5)=90./cell(6)=90.<br>
+there is no need to check the alignment rule.<br>
+<br>
+911213<br>
+Add MOVE-O entry in MMI.FOR. The MOVE-O command will<br>
+move the molecule close to a specified point by symmetry<br>
+operators.<br>
+<br>
+911210<br>
+non- interactive RTN mode will create rtn_.txt (matrix or its inverse)&nbsp;<br>
+as an option.<br>
+If (,/Y/SAVE) is used as the last word, the matrix will be written to<br>
+rtn_.txt. If INVE is used as the last word, the inverse matrix will<br>
+be written to a new version of rtn_.txt.&nbsp;<br>
+<br>
+911206<br>
+non-interactive RTN mode will create rtn_.txt automatically.<br>
+<br>
+911126<br>
+RTN 9 .... command does not work sometimes (unitary matrix)<br>
+<br>
+Add polar angle subroutine (POLAR.FOR) to AXISDIST.FOR&nbsp;<br>
+<br>
+modify READP.FOR&nbsp;<br>
+<br>
+911115<br>
+Add conversion between R space group and Cartition coordinates.&nbsp;<br>
+(CHK_LIB:TRNSLNBx, MMI.FOR)<br>
+<br>
+<br>
+911114<br>
+fix a bug in volume.for, which may cause sqrt(-x).<br>
+<br>
+911029<br>
+add ruler to PERMUT command<br>
+<br>
+911021<br>
+RTN 7 .... command does not work sometimes<br>
+<br>
+911016<br>
+change logical name pdb$data to edp_data<br>
+<br>
+911010&nbsp;<br>
+Change the symmetry contact search from (-1,1;-1,1;-1,1) to
+(-2,2;-2,2;-2,2).&nbsp;<br>
+Subroutines modified are MMI(MMI, MMIR), DIST(MMIG).<br>
+</p>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->.
+</font>
+</body>
+</html>

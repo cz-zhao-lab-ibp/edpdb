@@ -1,0 +1,19 @@
+! phipsi.edp   by X. Cai Zhang, 000602
+! list all the phi, psi angles of all a.a. residues. 
+! all there results are stored in the CA atom records: phi (X) and psi (Y).
+! you may save this result using the 'write' command. 
+! also see: chi.edp, avb.edp
+
+! syntax: 
+! @phipsi.edp 
+
+initialize ; ca ; blank ; setw 0.0 ; main 
+
+setenv -s interactive off
+dfabcd c n ca c 0 1 1 1 ; abcd c x
+dfabcd n ca c n 0 0 0 1 ; abcd b y
+setenv -r interactive
+
+initialize ; ca ; sete ; seta fps ; setw 0.0 ; setb 0.0 ; list
+
+

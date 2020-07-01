@@ -1,0 +1,67 @@
+! <beginning of match1d.edp>
+! copyright by X. Cai Zhang (000602)
+
+! This macro calculate the matrix from one protein molecule to another.
+! It require v99b or higher version EDPDB to run this macro. 
+! A PDB file, tmp_.pdb, is written to output the rotated-translated molecule.
+! Note: the PDB file should not contain a 'j' chain.
+! also see: matchzn.edp, match1ds.edp, match3d.edp
+
+! Syntax: 
+! @match1d target_chain moving_chain
+! example: to overlay chain b to chain a, type 
+! @match1d a b
+
+! define molecule A and B
+parameter ch_a = $(p1)
+parameter ch_b = $(p2)
+
+! sequence homology search
+{ca | chain $(ch_a)  ; group a }
+initialize
+setenv -s verbose 4
+{ ca | chain $(ch_b)| match1d a suba 1.5 1.0 0.5 0.1 30 ;  over suba rtn_.txt}
+
+! overlay B to A based on secondary structure alignment
+chain $(ch_b) ; rtn file rtn_.txt ; initialize
+
+! refine the overlay based on 
+!  maximizing the number of matched atoms 
+!  and minimizing the overall coordinate difference
+
+setenv verbose 0
+@align3d $(ch_a) $(ch_b) 4.0
+if ( -i istatus == -1 ) goto abort
+@align3d , , 4
+if ( -i istatus == -1 ) goto abort
+@align3d , , 3
+if ( -i istatus == -1 ) goto abort
+@align3d      
+if ( -i istatus == -1 ) goto abort
+@align3d       
+if ( -i istatus == -1 ) goto abort
+
+
+system del tmp_.pdb ; write tmp_.pdb ; close; reset 
+
+read tmp_.pdb j ; chain j ; group jnk ; initialize 
+
+chain $(ch_b) ; overlay jnk $(ch_b)2$(ch_a)_.txt ; initialize
+setenv -r verbose
+
+! NOTE THAT THE ORINGINAL FILE(S) HAVE NOT BEEN CHANGED YET.
+!
+! match1d mainly does two things. first it calculates 
+!  the rotation-translation matrix from one molecule ($(ch_b))
+!  to the other ($(ch_a)), named as $(ch_b)2$(ch_a)_.txt; second, it creates a PDB file, 
+!  tmp_.pdb of the rotated-translated molecule ($(ch_b)). 
+!  the input PDB file(s) are reset to the oringinal ones
+!  at the end of the procedure.
+! Suggested action:
+!  initialize ; chain $(ch_b) ; rtn file $(ch_b)2$(ch_a)_.txt
+!<end of match1d.edp>
+return
+
+abort:
+!<abort: match3d.edp>
+

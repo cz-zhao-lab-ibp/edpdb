@@ -1,0 +1,54 @@
+!<beginning of homodeling.edp>
+! copyright   by CZ 120427
+! this macro makes a.a. substitution one residue at a time.
+! syntax: 
+! @mutate res_1 res_type res_1'
+
+! example: 
+!  to mutate residue a1 to leu, and rename it to b1
+! @mutate 1 leu  101    ! note that b1 should not be in the old id list
+!                       ! unless a1 and b1 are the same.
+setenv -s maxerr 20 exit
+{ ca | zone $(p1) ; group tmp ; parameter r_n tmp residue }
+if ( r_n == $(p2) ) goto ch_id
+
+read $(edp_data)/aalib.pdb  ! where aalib(.pdb) is a library of the 20 a.a.
+
+!! overlay the new residue to the one to be replaced
+initial
+dfmain  n c o
+side L$(p2)
+rtn over L$(p2) ca n c ,,, $(p1) ca n c  ,,,
+group mut
+!! exchange the output order of side chain $(p1) and side chain of L$(p2) 
+
+initial
+side $(p1)
+sort swap mut	!! turn the group mut ON
+group mut	!! and redefine group mut
+
+seti 	$(p1) 	!! set id of the new side chain to $(p1)
+setc    ' '	!! set   chain_marker column to blank
+setc    	!! split chain_marker from id(in the text string)
+{main | zone $(p1) }
+setr	$(p2)
+
+zone all
+exclude 
+{side | zone $(p1) }	!! exclude the old side chain
+chain L			!! exclude the aalib
+include
+
+load mut 		!! include the new side chain
+
+system rm tmp_.pdb
+write tmp_.pdb
+close
+
+read tmp_.pdb _ initialize
+
+ch_id:
+!{ zone $(p1) ; seti $(p3) 1 ; list }
+
+!<end of mutate.edp>
+

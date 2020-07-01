@@ -1,0 +1,1035 @@
+<html>
+<head><title>
+	EdPDB:  A Multi-Functional Tool for Protein Structure Analysis
+</title></head>
+
+<body background="trebuche2.gif">
+<a name="top">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1>
+	EdPDB:  A Multi-Functional Tool for Protein Structure Analysis
+</h1>
+<pre>		Xuejun Zhang and Brian W. Matthews
+
+                Institute of Molecular Biology, 
+                Howard Hughes Medical Institute
+		and Department of Physics
+		University of Oregon
+		Eugene, Oregon  97403
+</pre>
+(A shortened version of this manuscript was published in <i>J. Appl. Cryst.</i>
+(1995) <b>28</b>, 624-630).
+
+<hr><h2> ABSTRACT</h2>
+     EdPDB is a FORTRAN program that simplifies the analysis of
+protein structure and makes it easy to extract various types of
+geometrical and biologically relevant information both for the
+molecule in isolation as well as in its crystallographic context. 
+EdPDB offers a large set of functions by which the user can
+evaluate, select and manipulate the coordinates of protein
+structures.  Types of calculation available include the
+determination of solvent accessibility, bond lengths and torsion
+angles, determination of the van der Waals volume of a group of
+atoms, determination of the best-fit plane through a set of points,
+evaluation of crystal contacts between a molecule in a crystal and
+all symmetry-related molecules and the determination of <i>hinge-
+bending</i> motion between protein domains.  It is also possible to
+compare different structures, to perform coordinate manipulations
+and to edit coordinate files.  The program augments the graphic
+analysis of protein structure by allowing the user to construct a
+simple set of commands that will rapidly screen an entire
+structure.  It may also make special purpose analyses feasible
+without complicated programming.
+
+<ul>
+	<li><a href="#introduction">INTRODUCTION</a>
+	<li><a href="#general organization">GENERAL ORGANIZATION</a>
+	<li><a href="#functions_command">EdPDB FUNCTIONS AND COMMAND CATEGORIES</a>
+	<li><a href="#examples">EXAMPLES</a>
+	<li><a href="#epilogue">EPILOGUE</a>
+	<li><a href="#acknowledgements">ACKNOWLEDGEMENTS</a>
+	<li><a href="#references">REFERENCES</a>
+	<li><a href="#appendix_a">APPENDIX A</a>
+</ul>
+
+<hr><h2><a name="introduction">INTRODUCTION</a></h2>
+          A protein structure solved by X-ray crystallography is usually
+stored as a set of coordinates of its component atoms.  The three-
+dimensional structure can be displayed and analyzed by interactive
+images programs such as <i>FRODO</i> (Jones, 1978) or its descendent
+<i>O</i>.  Such images program packages are very well developed and
+are widely used.  When quantitative analysis is required, text-
+based structure analysis is preferred.  Such calculations are
+usually performed with a variety of algorithms implemented in
+separate programs (e.g. Lee & Richards, 1971; Connolly, 1983;
+Laskowski, MacArthur, Moss & Thornton, 1993; Moras, Podjarny &
+Thierry, 1991 and references therein).  Currently, numerous program
+packages are in use for structure determination and analysis.  For
+historical or technical reasons, these programs use different file
+formats for protein structure coordinates, so that still more
+programs are necessary to convert coordinates among the different
+formats.  To simplify protein structure analysis, a general
+purpose, multi-functional, programmable, text-based program is
+highly desirable.  In this paper, we describe a program, EdPDB,
+which has been designed with this goal in mind.
+<p>
+          EdPDB was named to reflect its original conception, namely
+that it should be a general purpose editor for coordinate files in
+the format of the Brookhaven Protein Data Bank (<i>PDB</i>) (Bernstein et
+al., 1977).  The <i>PDB</i> format is widely accepted and is often used as
+an intermediate to convert coordinates of protein structures from
+one format to another.  The Brookhaven Protein Data Bank is also
+the main source for protein structure coordinates.  For this
+reason, the <i>PDB</i> format was chosen for use by EdPDB.  However, it
+would not be difficult to have EdPDB accept other formats if the
+present <i>PDB</i> format was superseded by another.
+<p>
+          As a multi-functional line mode editor, EdPDB does not require
+any images hardware.  This makes EdPDB easy to implement on
+different computer systems.
+<p>
+          The main feature of EdPDB is its large collection of
+functions, which permit selection, editing and calculation.  About
+one-hundred commands are available in the current version of the
+program (<i>V94A</i>).  None of these is conceptually complicated and many
+of the single functions might be performed with a relatively simple
+program.  The combination, however, significantly reduces the
+amount of input/output, compared to the use of separate programs,
+and thereby speeds up the calculations.  Furthermore, a single
+program with multiple functions gives the user more freedom to
+follow his/her own logic.  In contrast to a typical database
+program (Morris, MacArthur, Hutchinson & Thornton, 1992) which
+usually uses a master file containing precalculated data, EdPDB
+reads the structural coordinates and calculates all the data
+required for the task at hand.
+<p>
+          Another major goal in designing EdPDB was that it be general. 
+The same program should be useable for calculations as simple as
+counting atoms or as complex as determining fractional solvent
+accessibility.  The various calculations have been optimized for
+speed.  Keyword leading, free format input and an on-line help
+service make EdPDB user-friendly.  The construction of the command
+interpreter makes EdPDB programmable, thereby providing the user
+ways to extend the potential of the program, for example, by
+defining macros.
+<p>
+          Another feature of the program is to allow the full use of
+symmetry operators.  This makes EdPDB an especially useful tool for
+crystallographers.
+<p>
+          In the following sections, the general organization of EdPDB
+is discussed, followed by a brief description of the available
+commands.  These are classified into seven categories according to
+their functions.  A few examples are included to illustrate the
+potential of EdPDB.
+
+<hr><h2><a name="general organization">GENERAL ORGANIZATION</a></h2>
+<ul>
+	<li><a href="#io_and_selection">Input/Output Fields and Selection of Records </a>
+	<li><a href="#calling_functions">Calling Functions  </a>
+	<li><a href="#io_files">Input/Output Files  </a>
+	<li><a href="#conventions"> Conventions </a>
+	<li><a href="#programming"> Programming </a>
+</ul>
+
+<hr><h3><a name="io_and_selection">Input/Output Fields and Selection of Records </a></h3>
+          EdPDB is designed to handle any number of <i>PDB</i> coordinate
+files.  The only restrictions come from the dimensions of the
+predefined arrays in the FORTRAN program, which can be easily
+modified, if necessary.  In a <i>PDB</i> format file, coordinates are
+stored with one atom per record.  For each input atom record, there
+are several fields:  <code>ATOM</code> keyword, entry number, atom name (e.g.
+CA, OG1), residue type (e.g. <code>ALA, PHE, SOL</code>), chain marker (blank
+space or single character), residue number, coordinates (<i>X,Y,Z</i>),
+crystallographic occupancy or weight (<code>W</code>), and thermal factor (<code>B</code>). 
+For convenience, and following the convention of other popular
+crystallographic programs (e.g. <i>FRODO</i>; Jones, 1978), EdPDB also
+defines the chain marker followed by the residue number as a
+residue identification.  Records can be selected by matching the
+appropriate input fields with a selection criterion.  Similarly,
+for each atom record, EdPDB defines output fields as a displayed
+text string and two real number fields (i.e. a weight and a thermal
+factor).  The displayed text string, which usually includes the
+atom name, residue type and coordinates, can be modified by using
+editing commands or updated as the result of various calculations. 
+Therefore, fields in the displayed text string may contain
+information different from the internal fields.  For example, an
+atom name can be overwritten in the displayed text, but will not be
+changed in the internal atom-name array, unless the modified file
+is written out and reread in.  
+<p>
+          During execution, EdPDB opens buffers to store the pointers
+(addresses) of the selected records.  Records selected in the main
+buffer are called <code>ON</code> atoms.  The remaining records are called <code>OFF</code>
+atoms.  Most of the editing and calculation commands effect the <code>ON</code>
+atoms, while selection commands change the <code>ON/OFF</code> status of
+records.
+
+<hr><h3><a name="calling_functions">Calling Functions  </a></h3>
+          Each function in EdPDB is activated by a one-line input
+statement (a command or an <i>input card</i>).  An input card starts
+with a keyword (i.e. the name of the function) and includes any
+parameters that may be required by the function.  The leading key-
+word can be abbreviated as long as there is no ambiguity with other
+leading keywords.  For example, command <code>RESET</code> may be abbreviated
+as <code>RESE</code>, but cannot be abbreviated further (e.g. <code>RES</code>) because of
+the ambiguity with the command <code>RESIDUE</code>. The input parameters are
+separated from each other by spaces or a comma (not a space
+followed by a comma).  At the position where a parameter is
+expected, a comma may be used to indicate the default value for
+that parameter, if it has been defined.  In most cases the order of
+the input parameters is organized so that required parameters are
+input first and optional ones later.  Once an input card is entered
+the function is called immediately.  For example, by typing
+<code>ANALYZE</code>, the average, minimum, maximum, range and standard
+deviation of the coordinates, occupancies and B-factors of the
+current <code>ON</code> atoms will be listed.  The order of the input cards,
+therefore, will determine the behavior of EdPDB.
+
+<hr><h3><a name="io_files">Input/Output Files  </a></h3>
+          When being used in an editing mode, EdPDB uses <i>PDB</i> files as
+its direct input.  New files in the <i>PDB</i> format can be output at any
+time.  
+<p>
+          At the commencement of running EdPDB, two new files are
+opened.  Each file has the same name as the input <i>PDB</i> file, but
+with file extensions <i>EDP</i> and <i>OUT</i>.  For example, if the input <i>PDB</i>
+file name is <i>pdb4lzm.pdb</i>, the newly created files will be called
+<i>pdb4lzm.edp</i> and <i>pdb4lzm.out</i>.  The <i>EDP</i> file contains a record of
+commands completed during the current execution.  This file can be
+used subsequently, e.g. to repeat a set of commands, or can be
+modified into a macro for other similar calculations.  The <i>OUT</i> file
+contains intermediate results which may or may not be shown on the
+terminal screen depending on the user's request.  Usually the <i>OUT</i>
+file is used only for storing intermediate results.  At a normal
+termination both the <i>EDP</i> and <i>OUT</i> files will be deleted by default,
+unless an optional save is requested (e.g. using the <code>SAVE</code> option in
+the <code>QUIT</code> command).  
+<p>
+          Most of the geometry calculations are based on the Cartesian
+coordinates as input from the <i>PDB</i> file.  Some calculations,
+however, require additional information.  For example, calculation
+of the area of solvent-accessible surface requires the assignment
+of a van der Waals radius to each of the atoms involved.  An
+external file called <i>acc.txt</i> is used to input these radii.  The
+SORT command may also require a file called <i>pdbstd.dat</i> which is
+used to specify the standard order of atoms within each residue and
+the labeling convention.  The standard follows the normal atom
+order in a <i>PDB</i> file and the <i>IUPAC-IUB</i> convention (1970).  It can,
+however, be modified for special purposes.  Since EdPDB uses an
+event-driven strategy, this kind of additional information is not
+read unless it is needed by a specific function.
+
+<hr><h3><a name="conventions"> Conventions </a></h3>
+          EdPDB uses the Angstrom (1 A = 10^-10m) as the unit of length and
+the degree as the angular unit.  For most functions EdPDB assumes
+that the input coordinates are orthogonal.  The coordinates can,
+however, be transformed between different coordinate systems.  In
+the case of a crystal structure in a non-orthogonal space group,
+the alignment of the Cartesian coordinate system (<i>XYZ</i>) relative to
+the crystallographic coordinate system (<i>abc</i>) is read from the
+header of the <i>PDB</i> file if present.  The user can override this
+information explicitly through a <code>CELL</code> card.  Crystallographic
+symmetry operators are input in the format of the International
+Tables for Crystallography.  The conventions for the polar angles
+(<i>phi</i>, <i>psi</i> and <i>kappa</i>) are that <i>phi</i> is the angle between the <i>X</i> axis and the
+projection of the rotation axis on the <i>X-Y</i> plane; <i>psi</i> is the angle
+between the rotation axis and the <i>Z</i> axis; and <i>kappa</i> is the rotation
+angle about the rotation axis.  Two different definitions of
+Eulerian angles can be used in EdPDB, and are explained explicitly
+in the program documentation. For all angles, the positive 
+direction is defined as counterclockwise when looking down 
+the rotation axis.
+
+<hr><h3><a name="programming"> Programming </a></h3>
+          Like many other general purpose programs, EdPDB commands are
+programmable.  The simplest method is to use a macro file that
+contains a sequence of EdPDB commands.  Passing of parameters to
+such a macro file, and calling other macro files from within such
+a macro file, can be used.  Loop and GOTO program structure in a
+macro are also available with EdPDB commands.  An EdPDB command,
+<code>ALIAS</code>, can also be used to create user-defined commands which
+always have higher priority than the built-in command.  EdPDB is a
+module-based program.  This provides an open frame for new
+functions (commands) to be added.  Therefore the capabilities of
+EdPDB can be extended at different programming levels.
+
+<hr><h2><a name="functions_command">EdPDB FUNCTIONS AND COMMAND CATEGORIES</a></h2>
+          There are a hundred or so EdPDB commands that are classified
+into seven categories, namely:  
+	<a href="#selection">Selection</a>,
+	<a href="#calculation">Calculation</a>,
+	<a href="#editing">Editing,</a>,
+	<a href="#io_commands">Input/Output</a>,
+	<a href="#control">Control</a>,
+	<a href="#definition"> Definition</a> and
+	<a href="#miscellaneous">Miscellaneous</a>.
+A summary of
+the currently available commands with a brief description is given
+in Appendix A.  Partly for historical reasons, and partly for
+convenience of typing, not all of the keywords used in EdPDB are
+real English words.
+<p>
+          In the following, we will first discuss 
+<a href="#starting_help_quit">
+how to start and quit EdPDB as well as how to get on-line help</a>.
+Then a brief discussion
+and a list of command names is given for each of the seven
+categories.  Note that some of the commands can fit into different
+categories, although they are listed in only one.
+
+<hr><h3><a name="starting_help_quit">Starting EdPDB, Getting Help and Quitting  </a></h3>
+          One impediment to learning a new program is that unfamiliar
+data files may need to be prepared and pre-programs run as a
+prerequisite to the desired calculation.  After starting the
+program, it may be difficult to get help when needed.  Sometimes it
+may not be apparent how to terminate the program in an appropriate
+manner.  EdPDB is set up to minimize problems of this sort.
+<p>
+          To start, one simply types the program name, EdPDB, followed
+by the file name of the <i>PDB</i> format coordinate file to be read.  For
+example, if the user's <i>PDB</i> file is called <i>pdb4lzm.pdb</i>, the
+following command typed in a system command line (e.g. <i>DCL/VMS</i>)
+will start the EdPDB program by reading the <i>PDB</i> file.
+<pre>
+	$ EdPDB PDB4LZM.PDB
+</pre>
+The input <i>PDB</i> format coordinate file will be opened as a read-only
+file and will not be modified or overwritten (unless insisted by
+the user under a <i>unix</i> system).
+<p>
+          If EdPDB is being used interactively an on-line help utility
+is available to describe functions and command syntax.  Examples
+are included in the on-line help menu to illustrate the use of the
+command and its relation to other commands.  Typing HELP at any
+time during the execution of EdPDB will call the on-line help
+utility.  Another way to get on-line help for a particular command
+is to type the leading keyword of the command and to end the input
+line with "/?" (without the quotation marks).  This is convenient
+when the user knows the command-leading keyword but is unsure
+about the detailed parameters.
+<p>
+          There are several ways to terminate EdPDB.  A standard way is
+via the <code>QUIT</code> command.  A quick way is to input <i>control-Z</i> 
+(or <i>control-D</i> on a <i>unix</i> computer, i.e. end-
+of-file).  The difference is that the <code>QUIT</code> command will do
+housekeeping before exiting from the program, while <i>control-Z</i> will
+leave the <i>.edp</i> and <i>.out</i> files created by the program.  Saving these
+files is sometimes desirable, since they contain execution history.
+
+<hr><h3><a name="selection">Selection Commands  </a></h3>
+          The currently available selection commands are as follows: <br>
+	<a href="edp_s.html#atom">	ATOM	</a>,
+	<a href="edp_s.html#bfactor">	B	</a>,
+	<a href="edp_s.html#ca">		CA	</a>,
+	<a href="edp_s.html#chain">	CHAIN 	</a>,
+	<a href="edp_s.html#exclude">	EXCLUDE	</a>,
+	<a href="edp_s.html#extract">	EXTRACT	</a>,
+	<a href="edp_s.html#group">	GROUP	</a>,
+	<a href="edp_s.html#include">	INCLUDE	</a>,
+	<a href="edp_s.html#initial">	INITIAL	</a>,
+	<a href="edp_s.html#load">	LOAD	</a>,
+	<a href="edp_s.html#main">	MAIN	</a>,
+	<a href="edp_s.html#match">	MATCH	</a>,
+	<a href="edp_s.html#mmi">		MMI	</a>,
+	<a href="edp_s.html#mmir">	MMIR	</a>,
+	<a href="edp_s.html#more">	MORE	</a>,
+	<a href="edp_s.html#nayb">	NAYB 	</a>,
+	<a href="edp_s.html#naybr">	NAYBR	</a>,
+	<a href="edp_s.html#residue">	RESIDUE	</a>,
+	<a href="edp_s.html#side">	SIDE	</a>,
+	<a href="edp_s.html#swap">	SWAP	</a>,
+	<a href="edp_s.html#wfactor">	W	</a>,
+	<a href="edp_s.html#xcoor">	X,Y,Z	</a> and
+	<a href="edp_s.html#zone">	ZONE	</a>.
+<p>
+          Selection commands define the <code>ON/OFF</code> status of the records, as
+necessary to prepare groups of atoms for other EdPDB functions. 
+These commands are followed by an argument specifying the atoms,
+chains, molecules, etc., to be selected.  E.g. <code>ATOM CA</code> selects
+all the alpha-carbon atoms.  The commands shown in bold face can also
+be used without an argument to show on the terminal the current
+atoms, chains, etc., that are active.  EdPDB selects records (i.e.
+atoms) by matching any one of the <i>PDB</i> fields (except entry number)
+with selection criteria defined by the user (see below). 
+Intramolecular and intermolecular distances between symmetry-
+related molecules can also be used as selection criteria.
+<p>
+          Different selection strategies can be constructed with EdPDB. 
+For instance, two consecutive selection commands work independently
+and select the records which satisfy either of the selection
+criteria.  Thus, the following commands select both the backbone
+atoms and the C-beta atoms.
+<pre>
+	MAIN
+	ATOM CB
+</pre>
+          A nested command can be used to perform a logical <i>and</i>
+selection.  For example, the following one-lined nested command
+will select all polar atoms (i.e. nitrogen or oxygen) which are
+within a 4.0 A sphere centered at the <code>OH</code> atom of residue 24.
+<pre>
+	NAYB 4.0   24   OH FROM {ATOM O* N*}
+</pre>
+the asterisk "*" is a wild card for any character(s) in the atom
+name.  In this selection command, the order of the criteria does
+not affect the result.  It works the same as the following command.
+<pre>
+	ATOM O* N* FROM {NAYB 4.0   24   OH}
+</pre>
+A multiply nested command can be used for a more complicated <i>and</i>
+selection.
+<p>
+          There are several ways to make a logical <i>not</i> selection.  The
+<code>EXCLUDE</code> command followed by another selection command is a
+convenient way to turn the selected records <code>OFF</code>.  For example, the
+following two commands can be used to select records which have 
+B-factor between 20 and 30 (A^2).
+<pre>
+	B &gt 19.9999
+	EXCLUDE B &gt 30.0
+</pre>
+The first command selects all records with a thermal factor equal
+to or larger than 20 A^2.  The second command then turns off those
+records with thermal factors larger than 30 A^2.  <code>SWAP</code> is another
+command that performs a logical <i>not</i> selection.  In some selection
+commands an <code>EXCEPT</code> option is also available.  For example, the
+following two commands select glycine residues from molecule A
+(i.e. <code>CHAIN A</code>).
+<pre>
+	CHAIN A
+	EXCLUDE RESIDUE EXCEPT GLY
+</pre>
+          The command <code>GROUP</code> defines a set of selection criteria that can
+be used subsequently as a group.  The following sequence
+illustrates the use of the <code>GROUP</code> command.
+<pre>
+	...(selection commands)
+	GROUP TMP
+	INITIALIZE
+	RESIDUE ASP FROM TMP
+</pre>
+The <code>GROUP</code> command defines the pre-selected records as a group named
+<code>TMP</code>.  The <code>INITIALIZE</code> command reinitializes the buffer used to store
+the <code>ON</code> atoms and the last line selects as the <code>ON</code> atoms only the 
+<code>Asp</code>
+residues from the <code>TMP</code> group.
+
+<hr><h3><a name="calculation">Calculation Commands  </a></h3>
+          The currently available calculation commands are <br>
+	    <a href="edp_c.html#ab">	AB	</a>,
+	    <a href="edp_c.html#abc">	ABC	</a>,
+	    <a href="edp_c.html#abcd">	ABCD	</a>,
+	    <a href="edp_c.html#access">	ACCESS	</a>,
+	    <a href="edp_c.html#analyze">	ANALYZE	</a>,
+	    <a href="edp_c.html#avb">	AVB	</a>,
+	    <a href="edp_c.html#axis">	AXIS	</a>,
+	    <a href="edp_c.html#bridge">	BRIDGE	</a>,
+	    <a href="edp_c.html#diff">	DIFF	</a>,
+	    <a href="edp_c.html#distance">	DISTANCE	</a>,
+	    <a href="edp_c.html#euler">	EULER	</a>,
+	    <a href="edp_c.html#harker">	HARKER	</a>,
+	    <a href="edp_c.html#clique">	CLIQUE	</a>,
+	    <a href="edp_c.html#closer">	CLOSER	</a>,
+	    <a href="edp_c.html#correlation">	CORRELATION	</a>,
+	    <a href="edp_c.html#jiggle">	JIGGLE	</a>,
+	    <a href="edp_c.html#sdist">	SDISTANCE	</a>,
+	    <a href="edp_c.html#momentinertia">	MOMENTINERTIA	</a>,
+	    <a href="edp_c.html#movecenter">	MOVECENTER	</a>,
+	    <a href="edp_c.html#newxyz">	NEWXYZ	</a>,
+	    <a href="edp_c.html#overlay">	OVERLAY	</a>,
+	    <a href="edp_c.html#planar">	PLANAR	</a>,
+	    <a href="edp_c.html#polar">	POLAR	</a>,
+	    <a href="edp_c.html#vec_pv">	PV	</a>,
+	    <a href="edp_c.html#ratio">	RATIO	</a>,
+	    <a href="edp_c.html#rmsw">	RMSW	</a>,
+	    <a href="edp_c.html#rtn">	RTN	</a>,
+	    <a href="edp_c.html#shape">	SHAPE	</a>,
+	    <a href="edp_c.html#sort">	SORT	</a>,
+	    <a href="edp_c.html#sumw">	SUMW	</a>,
+	    <a href="edp_c.html#volume">	VOLUME	</a>,
+	    <a href="edp_c.html#vec_vp">	VP	</a> and
+	    <a href="edp_c.html#vec_vv">	VV	</a>.
+<p>
+          EdPDB can carry out a variety of structural analyses and
+coordinate rotation and translation operations.
+<p>
+          Rotation and translation matrices can be determined, stored,
+manipulated (e.g. inverted, multiplied, etc.) and applied to
+selected atoms later.  For example, the command <code>OVERLAY</code> calculates
+the matrix that optimizes the superposition between two sets of
+coordinates (McLachlan, 1979).  The command <code>MOMENTUMINERTIA</code>A
+determines the matrix that brings the three principal axes of
+rotation of the model (i.e. the selected atoms) into coincidence
+with the <i>X,Y,Z</i> coordinate axes.  The <code>MOVECENTER</code> command defines the
+matrix that brings the center of mass of the current model as close
+as possible to the origin (or to any user specified position)
+consistent with all possible crystallographic symmetry operators.
+<p>
+          With the <code>RTN</code> command, one can determine and/or apply various
+coordinate transformations.  These include
+<blockquote>
+          (a)  apply a transformation matrix read from a file 
+      <br>(b)  apply a given crystallographic symmetry operation 
+      <br>(c)  apply a rotation specified in Eulerian angles (either
+ZY'Z" convention or ZX'Z" convention) 
+      <br>(d)  apply a rotation specified in polar angles
+      <br>(e)  transform between orthogonal and non-orthogonal
+coordinate systems or vice versa
+      <br>(f)  apply a rotation about a given bond
+      <br>(g)  center a molecule on the origin of coordinates
+      <br>(h)  apply a rotation to reset a torsion angle from any
+arbitrary angle to a given value (e.g. for setting side-chain
+torsion angles to standard values)
+      <br>(i)  make a coordinate transformation based on a three-atom
+superposition (e.g. for <i>mutating</i> an amino acid)
+      <br>(j)  determine and apply the transformation that will
+superimpose two atoms consistent with a given rotation (e.g. for
+applying non-crystallographic symmetry).  The two atoms might
+represent heavy atoms bound to two protein molecules and the
+rotation might be determined from a self-rotation function search.
+</blockquote>
+          With the calculation commands <code>HARKER</code>, <code>EULER</code> and <code>POLAR</code>, the
+<i>X,Y,Z</i> input fields can contain crystallographic coordinates or
+angular values rather than coordinates in the standard Cartesian
+<i>PDB</i> framework.  In such cases, the <i>PDB</i> format is simply used as a
+vehicle to input necessary data to EdPDB.
+<p>
+          The result of a calculation will be written to the standard
+output device (e.g. the terminal if the program is being used
+interactively) and/or to a scratch file (<i>input_file_name.out</i>). 
+Some results may overwrite the field(s) of related records, e.g.
+the <code>ACCESS</code> command (used for solvent accessibility calculation)
+will overwrite the occupancy (<code>W</code>) field of each <code>ON</code> atom with the
+solvent-accessible area of that atom.  These calculation commands
+can therefore be considered as editing commands as well.
+<p>
+          Similarly, some calculation commands can also be considered as
+selection commands.
+<p>
+          EdPDB uses the Lee-Richards algorithm (Lee & Richards, 1971)
+to calculate solvent-accessible area (command <code>ACCESS</code>) and
+McLachlan's algorithm (McLachlan, 1979) to perform least-squares
+structural superposition (command <code>OVERLAY</code>).
+<p>
+
+<hr><h3><a name="editing">Editing Commands  </a></h3>
+          The currently available editing commands are <br>
+	    <a href="edpdb_e#blank">	BLANK 	</a>,
+	    <a href="edpdb_e#permute">	PERMUTE	</a>,
+	    <a href="edpdb_e#set">	SET	</a>,
+	    <a href="edpdb_e#seta">	SETA	</a>,
+	    <a href="edpdb_e#setb">	SETB	</a>,
+	    <a href="edpdb_e#setc">	SETC	</a>,
+	    <a href="edpdb_e#sete">	SETE	</a>,
+	    <a href="edpdb_e#seti">	SETI	</a>,
+	    <a href="edpdb_e#setr">	SETR	</a>,
+	    <a href="edpdb_e#sett">	SETT	</a>,
+	    <a href="edpdb_e#setw">	SETW	</a>,
+	    <a href="edpdb_e#switchwb">SWITCHWB</a> and
+	    <a href="edpdb_e#update">	UPDATE	</a>.
+<p>
+          Editing commands modify the output fields, i.e. the text
+strings, and occupancy or thermal factor values of selected
+records.  In principle, every character in the text string can be
+modified.  The editing commands do not change either the internal
+coordinates (which may still be used for geometry calculations), or
+the internal atom type, residue type (e.g. <code>Ala</code>) or residue name
+(e.g. <code>A99</code>) (which are used for selection criteria).
+<p>
+          For a typical <i>PDB</i> coordinate file, the occupancy (<code>W)</code> field is
+usually less informative than the coordinate and B factor fields. 
+Therefore, with some calculations (e.g. <code>ACCESS</code> and <code>DISTANCE),</code> the
+W field is overwritten with the results.  In other calculations
+(e.g. <code>OVERLAY</code> and <code>MOMENTUMINERTIA)</code> the values in the W field may be
+used as weights.  In this case, the weight value should be defined
+appropriately before performing the calculation.
+<p>
+          Some commonly used programs create and accept non-standard
+"<i>PDB</i> format" files in which, for example, a field may be shifted by
+one or two columns.  This can cause difficulties in sharing
+coordinate files among different programs.  The <code>PERMUTE</code> command
+allows inconsistencies of this sort to be easily corrected.
+<p>
+          EdPDB also provides an easy way to inter-change labels so as
+to change from one convention to another.  In the following
+example, the <code>OH</code> atoms of residue type <code>SOL</code> are renamed as 
+<code>HOH</code>, while
+any <code>OH</code> atoms that might be associated with another residue type
+(e.g. <code>TYR)</code> are not affected.
+<pre>
+	ATOM OH FROM {RESIDUE SOL}
+	SETA HOH
+</pre>
+
+<hr><h3><a name="io_commands">Input/Output Commands  </a></h3>
+          The input/output commands are 
+            <a href="edp_i.html#append">   APPEND  </a>,
+            <a href="edp_i.html#exit">     EXIT    </a>,
+            <a href="edp_i.html#list">     LIST    </a>,
+            <a href="edp_i.html#read">     READ    </a>,
+            <a href="edp_i.html#sequence"> SEQUENCE        </a> and
+            <a href="edp_i.html#write">    WRITE   </a>.
+<p>
+          As an editor program, EdPDB can output an edited file to the
+terminal or create a new file in the <i>PDB</i> format.  The user also has
+the ability to reformat the output by (1) using the editing command
+<code>PERMUTE</code> to rearrange the text string, and (2) using a user-defined
+format in an output statement.  By using the calculation command
+<code>SORT</code>, one can rearrange the records in a <i>PDB</i> file in many different
+ways.  The <code>APPEND</code> command provides a simple way to merge blocks of
+coordinates in a user-preferred sequence.
+<p>
+          Additional <i>PDB</i> files including those created within the
+current EdPDB execution can be accessed with the <code>READ</code> command. 
+Peptide chains or molecules from such files can be distinguished by
+using additional chain identifiers.
+<p>
+          A combination of a selection command with a <code>LIST</code> command
+provides a fast way to search for particular records in a <i>PDB</i> file. 
+The following command sequence, for example, will list the solvent
+molecules with thermal factors less than 10 A^2.
+<pre>
+	INITIALIZE
+	B &lt 10 FROM {RESIDUE SOL}
+	LIST
+</pre>
+
+<hr><h3><a name="control"> Control Commands </a></h3>
+          The control commands and related options include <br>
+Available commands:
+            <a href="edp_ctr.html#macro_file">      @macro_file     </a>,
+            <a href="edp_ctr.html#close">           CLOSE   </a>,
+            <a href="edp_ctr.html#goto">            GOTO    </a>,
+            <a href="edp_ctr.html#label_statement"> label_statement:  </a>,
+            <a href="edp_m.html#setenv_maxerr">     MAXERR  </a>,
+            <a href="edp_ctr.html#parameter">       PARAMETER       </a>,
+            <a href="edp_ctr.html#pause">           PAUSE   </a>,
+            <a href="edp_ctr.html#quit">            QUIT    </a>,
+            <a href="edp_ctr.html#reset">           RESET   </a>,
+            <a href="edp_ctr.html#return">          RETURN  </a>,
+            <a href="edp_ctr.html#rewind">          REWIND  </a> and
+            <a href="edp_ctr.html#system">          SYSTEM  </a>.
+<p>
+          Control commands are used to change the status of either the
+program or the input/output files.  Many commands in this category
+were designed to enhance the programming ability of EdPDB.  It is
+also possible for a user to call a system command (e.g. a <i>DCL</i>
+command in <i>VMS</i>, or a shell command in <i>unix</i> )or to create a 
+sub-process without terminating the EdPDB program.
+<p>
+
+<hr><h3><a name="definition"> Definition Commands </a></h3>
+          The current definition commands include 
+            <a href="edp_d.html#alias">   ALIAS   </a>,
+            <a href="edp_d.html#cell">    CELL    </a>,
+            <a href="edp_d.html#dfab">    DFAB    </a>,
+            <a href="edp_d.html#dfabc">   DFABC   </a>,
+            <a href="edp_d.html#dfabcd">  DFABCD  </a>,
+            <a href="edp_d.html#dfbrg">   DFBRG   </a>,
+            <a href="edp_d.html#dfca">    DFCA    </a>,
+            <a href="edp_d.html#dfnewxyz">        DFNEWXYZ        </a>,
+            <a href="edp_d.html#dfmain">  DFMAIN  </a>,
+            <a href="edp_d.html#dfres">   DFRES   </a> and
+            <a href="edp_d.html#symmetry">        SYMMETRY        </a>.
+<p>
+          Each command is followed by an argument that defines sets of
+atoms or templates or parameters that are used in subsequent
+operations.  When used without an argument the command will show on
+the terminal the definition, if any, that is currently in effect. 
+One philosophy of EdPDB is that it should be as flexible and as
+general-purpose as possible.  For example, the command <code>DFABCD</code> is
+used to define a template for the calculation of torsion angles. 
+The program is not, however, restricted to the standard backbone
+and side-chain torsion angles.  It is possible to use DFABCD to
+specify any type of pseudo torsion angle, e.g. the torsion angle
+formed by four sequential C-alpha atoms.
+<p>
+          As a general purpose program, EdPDB allows the user to
+overwrite the default definitions, which might be too specific in
+some cases.  For example the <i>main-chain</i> atoms are usually defined
+by the default definition <code>DFMAIN N CA C O</code> but this can be
+replaced by the command statement <code>DFMAIN N CA C O CB</code>.
+<p>
+          The <code>ALIAS</code> command allows the user to define his/her own key-
+words in terms of meaningful EdPDB command(s).  For example, a
+user-defined keyword DIRE (using <code>ALIAS DIRE SYSTEM WAIT
+DIRECTORY</code>) might be used to call the <i>VMS/DCL</i> command <code>DIRECTORY</code>. 
+Thus, by typing <code>DIRE</code> the user can, for example, list the file
+names in the current directory without terminating EdPDB.
+<p>
+
+<hr><h3><a name="miscellaneous">Miscellaneous Commands  </a></h3>
+          These commands are designed to make EdPDB more user friendly
+and/or to provide the user with help when needed.
+<p>
+          They include 
+            <a href="edp_m.html#comment"> comment </a>,
+            <a href="edp_m.html#clear">   CLEAR   </a>,
+            <a href="edp_m.html#file">    FILE    </a>,
+            <a href="edp_m.html#help">    HELP    </a>,
+            <a href="edp_m.html#prompt">  PROMPT  </a>,
+            <a href="edp_m.html#setenv">  SETENV  </a> and
+            <a href="edp_m.html#shdf">    SHDF    </a>.
+
+<hr><h2><a name="examples">EXAMPLES</a></h2>
+          In this section, several examples are given to show the use,
+the flexibility and the potential of EdPDB.  Appendix A can be
+consulted for additional information on the individual commands. 
+Any text in an input line following a semicolon is regarded as a
+comment and is ignored by the command interpreter of EdPDB.
+<p>
+
+          (1)  Preliminary inspection and statistical analysis of a
+file.
+<pre>
+	INITIALIZE	! initialize working buffer space for ON atoms
+	ZONE ALL 	! select all the atom records
+	ZONE		! show the zone information
+	RESIDUE 	! show the number of residues for each type of residue
+	ATOM 		! show the number of atoms for each type of atom
+	ANALYSIS	! give statistical information for X, Y, Z, W and B
+</pre>
+(see Appendix A)
+<p>
+          (2) Backbone <i>zeta</i> angle calculations.  
+          The angle <i>zeta</i> of an amino acid residue is the pseudo torsion
+angle defined by connecting in sequence the atoms Cà, N, C and C-beta. 
+For a well-refined protein structure, this angle should equal
+approximately +33.5o for every residue.  A negative <i>zeta</i> for an L-amino 
+acid residue indicates a chirality error.
+<pre>
+	DFABCD CA N C CB 1 1 1 1
+		! define the template for a torsion angle calculation
+		! where the numbers indicated that all the atom are within the same
+		! residue 
+	INITIALIZE
+	ATOM N CA C CB	! select the atoms needed for the calculation
+	ABCD           	! calculate all the torsion angles that fit the above template
+</pre>
+          (3)  Search for all interactions between nitrogen and oxygen
+(i.e. potential hydrogen bonds) within a protein.
+<pre>
+	INITIALIZE
+	ATOM N* O*
+		! select nitrogen and oxygen atoms
+		! * indicates a wild card to include all types of N and O atoms
+	GROUP P ! define these atoms as group P (i.e. "polar")
+	DISTANCE P 2.0 3.5 3
+		! list every polar atom pair with a distance
+		! between 2.0 and 3.5* and separated by at least three residues
+</pre>
+          (4) Structural superposition or overlay of molecules A and B,
+each assumed to contain 164 residues.
+<pre>
+	INITIALIZE
+	GROUP A FROM {MAIN A1-A164}
+		! define the backbone atoms of molecule A as group A
+	GROUP B FROM {MAIN B1-B164}
+		! define the backbone atoms of molecule B as group B
+	LOAD B
+		! select group B which contains the backbone atoms of molecule B
+	OVERLAY A rtn_.txt
+		! calculate the matrix that gives the optimum least-squares superposition
+		! of molecule B on molecule A and write the matrix to a file named
+		! rtn_.txt
+	INITIALIZE
+	AXIS rtn_.txt
+		! analysis of the rotation-translation matrix written in the file rtn_.txt
+	CHAIN B ! select the whole of molecule B
+	RTN FILE rtn_.txt
+		! apply the rotation-translation matrix of rtn_.txt to the currently selected
+		! atoms, i.e. to the whole of molecule B
+</pre>
+<p>
+          (5) Check and resequence a coordinate file according to the
+standard dictionary file <i>pdbstd.dat</i> supplied with the program.
+<pre>
+	INITIALIZE
+	ZONE ALL
+	SORT DFRES
+		! read file pdbstd.dat by default
+		! check the atom order, side-chain chirality and labeling
+	SET ENTRY
+		! reset the entry number consistent with the new order of the records
+	EXIT SORTED.PDB HEADER
+		! create a new PDB coordinate file named sorted.pdb with the old file
+		! headers but atoms reordered
+</pre>
+          (6)  Check all possible intermolecular contacts in a crystal
+with two molecules, A and B, each of 164 amino acid residues, per
+asymmetric unit.
+<pre>
+	CELL 80.0, 80.0, 50.0, 90.0, 90.0, 120.0, 6
+		! input cell parameters and the alignment convention which in this case is
+		! #6 X//a, Y//b*, Z//(a x b*)
+	@symmetry R32                         
+		! input symmetry operators from the file symmetry.edp (see below)
+	INITIALIZE
+	GROUP A FROM {ZONE A1-A164}
+		! define molecule A as group A
+	GROUP B FROM {ZONE B1-B164}
+		! define molecule B as group B
+	LOAD A	! select molecule A
+	SDISTANCE A 3.5 
+		! check crystal contacts of atoms within 3.5*, between symmetry-related
+		! A molecules
+	SDISTANCE B 3.5 
+		! between all A molecules and all B molecules
+	INITIALIZE
+	LOAD B
+	SDISTANCE B 3.5 
+		! between symmetry-related B molecules
+</pre>
+The file <i>symmetry.edp</i> contains the symmetry operators for most 
+of the commonly used space groups. Simple translations are not 
+necessary since they are handled automatically.
+<pre>
+	! symmetry operators for space group R32
+	SYMMETRY  X, Y, Z
+	SYMMETRY  -Y, X-Y, +Z
+	SYMMETRY  -X+Y, -X, +Z
+	SYMMETRY  Y, X, -Z
+	SYMMETRY  X-Y, -Y, -Z
+	SYMMETRY  -X, -X+Y, -Z
+</pre>
+          (7) Construct a file that contains the average thermal factor,
+B, for each residue, where the averaging is (a) over the whole
+residue, (b) over the backbone atoms, and (c) over the side-chain
+atoms of each residue.
+<pre>
+	INITIALIZE
+	CA 	! select C-alpha atoms only
+	BLANK	! blank the X, Y and Z fields of the C-alpha atom records
+		! these will be used to write the output
+	MORE 
+		! extend the selection to all residues which have C-alpha atoms, i.e. select all
+		! amino acid residues
+	AVB X   ! calculate average B for each residue
+		! write the result to the X field of the C-alpha atom
+	EXCLUDE MAIN
+		! keep side-chain atoms only
+	AVB Z   ! calculate side-chain average B for each residue
+		! write the result to the Z field of the C-alpha atom
+		! for glycine the field is left blank
+	INITIALIZE
+	MAIN    ! select main-chain atoms
+	AVB Y	! calculate main-chain average B for each residue
+		! write the result to the Y field of the C-alpha atom
+	INITIALIZE
+	CA  	! recall the modified C-alpha atom records
+	WRITE AVB.LIS
+		! output the result to a file named avb.lis
+</pre>
+          (8) Calculate the angle and the shortest distance between the
+axes of two alpha-helices in a protein.  
+          Assume that the helical regions include residues 115-122 and
+126-134.
+<pre>
+	initialize; zone 115-122 ; more 0 -1 | main ; group tgt
+	more 1 1 | main ; overaly tgt v1.txt ; axis v1.txt v1
+		! the axis of helix 115-122 will be defined as the rotation axis that
+		! superimposes the backbone atoms of residues 115-121 on the partially
+		! overlapping residues 116-122
+		! calculate this transformation and store in the file v1.dat
+		! extract the vector, v1, which corresponds to the rotation axis in the
+		! matrix v1.dat
+	initialize; zone 126-134 ; more 0 -1 | main ; group tgt
+	more 1 1 | main ; overaly tgt v2.txt ; axis v2.txt 
+		! similarly, determine the transformation that will define the axis of helix
+		! 126-134
+		! extract the vector, v2, which corresponds to the rotation axis in the
+		! matrix v2.dat
+	initiliaze
+	vector vv v1 v2
+		! calculate the angle and distance between the two axes
+</pre>
+          (9) Search for candidate sites to introduce a disulfide bond
+by mutation.  
+          The C-beta - C-beta distance should be between 4.0-6.5 A, the C-alpha - C-beta - C-gamma
+angle should be larger than 80.0o, and the loop formed by the
+disulfide bond should, for example, be longer than 50 residues
+(e.g. Sowdhamini et al., 1989).
+<pre>
+	INITIALIZE
+	DFBRG CA CB CB CA X 0 Y 0 ,,,, 4.0, 6.5, 80.0, 180.0, 0.0, 360.0 WXYZ 50
+		! create a template for the search
+	ATOM CA CB
+		! select the atoms needed for the search, define the search range
+	BRIDGE 	! perform the search
+		! list all the candidates that fit the template
+</pre>
+          (10) Calculate the correlation between the solvent-accessible
+area (<i>SAA</i>) and the average thermal factor, including all residues
+in the protein.
+<pre>
+	INITIALIZE
+	MORE FROM {CA}
+		! select all amino acid residues, i.e. the protein part of the PDB file
+	ACCESS	! calculate the solvent-accessible area for each atom
+		! default van der Waals radii are assumed
+		! store the value in the W field
+	AVB X	! store the average B in the X field of the C-alpha atom
+	SUMW Y	! store the summation of SAA in the Y field of the C-alpha atom
+	INITIALIZE
+	CA	! select the CA atom records in which the X and Y fields store the
+		! average B and summation of SAA, respectively
+	GROUP TMP
+	CORRELATION TMP X Y
+		! calculate the correlation between fields X and Y
+</pre>
+          (11) Calculate the solvent-accessible area (<i>SAA</i>) of molecule
+A in the presence and absence of molecule B.  The difference is the
+solvent-accessible area of molecule A that is buried in the
+interface.
+<pre>
+	INITIALIZE
+	GROUP MOLB FROM {CHAIN B}
+	CHAIN A
+	ACCESS MOLB
+		! calculate the SAA of molecule A in the presence of molecule B
+	ACCESS	! calculate the SAA of molecule A in the absence of molecule B
+</pre>
+          (12) Assume that a protein contains N-terminal and C-terminal
+domains, defined respectively by the amino acids 1-60 and 80-162. 
+Assume also that the structure of this protein is determined in two
+different situations, A and B (e.g. in two crystal forms). 
+Calculate the change of the interdomain hinge-bending angle between
+the N-terminal and C-terminal domains in the two independent
+protein structures, A and B.
+<pre>
+	INITIALIZE
+	GROUP A FROM {MAIN A1-A60}
+	MAIN B1-B60
+	OVERLAY A OVERLAY_N_DOMAIN.DAT
+		! calculate the overlay matrix between the two N-terminal domains
+		! starting from an arbitrary position
+		! store in the file overlay_n_domain.dat
+	CHAIN B	! select the molecule B
+	RTN FILE OVERLAY_N_DOMAIN.DAT
+		! superimpose molecule B on molecule A
+		! by applying the matrix stored in overlay_n_domain.dat which
+		! will superimpose the N-terminal domains
+	INITIALIZE
+	GROUP A FROM {MAIN A80-A162}
+	MAIN B80-B162
+	OVERLAY A OVERLAY_C_DOMAIN.DAT
+		! now calculate the matrix that will superimpose the C-terminal domains
+		! starting from the position where the two N-terminal domains are
+		! already superimposed
+		! this is the desired transformation
+	INITIALIZE
+	AXIS OVERLAY_C_DOMAIN.DAT
+		! extract the rotation axis and the rotation angle from the transformation
+		! matrix the angle is the change of the hinge-bending angle
+</pre>
+          The above examples are by no means complete.  They are
+intended only to illustrate the potential of EdPDB.
+
+<hr><h2><a name="epilogue">EPILOGUE</a></h2>
+          We take it as self-evident that efficiency is desirable.  For
+example, when preparing a manuscript, one likes to use a word
+processing program, because such a program combines useful editing
+utilities and makes a complex task much simpler.  Structural
+biologists in general, and protein crystallographers in particular,
+are constantly dealing with structure coordinate files.  Attempting
+to edit or evaluate such files by sitting in front of a terminal
+and repeatedly typing a group of keys is tedious and time-
+consuming.  There is a need for a crystallographic or structural
+"word processor", so that more time is available to concentrate on
+the underlying science.  It is hoped that in this sense, EdPDB can
+be a useful tool for structural biologists.  In summary, EdPDB has
+the following attributes:
+<blockquote>
+          - it works like a line mode editor. 
+     <br> - it is easy to start. 
+     <br> - on-line help is available. 
+     <br> - specific structural parameters that may be required for a
+given task are input from simple database files, rather than coded
+in the program.
+     <br> - the program is  versatile.  It has many features that
+were developed for macromolecular crystallography but it also
+permits detailed structural analysis of a simple molecule.
+     <br> - one can write macros to extend its capabilities.  It is
+programmable.
+</blockquote>
+
+          EdPDB is available from the author who can be reached at the
+E-Mail address:  zhangc@omega.omrf.ouhsc.edu.
+
+<hr><h2><a name="acknowledgements">ACKNOWLEDGEMENTS</a></h2>
+          We thank numerous colleagues in the laboratories of B.W.M. and
+Dr. S.J. Remington (University of Oregon), particularly Andrew
+Morton and Dr. Dirk Heinz, for their continuous encouragement,
+stimulating discussions and help in proofreading the on-line help
+menu.  This work was supported in part by NIH grant GM20066.
+
+<hr><h2><a name="references">REFERENCES</a></h2>
+Bernstein, F. C., Koetzle, T. F., Williams, G. J. B., Meyer, E. F.
+          Jr., Brice, M. D., Rodgers, J. R., Kennard, O., Shimanouchi,
+          T. & Tasumi, M. (1977). J. Mol. Biol. 112, 535-542. <p>
+Connolly, M. L. (1983). Science 221, 709-713.
+Grindley, H. M., Artymiuk, P. J., Rice, D. W. & Willett, P. (1993).
+          J. Mol. Biol. 229, 707-721. <p>
+IUPAC-IUB Commission on Biochemical Nomenclature.  Abbreviations
+          and Symbols for Description of the Conformation of Polypeptide
+          Chains (1970). J. Mol. Biol. 52, 1-17.<p>
+Jones, T. A. (1978). J. Appl. Cryst. 11, 268-272.
+Laskowski, R. A., MacArthur, M. W., Moss, D. S. & Thornton, J.
+          (1993). J. Appl. Cryst. 26, 283-291.<p>
+Lee, B. & Richards, F. M. (1971). J. Mol. Biol. 55, 379-400. <p>
+McLachlan, A. D. (1979). J. Mol. Biol. 128, 49-79. <p>
+Moras, D., Podjarny, A. D. & Thierry, J. C., Eds. (1991).<p>
+          "Crystallographic Computing 5: From Chemistry to Biology",
+          International Union of Crystallography, Oxford University
+          Press. <p>
+Morris, A. L., MacArthur, M. W., Hutchinson, E. G. & Thornton, J.
+          M. (1992). Prot.: Struct. Funct. Genet. 12, 345-364. <p>
+Sowdhamini, R., Srinivasan, N., Shoichet, B., Santi, D. V.,
+          Ramakrishnan, C. & Balaram, P. (1989). Prot. Engin. 3, 95-103.
+
+<hr><h2><a name="appendix_a">APPENDIX A</a></h2>
+A Brief Summary of the Commands of EdPDB (<i>V94A</i>) 
+          In the following, the currently available EdPDB commands are
+summarized in alphabetical order.  A more detailed account is given
+in the on-line help menu.
+<p>
+(Omitted ...)
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->.
+</font>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<html>
+<header><title>Convert between rhombohefral and hexagonal cells</title>
+<script language="JavaScript">
+
+function r2h () { 
+var size  = document.form1.cell_abc.value;
+var angle = document.form1.cell_abg.value;
+
+document.form1.cell_ab.value=size*
+	Math.sqrt(2*(1-Math.cos(Math.PI/180*angle))) ;
+document.form1.cell_c.value=size*
+	Math.sqrt(3*(1+2*Math.cos(Math.PI/180*angle))) ;	
+}
+
+function h2r () { 
+var a = document.form1.cell_ab.value;
+var c = document.form1.cell_c.value;
+
+document.form1.cell_abc.value=
+	Math.sqrt(Math.pow(a,2)/3 + Math.pow(c,2)/9) ; 
+document.form1.cell_abg.value=
+	Math.acos( (2*Math.pow(c,2) - 3*Math.pow(a,2))/ 
+      	(2*Math.pow(c,2) + 6*Math.pow(a,2))) *180/Math.PI; 	
+}
+</script>
+</header>
+
+<BODY background="../../graphics/trebuche2.gif">
+<hr><a name="top">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="../edp_d.html#cell"'>
+<input type="button" value="home"    onClick='document.location="../edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="../edp_ind.html"'>
+</form>
+</a>
+
+<form name="form1">
+Rhombohedral cell parameters: <br>
+cell dimensions (<i>a=b=c</i>) <input type="text" size="8" name="cell_abc">,
+angles (alpha=beta=gamma) <input type="text" size="8" name="cell_abg">
+<input type="button" name="convert1" value="convert"
+onClick="r2h()">
+<p>
+Hexagonal cell parameters: <br>
+cell dimensions (<i>a=b</i>) <input type="text" size="8" name="cell_ab">
+(<i>c</i>) <input type="text" size="8" name="cell_c">,
+angles (alpha=beta=90, gamma=120)
+<input type="button" name="convert2" value="convert" onClick="h2r()">
+<p>
+
+</form>
+<p>
+     Reindex from an R-cell (hkl) to a hexagonal cell (HKL):<br>
+<ul>
+<li>       H= h-k<br>
+<li>       K= k-l<br>
+<li>       L= h+k+l<br>
+</ul>
+</p>
+<p>
+     Conditions limiting possible reflections:<br>
+<ul>
+<li>       -H+K+L= 3n<br>
+</ul>
+</p>
+</body>
+</html>

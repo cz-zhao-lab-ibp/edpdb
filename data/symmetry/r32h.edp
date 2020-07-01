@@ -1,0 +1,8 @@
+symmetry initialize
+symm    X,   Y,  Z !!IDENTITY
+symm   -Y, X-Y,  Z !!0B
+symm  Y-X,  -X,  Z !!0C
+symm    Y,   X, -Z !!0D
+symm   -X, Y-X, -Z !!0E
+symm  X-Y,  -Y, -Z !!0F
+      

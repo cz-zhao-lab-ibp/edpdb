@@ -1,0 +1,18 @@
+! align3d.edp  by X. Cai Zhang, 000602
+! this macro refines the orientation of chain_2 again chain_1, 
+!  assuming they have been brought in a similar orientation.
+!  only atom pairs within the distCutoff are used in the alignment.
+! syntax:
+! @align3d.edp targeChainName movingChainName2 distCutoff
+! example:
+! @align3d a b 3.0
+
+{ atom ca ca_a | chain $(p1) ; group a }
+{ atom ca ca_a | chain $(p2) ; group b }
+initialize ; load b | align3d a suba $(p3) ; overlay suba rtn_.txt 
+if (-i status ^= -3 )  goto ok1
+parameter istatus = -1 ; return 
+
+ok1: 
+parameter istatus = 0 ; chain $(p2) ; rtn file rtn_.txt
+

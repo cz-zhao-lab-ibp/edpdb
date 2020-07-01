@@ -1,0 +1,32 @@
+! chi.edp   by X. Cai Zhang, 000602
+! list all the chi_1, chi_2 (for beta-branched residue also chi_2') angles
+!  of all a.a. residues. the residue average B-factors are listed in the B field.
+! all there results are stored in the CA atom records: chi_1 (X), chi_2 (Z),
+!  and chi_2' (Y).
+! you may save this result using the 'write' command. 
+! also see: phipsi.edp, avb.edp, bad_chi.edp
+
+! syntax: 
+! @chi.edp 
+
+setenv -s interactive off
+initialize ; ca ; blank ; setw 0.0 ; more 
+
+dfabcd n ca cb cg    ; abcd b x
+dfabcd n ca cb og    ; abcd b x
+dfabcd n ca cb cg1   ; abcd b x
+dfabcd n ca cb og1   ; abcd b x
+dfabcd n ca cb sg    ; abcd b x
+dfabcd n ca cb cg2   ; abcd b y
+dfabcd ca cb cg sd   ; abcd a z
+dfabcd ca cb cg cd   ; abcd a z
+dfabcd ca cb cg od1  ; abcd a z
+dfabcd ca cb cg nd1  ; abcd a z
+dfabcd ca cb cg cd1  ; abcd a z
+dfabcd ca cb cg1 cd1 ; abcd a z
+
+exclude main ; avb w ; switchwb 
+
+initialize ; setenv -r interactive 
+ca ; setw 0.0 ; seta chi ; sete ; list 
+

@@ -1,0 +1,34 @@
+initialize ; chain $(p1) | ca ; setw 0.0 ; group t1
+
+setenv -s verbose 0
+
+dfabcd c n ca c 0 1 1 1 f f t f -80. -30.
+initialize ; load t1 ; sett ' ' 70 ; abcd c
+dfabcd n ca c n 0 0 0 1 f t f f -75. -20.
+initialize ; load scr ; abcd b 
+initialize ; load scr ; sett h 70 ; group hlx
+initialize ; { load t1 | pattern hhhhh 70}
+set weight 10.0 ; group hlx
+initialize ; load hlx | residue pro ; set weight 30
+initialize ; load hlx | residue gly ; set weight 40
+!!list zone
+
+dfabcd c n ca c 0 1 1 1 f f t f -180.0 0.0
+initialize ; load t1 ; sett ' ' 70; group ca ; abcd c
+dfabcd n ca c n 0 0 0 1 f t f f 40.0 180.0
+initialize ; load scr ; abcd b 
+initialize ; load scr ; sett s 70; group bst
+initialize ; { load t1 | pattern sssss 70}
+set weight 20.0 ; group bst
+initialize ; load bst | residue pro ; set weight 30
+initialize ; load bst | residue gly ; set weight 40
+!!list zone
+
+rewind out
+
+initialize ; load t1 | w > 0.1
+exclude residue except pro gly
+setw 0.0
+
+initialize ; load t1
+setenv -r verbose

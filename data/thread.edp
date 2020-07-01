@@ -1,0 +1,28 @@
+! <beginning of thread.edp>
+! copyright by X. Cai Zhang (010604)
+
+! This macro calculate the matrix from one protein molecule to another.
+! It require v01a or higher version EDPDB to run this macro. 
+! also see: matchzn.edp, match1ds.edp, match1d.edp, match3d.edp
+
+! Syntax: 
+! @thread target_chain moving_chain
+! example: to overlay chain b to chain a, type 
+! @thread a b
+
+setenv -s verbose 0
+! define molecule A and B
+parameter ch_a = $(p1)
+parameter ch_b = $(p2)
+
+@assign-2nd $(ch_a)
+w2t 0.0 score_2nd.txt
+
+@acc-rel $(ch_a) bme
+w2t 0.0 score_acc.txt
+
+! threading search
+{ca | chain $(ch_a)  ; group a }
+initialize ; setenv verbose 4
+ca | chain $(ch_b)| thread a suba 1.5 1.0 0.01 1.0 30 
+setenv -r verbose

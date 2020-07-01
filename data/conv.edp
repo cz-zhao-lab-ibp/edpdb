@@ -1,0 +1,13 @@
+! this macro converts the cartician coordinates to a new cartician system,
+!  assuming the current PDB contains the orientation matix header. 
+! syntax:
+!  @conv convention#
+
+! example: convert the coordinates to convertion #1,ie. x//a*, y//b, z//(a* x b)
+!  @conv 1
+
+zone all
+rtn deorth 1 1 1
+cell , , , , , , $(p1)
+cell
+rtn orth 1 1 1

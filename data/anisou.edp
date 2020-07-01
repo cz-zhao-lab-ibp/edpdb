@@ -1,0 +1,29 @@
+! <beginning of anisou.edp>
+!! copyright by X. Cai Zhang (modified on 030829)
+
+! This is an example macro that calculate the anisotropic factor 
+!   from modified PDB ANISOU records.
+
+! Syntax: @anisou 
+
+mkfile tmp1_.edp 
+eigen $(p3) $(p4) $(p5) $(p6) $(p7) $(p8) 0.0001 , , , $(p2) $(p1)
+{zone $(p2) | atom $(p1)} 
+eof
+
+init; alias anisou @tmp1_.edp
+
+ANISOU       N          15     3230   3439   5080   -927   -459  -1207
+ANISOU       CA         15     2993   3259   3542  -1151    224   -929
+ANISOU       C          15     3064   2973   2386  -1133    -10   -416
+ANISOU       O          15     4184   3408   2414  -1543    -42     38
+ANISOU       N          16     3038   3171   2977  -1010    -76   -262
+ANISOU       CA         16     3203   2661   3644  -1173    344   -274
+ANISOU       CB         16     4328   2864   3049  -1068    454   -168
+ANISOU       CG         16     5538   3640   4343  -1573  -1135    171
+ANISOU       OD1        16     7574   4665   2480  -1328   -346    290
+ANISOU       ND2        16     5779   5156   5831    -92  -1415    467
+ANISOU       C          16     2715   2706   3214   -686   -429    -89
+ANISOU       O          16     3159   3700   3323     46    -94    474
+
+! <end of anisou.edp>

@@ -1,0 +1,49 @@
+! acc-rel.edp   by X. Cai Zhang, 010602
+! calculate percentage solvent accessibilty in the context of the protein, 
+!  but excluding solvent molecules.
+! syntax: 
+! @acc-rel.edp  chainName ligandToBeExcluded 
+! example:
+! @acc-rel  a 'BME NAG' 
+
+! if the PDB file does not contain a chain mark, 
+!  open the PDB file with the option "-c a"
+
+initialize ; chain $(p1) | ca ; group t1 ; more
+exclude residue sol wat tip $(p2) 
+! it is okay if the above listed molecules do not exist
+
+access , , 1.4 0.2 
+
+initialize ; load t1 | ca ; blank ; seta acc ; more ; sumw x 
+exclude side ; sumw y
+more ; exclude main ; sumw z 
+
+initialize ; load t1 | residue ala ; set weight 108 ; set weight x / 
+initialize ; load t1 | residue cys ; set weight 102 ; set weight x / 
+initialize ; load t1 | residue asp ; set weight 165 ; set weight x / 
+initialize ; load t1 | residue glu ; set weight 169 ; set weight x / 
+initialize ; load t1 | residue phe ; set weight 177 ; set weight x / 
+initialize ; load t1 | residue gly ; set weight 102 ; set weight x /
+initialize ; load t1 | residue his ; set weight 112 ; set weight x /
+initialize ; load t1 | residue ile ; set weight 124 ; set weight x / 
+initialize ; load t1 | residue lys ; set weight 207 ; set weight x /
+initialize ; load t1 | residue leu ; set weight 167 ; set weight x / 
+initialize ; load t1 | residue met ; set weight 200 ; set weight x /
+initialize ; load t1 | residue asn ; set weight 143 ; set weight x / 
+initialize ; load t1 | residue pro ; set weight 146 ; set weight x /
+initialize ; load t1 | residue gln ; set weight 130 ; set weight x / 
+initialize ; load t1 | residue arg ; set weight 240 ; set weight x / 
+initialize ; load t1 | residue ser ; set weight 120 ; set weight x / 
+initialize ; load t1 | residue thr ; set weight 152 ; set weight x / 
+initialize ; load t1 | residue val ; set weight 155 ; set weight x / 
+initialize ; load t1 | residue trp ; set weight 160 ; set weight x / 
+initialize ; load t1 | residue tyr ; set weight 192 ; set weight x /
+
+initialize ; load t1 
+! the occs field of CA atoms has been changed to 
+!   % solvent accissible area (SAS) of the corresponding residue;
+! the X field of CA atoms changed to SAS of the residue in A^2;
+! the Y field of CA atoms changed to SAS of the main chain atoms in A^2;
+! the Z field of CA atoms changed to SAS of the side chain atoms in A^2.
+! type LIST to see the result.

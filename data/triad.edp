@@ -1,0 +1,11 @@
+!<beginning of triad.edp> 
+! copy right by X. C. Zhang (modified on 040413)
+! function: listing potential ser/cys - his - asp/glu catalytic triad, 
+!           based on cb atom geometry. 
+! syntax:
+!   @triad
+
+init; atom cb | residue asp glu ; group tr3
+init; atom cb | residue his     ; group tr2
+init; atom cb | residue ser cys ; group tr1 
+doit tr2 s 5 4.5 7.5 tr3 s 5 4.5 7.5  

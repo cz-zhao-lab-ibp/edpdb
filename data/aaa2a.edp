@@ -1,0 +1,70 @@
+! aaa2a.edp   by X. Cai Zhang, 000602
+! change the chain_mark to the single letter a.a. name.
+! useful for a pattern search. 
+! also see: the 'pattern' command
+
+! syntax: 
+! @aaa2a.edp
+
+initialize
+residue ala
+sett  a 70
+initialize
+residue cys
+sett  c 70
+initialize
+residue asp
+sett  d 70
+initialize
+residue glu
+sett  e 70
+initialize
+residue phe
+sett  f 70
+initialize
+residue gly
+sett  g 70
+initialize
+residue his
+sett  h 70
+initialize
+residue ile
+sett  i 70
+initialize
+residue lys
+sett  k 70
+initialize
+residue leu 
+sett  l 70
+initialize
+residue met 
+sett  m 70
+initialize
+residue asn 
+sett  n 70
+initialize
+residue pro 
+sett  p 70
+initialize
+residue gln 
+sett  q 70
+initialize
+residue arg 
+sett  r 70
+initialize
+residue ser
+sett  s 70
+initialize
+residue thr 
+sett  t 70
+initialize
+residue val 
+sett  v 70
+initialize
+residue trp
+sett  w 70
+initialize
+residue tyr
+sett  y 70
+initialize
+

@@ -1,0 +1,11 @@
+! zeta.edp   by X. Cai Zhang, 000602
+! calculated the zeta angle which should be around +35 degrees.
+! a negative zeta angle indicates that the residue has a "wrong" chirality for
+!  an L amino acid residue.
+! syntax: 
+! @zeta.edp 
+
+dfabcd ca n c cb 0 0 0 0 t t t t  ! -180 0 !! to pick the wrong ones
+initial ; atom ca n c cb 
+abcd 
+

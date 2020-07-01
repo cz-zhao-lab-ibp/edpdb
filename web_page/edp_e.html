@@ -1,0 +1,674 @@
+<html>
+<head>  <title>EdPDB: Editing </title> </head>
+
+<body background="trebuche2.gif">
+<hr><a name="top"></a><a name="editing">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1>        	Editing			</h1>
+      Editing commands modify the output fields, i.e. text strings, W
+  and B values, of the selected records. Specifically, every character
+  in the text string can be modified. The editing commands listed
+  below will not change the internal xyz coordinates (which may be
+  used for geometry calculations).
+<p>
+Available commands:<ul>
+<li>	    <a href="edp_e.html#blank">	BLANK 	</a>,
+<li>	    <a href="edp_e.html#copy">	COPY	</a>,
+<li>	    <a href="edp_e.html#permute">	PERMUTE	</a>,
+<li>	    <a href="edp_e.html#set">	SET	</a>,
+<li>	    <a href="edp_e.html#switchwb"> SWITCHWB</a> and
+<li>	    <a href="edp_e.html#update">	UPDATE	</a>.</ul>
+
+
+<hr><a name="blank">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>    BLANK   </h2>
+      Blanks the x, y, z fields of the ON atoms.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      BLANK
+<p>
+  Example:
+  1) To erase the x, y and z fields of the Ca atoms.
+<pre>
+      initial
+      Ca 
+      blank
+</pre>
+
+<hr><a name="copy">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   COPY   </h2>
+      Copy X, Y, Z, W and B fields from a given group to the ON atoms.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      COPY <i>group_name</i> <br>
+      COPY <i>group_name</i> (X,Y,Z,W,B) <br>
+      COPY <i>group_name</i> T [<i>i0</i> [<i>i1</i>]]<br>
+<p>
+Output <a href="edp_ctr.html#parameter">Status</a>:
+-1, error; >=0, # of records copies.
+<p>
+  Also see: 
+<a href="edp_e.html#permute">	PERMUTE	</a>,
+<a href="edp_e.html#set">	SET	</a> and 
+<a href="edp_e.html#update">	UPDATE	</a>.
+<p>
+  Examples:<br>
+  1) Copy XYZ, W and B fields from residue A99 to B99.
+<pre>
+      initialize; zone A99; group a
+      initialize; zone B99; copy  a 
+</pre>
+  2) Copy W and B fields from residues A90-A100 to B90-B100.
+<pre>
+      initialize; zone A90-A100; group a
+      initialize; zone B90-B100; copy  a wb
+</pre>
+  3) Copy text columes 6-10 (atom name field) from residue A200 to B200.
+<pre>
+      initialize; zone A99; group a
+      initialize; zone B99; copy  a t 6 10 
+</pre>
+
+<hr><a name="permute">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  PERMUTE </h2>
+      Permute columns in the text string of the ON atoms. PDB files
+  output from different programs may have slightly different
+  formats. For example, some fields may shift relative to each other.
+  PERMUTE command can be used to fix this kind of problem by
+  reformatting the record. 
+<p>
+  Function: Editing, Information
+<p>
+  Syntax: <br>
+  1)  PERMUTE <br>
+  2)  PERMUTE  <i>i0, i1, shift</i> <br>
+<p>
+  Note: <br>
+  1)  The first form outputs a ruler which defines the column
+number. <br>
+  1)  The <i>i0, i1</i> are the starting and ending column numbers,
+      respectively. <br>
+  2)  The <i>shift</i> is the number of times of
+      one-character-permutations, which can be either positive or
+      negative. <br>
+<p>
+   Examples: <br>
+  1) To display the current test string and the column ruler.
+<pre>
+      zone all
+      permute
+</pre>
+  2) Shift the residue number, which is currently at positions 16 - 19
+  of the text string, right-ward by one character.
+<pre>
+      permute 16 20 1
+</pre>
+  3) Shift the atom name, which is currently the at positions 8 - 10
+  of the text string, left-ward by two characters.
+<pre>
+      permute 6 10 -2
+</pre>
+  4) Reformat the record to switch the residue type (eg. Ala, Asp) at
+  position 11 - 13 and the atom name at position 7-9. 
+<pre>
+      permute 7 13 3
+      permute 
+           ! to check the result of the permutation.
+           ! it does not look as expected
+      permute 7 13 -3
+           ! to restore the record, then try again
+      permute 7 14 4
+           ! or permute 6 13 4
+</pre>
+  
+<hr><a name="set">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      SET     </h2>
+      Set new text string etc. to all the ON atoms.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      SET  <i>field_name</i> <i>parameters</i> <br>
+<p>
+ 
+  Available field_names include the following: <ul>
+<li>  <a href="edp_e.html#seta">	ATOM 	</a>, 
+<li>  <a href="edp_e.html#setb"> 	B</a>, 
+<li>  <a href="edp_e.html#setc"> 	CHAIN	</a>, 
+<li>  <a href="edp_e.html#sete"> 	ENTRY	</a>, 
+<li>  <a href="edp_e.html#seti">   	ID </a>, 
+<li>  <a href="edp_e.html#setr">   	RESIDUE </a>, 
+<li>  <a href="edp_e.html#sett">   	TEXT </a> and
+<li>  <a href="edp_e.html#setw"> 	WEIGHT</a>.</ul>
+<p>
+  See also:
+
+<hr><a name="seta">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#set"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>     SET ATOM (SETA)    </h3>
+      Set new atom name to all the ON atoms.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      SET ATOM  <i>atom_name</i>
+<p>
+  See also: 
+ 
+<p>
+   Examples: <br>
+  1) Change atom name from WT to HOH
+<pre>
+      initial
+      atom wt
+      set atom hoh
+</pre>
+
+<hr><a name="setb">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#set"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>     SET B (SETB)    </h3>
+      Set the B-factor of the ON atoms to a given value or with the
+  average B of the ON atoms of each residue.
+<p>
+  Syntax: <br>
+  1)  SET B <br>
+  2)  SET B  [<i>b</i>] <br>
+<p>
+  Note: <br>
+  1)  The first form sets the B factor to the average B of the ON
+      atoms of each residue. <br>
+  2)  The second form sets the B factor to <i>b</i>, where 
+      <code>-99.0 &lt b  &lt 999.0</code>. <br>
+<p>
+  Also see: 
+  <a href="edp_c.html#avb">AVB</a> 
+<p>
+   Examples: <br>
+  1) Set the B factors of the ON atoms to 25.0
+<pre>
+      set b 25.0
+</pre>
+  2) Set the B factors of side chain atoms to the average B of the
+  side chain for each residue.
+<pre>
+      initial
+      side 
+      set b
+</pre>
+
+<hr><a name="setc">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#set"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>     SET CHAIN (SETC)    </h3>
+      Set new chain name to all the ON atoms.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      SET CHAIN  [<i>chain_name</i>]
+<p>
+  Note: <br>
+  1)  The <i>chain_name</i> is the new chain name (one character). <br>
+  2)  This command will not change the residue ID in the internal
+      array (used for selection criterion), but will affect all the
+      subsequent output (eg. LIST and WRITE commands). <br>
+  3)  If a chain_name is not input, SETC command will try to catch
+      the last non-numeric character in the <i>residue_id</i> field <em>
+      of the
+      text string</em> of each ON atom, using it as the chain name, and
+      erase the non-numeric characters from the residue_id field in
+      the displayed text string. <br>
+<p>
+  See also: 
+   <a href="edp_e.html#seti">SETI</a>
+<p>
+   Examples: <br>
+  1) Set the chain name of the ON atoms to <i>A</i>
+<pre>
+      set chain a
+</pre>
+  2) Set the chain name of the ON atoms to blank
+<pre>
+      set chain ' '
+</pre>
+  3) Split the <i>res_id</i> in the text string into a chain name and a
+  pure number.
+<pre>
+      set chain
+</pre>
+
+<hr><a name="sete">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#set"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>     SET ENTRY (SETE)    </h3>
+      Set new entry number to the ON atoms in the current
+  displaying order.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      SET ENTRY
+<p>
+  See also: 
+    <a href="edp_c.html#sort">SORT</a>
+<p>
+   Examples: <br>
+  1) Reset the entry number after relabeling the atoms.
+<pre>
+      sort dfres
+      set entry
+</pre>
+  2) Use the entry number to indicate the B factor order.
+<pre>
+      zone all
+      sort b    ! sort the records in an ascending B order.
+      set entry ! set the entry number according the B order.
+      sort      ! set the record order back to the original one.
+      list      ! the entry number indicates the order of the B factors.
+</pre>
+
+<hr><a name="seti">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#set"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>     SET ID (SETI)    </h3>
+      Set new residue_number (ID) to all the On atoms.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+  1)  SET ID <br>
+  2)  SET ID [<i>new_res_#</i> [<i>incr_#</i>]] <br>
+<p>
+  Note: <br>
+  1)  With the first form, SET ID command will try to catch the last
+      non-numeric character in the residue_id field of each ON atom,
+      using it as the chain name. Note that the information comes
+      from the residue_id, but not the text of the records.  <br>
+  2)  With the second form, if the <i>incr_#</i> is specified, or the
+      <i>new_res_#</i> is not an integer number, the residue_id field in the
+      text string will be set to the <i>new_res_#</i>. <br>
+  3)  If both <i>new_res_#</i> and <i>incr_#</i> are integers, 
+      the residue_id field
+      will be set to integer numbers starting from the <i>new_res_#</i>
+      and increased by <i>incr_#</i>.  <br>
+<p>
+  See also: 
+  <a href="edp_e.html#setc">SETC</a>
+<p>
+   Examples: <br>
+  1) Some programs punch out PDB files in which the chain name
+  and the residue number are stacked together. To split them into
+  two parts, type
+<pre>
+      set id
+</pre>
+  2) Set residue ID of the ON records to <i>a100</i>
+<pre>
+      set id a100
+</pre>
+  3) Set residue ID of the ON records to numbers starting from 401
+  and increased by 1.
+<pre>
+      set id 401 1
+</pre>
+
+
+<hr><a name="setr">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#set"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>     SET RESIDUE (SETR)    </h3>
+      Set new residue type to all the ON atoms.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      SET RESIDUE <i>residue_type</i>
+<p>
+  See also:
+<p>
+   Examples: <br>
+  1) Set the <i>residue_type</i> of all the ON atoms to <i>ALA</i>.
+<pre>
+      set residue  ala
+</pre>
+  2) Change the residue type of <i>WAT</i> residues to <i>SOL</i>
+<pre>
+      initial
+      residue wat
+      set residue sol
+</pre>
+
+<hr><a name="sett">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#set"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>     SET TEXT (SETT)  </h3>
+      Set new TEXT to all the On atoms.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      SET TEXT <i>text_string</i> [<i>column_1</i> [<i>column_2 </i>]] 
+<p>
+  Note:
+   <i>column_1</i> and  <i>column_2</i> are the starting and ending 
+  column
+  numbers of the region where the <i>text_string</i> is to be written.
+<p>
+  See also:
+  <a href="edp_e.html#permute">PERMUTE</a>,
+  <a href="edp_s.html#text">TEXT</a>, and
+  <a href="edp_e.html#update">UPDATE</a>
+<p>
+   Examples: <br>
+  1) Set the atom name of the ON atoms to <i>OH</i>.
+<pre>
+      set text 'OH  ' 7 10 
+           ! the same as seta oh
+</pre>
+  2) Set the Z field to blank. 
+<pre>
+      permute
+           ! check the column numbers for the Z field.
+      set text ' ' 40 47 
+</pre>
+ 
+<p>
+<hr><a name="setw">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#set"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>     SET WEIGHT (SETW)    </h3>
+      Set the W field of the ON atoms with a user specified value or
+  a calculated value.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+  1)  SET WEIGHT <br>
+  2)  SET WEIGHT (<i>wv</i>, X, Y, Z, B, AVW, CA, <i>file_name</i>) 
+[(+W, -W, *W, /W)] <br>
+<p>
+  Note: <br>
+  1)  The first form sets the W field to <i>res_#</i>*0.1, where <i>res_#</i>
+      is the
+      residue order number in the input PDB coordinate file.  <br>
+  2)  The <i>wv</i> is a real number to which the W column will be set.
+      The option X, Y, Z or B will set the W column equal to the
+      correspond column. CA will set the W column to what of the correspondind
+      CA atom. AVW will set the W column to the average value of the 
+      corresponding residue. The <i>file_name</i> specifies an 
+      <i>acc.txt</i> like file which defines the VDW radii for different 
+      types of atoms,
+      and the W column will be set according the data in this file. <br>
+  3)  The options +W -W *W and /W can be used to modify the W
+      value. <br>
+<p>
+  See also:
+  <a href="edp_c.html#access">ACCESS</a>,
+  <a href="edp_c.html#axis">AXIS</a>,
+  <a href="edp_c.html#distance">DISTANCE</a> and
+  <a href="edp_e.html#switchwb">SWITCHWB</a>
+<p>
+   Examples: <br>
+  1) Set the occupancy of the ON atoms to 0.5
+<pre>
+      set weight 0.5
+</pre>
+  2) Set the occupancy to 1.0 after a command, say AXIS, which
+  may cause unwanted changes in the occupancy column (ie. the W
+  field).
+<pre>
+      axis rtn_.txt
+      set weight 1.0
+</pre>
+  3) Create a PDB file (new_coor.pdb) in which the B factor is
+  proportional to the residue position number in the amino acid
+  sequence.
+<pre>
+      initial
+      set weight
+      switchwb
+      set weight 1.
+      write new_coor.pdb
+</pre>
+  4) Multiply the value in the B column by a factor 10.0.
+<pre>
+      set weight 10.0
+      set weight b *w
+      switchwb
+</pre>
+  5) Sort the records according to Z coordinates.
+<pre>
+      zone all
+      set weight z
+      sort w
+</pre>
+  6) Calculate the approximate molecular weight of the protein
+  molecule. The numbers used in this example are nothing more
+  than an example:
+<pre>
+      initial
+      atom c*
+      set weight 13.0
+           ! set the W column of carbon atoms to 13.0
+      initial
+      atom n*
+      set weight 14.0
+           ! set the W column of nitrogen atoms to 14.0
+      initial
+      atom o*
+      set weight 16.5
+           ! set the W column of oxygen atoms to 16.5
+      initial s*
+      set weight 33.0
+           ! and set the W of sulfur atoms to 33.0
+      zone all
+      sumw x
+           ! Calculate the summation of the W column.
+</pre>
+
+<hr><a name="switchwb">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  SWITCHWB</h2>
+      Switch B and W columns. This command is useful for sharing
+  EdPDB utilities between B and W columns.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      SWITCHWB
+<p>
+  See also:
+  <a href="edp_c.html#avb">AVB</a>,
+  <a href="edp_c.html#rmsw">RMSW</a>,
+  <a href="edp_e.html#setw">SETW</a> and
+  <a href="edp_c.html#sumw">SUMW</a>
+<p>
+   Examples: <br>
+  1) Switch the B and W columns.
+<pre>
+      switchwb
+</pre>
+
+  2) Calculate the average <i>W</i> for each residue. (Note that the value
+  in the W field could be any real number). 
+<pre>
+      switchwb 
+      avb x   ! store the average W in 
+           ! the X field of the CA atom for each residue.
+</pre>
+
+<hr><a name="update">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>    UPDATE  </h2>
+      Update the xyz, W or B fields of the ON records.
+<p>
+  Function: Editing
+<p>
+  Syntax: <br>
+      UPDATE <br>
+      UPDATE (XYZ, W, B) <i>file_name</i> <i>fortran_format</i> <br>
+      UPDATE T <i>column_1</i> <i>column_2</i> <i>file_name</i> 
+       <i>fortran_format</i> [<i>jump_after_string</i>]<br>
+<p>
+  See also:
+  <a href="edp_e.html#sett">SETT</a> and
+  <a href="edp_e.html#setw">SETW</a>
+<p>
+   Examples: <br>
+  1) convert <a href="edp_g.html#display">displayed</a>
+   text into internal data.
+<pre>
+      update
+</pre>      
+  2) Change the xyz coordinates according to the data in a text file.
+<pre>
+      initial
+      zone        all
+      update      xyz new.dat '(3f8.3)'
+</pre>
+  3) Change column <code>22</code> to the secondary structure symbol 
+defined by <i>DSSP</i>. The information is stored in a file called
+<i>a.dssp</i> and starts from the line after the text string '<code> #</code>.
+<pre>
+	initial
+	ca
+	update t 22 22 a.dssp '(16x,a1)' ' #'
+</pre>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->
+</font>
+</body>
+</html>

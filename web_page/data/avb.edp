@@ -1,0 +1,18 @@
+! avb.edp  by X. Cai Zhang, 000602
+! calculate B factors averaged over residue (stored in X),
+!  main chain (Y), and side chain (Z). B factors for the CA atom will stay 
+!  where they are, and OCC field is set to zero. All there results are stored
+!  in the CA atom records, assuming each residue has a CA atom (for protein, 
+!  this is a pretty good assumption, isn't it?).
+! You may save this result using the 'write' command. 
+! also see: rmsw.edp, sumw.edp, swicthwb
+!
+! syntax: 
+! @avb.edp 
+
+initialize ; ca ; blank ; more ; avb x 
+exclude side ; avb y 
+more ; exclude main ; avb z
+
+initialize ; ca ; setw 0.0 ; sete ; seta avb ; list
+

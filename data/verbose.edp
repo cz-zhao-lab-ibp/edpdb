@@ -1,0 +1,6 @@
+setenv -s verbose 10 ; setenv -s echo 2 
+! verbose.edp   by X. Cai Zhang, 000602
+! sequenze out everything possible. 
+! a macro of the opposite function is Bequiet.edp.
+! syntax: 
+! @verbose.edp

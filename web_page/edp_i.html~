@@ -1,0 +1,487 @@
+<html>
+<head>  <title>EdPDB: Input/output </title> </head>
+
+<body background="trebuche2.gif">
+<hr><a name="top"></a><a name="input-output"> 
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1>  	Input/output		</h1>
+Available commands:<ul>
+<li>	    <a href="edp_i.html#append">	APPEND 	</a>,
+<li>	    <a href="edp_i.html#exit">		EXIT	</a>,
+<li>	    <a href="edp_i.html#list">		LIST	</a>,
+<li>	    <a href="edp_i.html#read">		READ 	</a>,
+<li>	    <a href="edp_i.html#remark">	REMARK 	</a>,
+<li>	    <a href="edp_i.html#seq2pdb">	SEQ2PDB	</a>, 
+<li>	    <a href="edp_i.html#sequence">	SEQUENCE</a>, and
+<li>	    <a href="edp_i.html#write">		WRITE	</a>. 
+</ul>
+<p>
+      As an editing program, EdPDB can output the editing result to
+  either the terminal or to new PDB format files. It can also read
+  multiple PDB files.
+<p>
+
+<hr><a name="append">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      APPEND  </h2>
+      Append the ON atom to an opened PDB format output file.
+<p>
+  Function: Output
+<p>
+  Syntax: <br>
+      APPEND [<i>comment</i>]
+<p>
+  Note: <br>
+    The optional comment, which is usually a text string,  will be
+  written in front of the output records.
+<p> 
+  See also:
+  <a href="edp_i.html#write">WRITE</a>
+<p>
+   Examples: <br>
+  1) Append the current ON atoms to the opened PDB file.
+<pre>
+      append
+</pre>
+
+  2) Switch the order of two molecules, A and B, in the output file.
+<pre>
+      initial
+      chain b
+      write ba.pdb 'REMARK molecule B the first'
+      initial
+      chain a
+      append  'REMARK molecule A follows molecule B'
+</pre>
+  
+<hr><a name="exit">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> EXIT    </h2>
+      Make an output a PDB file, and terminate EdPDB.
+<p>
+  Function: Output, Control
+<p>
+  Syntax: <br>
+      EXIT  [<i>file_name</i>]  [(COS, HEADER, <i>title</i> )]
+<p>
+  Note: <br>
+  1)  The default file name is the same as that of the (1st) input
+      PDB file. To use the default file name, type a comma instead
+      of a file name. <br>
+  2)  The default file type is <i>.pdb</i>. <br>
+  3)  The EXIT command is equivalent to a WRITE statement
+      followed by a QUIT statement without the SAVE option.  <br>
+  4)  See the documentation of the WRITE command for the
+      information of the header options. <br>
+<p>
+  See also:
+  <a href="edp_ctr.html#quit">QUIT</a> and
+  <a href="edp_i.html#write">WRITE</a>
+<p>
+   Examples: <br>
+  1) Write the current ON atoms to a new PDB file, and quit from
+  EdPDB.
+<pre>
+      exit new_coor.pdb
+</pre>
+
+  2) Write a new PDB file including the cell parameter information,
+  and quit from EdPDB.
+<pre>
+      cell 61.2 61.2 96.8 90.0 90.0 120.0 1 
+           ! T4 lysozyme, P3221 crystal form
+      exit new_t4l.pdb cos
+</pre>
+
+
+<hr><a name="list">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> LIST    </h2>
+      List the ON atoms on the terminal.
+<p>
+  Function: Output
+<p>
+  Syntax: <br>
+    1)  LIST  [ <i>n1</i> [<i>n2</i>] ]<br>
+    2)  LIST  ZONE <br>
+    3)  LIST  VECTOR [<i>dmin, dmax, max_center_to_center_dist</i>]
+<p>
+  Note: <br>
+  1)  The <i>n1</i> and <i>n2</i> are the sequential numbers of the sorted ON
+      records, which between which the records will be listed. <br>
+      The default of <i>n1</i> is <code>1</code>, and the default of 
+      <i>n2</i> is the end of ON
+      atoms. <br>
+  2)  The second form lists the currently selected zone(s).
+<p>
+  See also:
+  <a href="edp_c.html#sort">SORT</a> and
+  <a href="edp_i.html#write">WRITE</a>
+<p>
+   Examples: <br>
+  1) List all the ON atoms.
+<pre>
+	list
+</pre>
+  2) List the 100th-110th Ca atoms.
+<pre>
+	initial
+	Ca
+	list 100 110
+</pre>
+  3) List the 1500th ON atom and its following atoms.
+<pre>
+	list 1500
+</pre>
+  4) List the top 40 best ordered solvent molecules, ie the solvent
+  molecules of the lowest B factors.
+<pre>
+	initial
+	residue sol
+	sort b
+	list 1 40
+</pre>
+  5) List the residues that are within 4.5 A from OG atom of residue
+  16.
+<pre>
+	initial
+	nayb 4.5 16 OG
+	list zone
+</pre>
+  6) List the topology of the beta sheets. (Ref. Koch, et al. (1992).
+Analysis of Protein Sheet Topologies by Graph Theoretical Methods. 
+<i>Protein: Struc., Func., and Gen.</i>. <b>12</b>:314-323).  
+<pre>
+	initial
+	.... ! selete beta strands
+	list vector
+</pre>
+
+<hr><a name="read">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        READ    </h2>
+      READ the ATOM records from an existing PDB file.
+<p>
+  Function: Input
+<p>
+  Syntax: <br>
+      READ <i>file_name</i> [<i>mark</i>] [INITIALIZE]
+<p>
+  Note: <br>
+  1)  The <i>mark</i> is a character string, which will be used to substitute
+      the chain names in the input file. (See 
+      <a href="edp_h.html#start_edpdb">Start EdPDB</a> 
+      for more information). <br>
+  2)  If the INITIALIZE option is used, the original records stored in
+      the program will be overwritten. Otherwise, the new records
+      will be appended to the original ones. <br>
+  3)  The file input with a READ command can not be recovered
+      with the RESET command. <br>
+<p>
+  See also:
+  <a href="edp_ctr.html#reset">RESET</a> and
+  <a href="edp_h.html#start_edpdb">Start EdPDB</a> 
+<p>
+   Examples: <br>
+  1) Read a PDB file, keep the chain name as it is, and overwrite
+  the previously input records.
+<pre>
+      read  file_b.pdb  ,  initialize
+  or
+      read  file_b.pdb  _  initialize
+</pre>
+
+  2) Read a PDB file (abcd.pdb) which contains A, B, C and D four
+  chains. The chain names will be changed to S, T, U and V when
+  they are read in.
+<pre>
+      read  abcd.pdb stuv
+</pre>
+
+<hr><a name="remark">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        REMARK    </h2>
+      Make a REMARK to the output PDB file.
+<p>
+  Function: Output
+<p>
+  Syntax: <br>
+      REMARK <i>text_string</i> 
+<p>
+  Note: <br>
+  1)  <p>
+  See also:
+  <a href="edp_i.html#write">WRITE</a>.  
+<p>
+   Examples: <br>
+  1) .
+<pre>
+      initialize; write new.pdb blank
+      setenv tolower off
+      remark The New Coordinates; setenv tolower on
+      zone all; append; close  
+</pre>
+
+<hr><a name="seq2pdb">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>     SEQ2PDB        </h2>
+      Create an output file containing pseudo pdb records according to 
+an input sequence file (It is not a 3D structure! You need more information than
+just the a.a. sequence to make of a real PDB file). The one- to three-character
+change is based on the information input from the file <i>pdbstd.dat</i>.
+<p>
+  Function: Output
+<p>
+  Syntax: <br>
+      SEQ2PDB <i>file_name</i> [<i>format</i>]
+<p>
+  Note: <br>
+  1)  The <i>file_name</i> defines the name of an input sequence file.<br>
+  2)  The <i>format</i> is a FORTRAN input format for reading the 
+      one-character
+      sequence. The default format is <code>(5(1X,10A1))</code>. <br>
+  3)  The first line of the sequence file can be either '*' plus the 
+      sequence number of the first residue or '>' plus comments. 
+<p>
+  See also:
+  <a href="edp_m.html#file">FILE</a>,
+  <a href="edp_i.html#sequence">SEQUENCE</a> and
+  <a href="edp_s.html#match1d">MATCH1D</a>
+<p> 
+   Examples: <br>
+  1) Make a pdb file (aa.pdb) for the sequence file aa.seq.
+<pre>
+      initialize
+      write aa.pdb
+      seq2pdb aa.pdb '(6(1x,10a1))'
+      close
+</pre>
+
+
+<hr><a name="sequence">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>     SEQUENCE        </h2>
+      Create an output file containing the single character sequence
+  of the <i>selected residues</i>. The three character to one character
+  change is based on the information input from the <i>pdbstd.dat</i> file.
+<p>
+  Function: Output
+<p>
+  Syntax: <br>
+      SEQUENCE [<i>file_name</i>] [<i>format</i>] [(C,R)]
+<p>
+  Note: <br>
+  1)  The <i>file_name</i> defines an output file name for the sequence.
+      It must be an non-existing file.<br>
+  2)  The <i>format</i> is a FORTRAN output format for output of the
+      sequence characters. The default format is <code>(5(1X,10A1))</code>. <br>
+  3)  If the optional C is used, the chain name of the first ON atom
+      of each residues will be output as the sequence characters. <br>
+  4)  If the optional R is used, the residue name of the first ON atom
+      of each residues will be output. <br>
+<p>
+  See also:
+  <a href="edp_d.html#dfres">DFRES</a>,
+  <a href="edp_m.html#file">FILE</a> and
+  <a href="edp_e.html#setc">SETC</a>
+<p> 
+   Examples: <br>
+  1) Output the amino acid sequence in the single-letter form.
+<pre>
+      ca
+      sequence a.seq
+</pre>
+
+  2) Output the amino acid sequence in the three-letter form.
+<pre>
+      ca
+      sequence aaa.seq '(13(a3,1x))' r
+</pre>
+
+  3) Output the burial-solvent_exposure pattern of the protein
+  molecule.
+<pre>
+      initial
+      ca
+      setc b
+           ! B stands for burial, to initialize with
+      more
+      access
+      sumw x
+           ! calculate the solvent accessible area of each residue    
+      initial
+      ca from { x &gt; 20.0 }
+           ! select solvent exposed residues
+      setc E  ! E stands for exposed 
+      ca
+      sequence pattern.seq
+</pre>
+
+<hr><a name="write">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        WRITE   </h2>
+      Make a new file to output the current ON atoms. The file will
+  remain opened and APPEND-able until is CLOSEd. The WRITE
+  command also automatically closes the previous output PDB file if
+  exists.
+<p>
+  Function: Output
+<p>
+  Syntax: <br>
+      WRITE  <i>file_name</i> [(COS, HEADER, BLANK, <i>title</i> )] 
+      [<i>format</i>]
+<p>
+  Note: <br>
+  1)  The default file type of the output file is <i>.pdb</i>. 
+The unix one overwrites the old file of the specified filename (be careful). 
+if it exists.<br>
+  2)  If the option COS is used, the CRYST, ORIGX and SCALE
+      information will be written onto the new PDB file. This is
+      the default option if the required cell parameters have been input.
+<br>
+  3)  If the option HEADER is used, the header from the 1st input
+      PDB file will be copied to the new file. <br>
+  4)  BLANK option is used to superess any header output. It becomes
+      the default option if on cell parameter has been input. <br>
+  5)  The <i>title</i> is a text string that is enclosed with a pair of
+      quotation mark (' '). It will be output before other records.  <br>
+  6)  The <i>format</i> must be a <i>FORTRAN</i> output format for a text
+      string and two real numbers. It can be used to reformat the
+      output records. The default is the PDB format.  <br>
+  7)  The order of the output records can be affected by the SORT
+      command.  <br>
+<p>
+  See also:
+  <a href="edp_i.html#append">APPEND</a>,
+  <a href="edp_d.html#cell">CELL</a>,
+  <a href="edp_ctr.html#close">CLOSE</a>,
+  <a href="edp_c.html#closer">CLOSER</a>,
+  <a href="edp_c.html#sdist">SDISTANCE</a>,
+  <a href="edp_i.html#read">READ</a>,
+  <a href="edp_c.html#shape">SHAPE</a> and
+  <a href="edp_c.html#sort">SORT</a>
+<p> 
+   Examples: <br>
+  1) Output the Ca atoms to a PDB file, eg. called Ca.pdb
+<pre>
+      initial
+      ca
+      write Ca.pdb
+</pre>
+  2) Output the ON atoms to a PDB file and add the CRYST, ORIG
+  and SCALE information.
+<pre>
+      cell 61.2 61.2 96.8 90.0 90.0 120.0 1
+      write new_coor.pdb cos
+</pre>
+  3) Output the ON atoms to a PDB file and copy the header from
+  the original (1st) input PDB file.
+<pre>
+      write new_coor.pdb header
+</pre>
+  4) Output the ON atoms to a PDB file and add a title to the PDB
+  file. Note that the double quotation mark is to prevent changing
+  the title to lower cases.
+<pre>
+      setenv tolower off
+      write new_coor.pdb 'REMARK This is a test PDB file.'
+</pre>
+  5) Output the ON atoms to a file in which the W, B column is at
+  the beginning of each record.
+<pre>
+      write new_coor.dat , '(t20,a,t1,2f8.3)'
+</pre>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2004-06-03<!--webbot bot="Timestamp" endspan i-CheckSum="12376"
+-->
+.</font>
+</body>
+</html>

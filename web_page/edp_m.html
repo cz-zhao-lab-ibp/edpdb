@@ -1,0 +1,628 @@
+<html>
+<head>  <title>EdPDB: Miscellaneous</title> </head>
+
+<body background="trebuche2.gif">
+<hr><a name="top"></a><a name="miscellaneous">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1>  	Miscellaneous		</h1>
+Available commands:<ul>
+<li>	    <a href="edp_m.html#comment">	comment	</a>,
+<li>	    <a href="edp_m.html#clear">	CLEAR	</a>,
+<li>	    <a href="edp_m.html#file">	FILE	</a>,
+<li>	    <a href="edp_m.html#help">	HELP	</a>,
+<li>	    <a href="edp_m.html#setenv">	SETENV	</a> and
+<li>	    <a href="edp_m.html#shdf">	SHDF	</a>.</ul>
+<p>
+      This type of command is designed to make EdPDB more
+  user-friendly and/or to provide the user with help when needed.
+<p>
+
+<hr><a name="comment">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      comment </h2>
+      Any text-string following an exclamation
+  mark (!) in an input statement will be considered as a comment
+  and is omitted during command interpretation.
+<p>
+  Function: Miscellaneous
+<p>
+  Syntax: <br>
+  1)  ! <i>comment</i> <br>
+  2)&nbsp; <i>command</i>     !<i>comment</i> <br>
+      
+  Note: <br>
+  1)  The first form is called a comment statement, and the
+      other is called commands with comments. <br>
+  2)  A comment statement starting with a single
+      exclamation mark will be echoed from a macro
+      if the  <a href="edp_m.html#setenv_echo">echo</a> option is set to larger than one (1) 
+      and <a href="edp_m.html#setenv_vb">verbose</a> is larger than zero (0). <br>
+  3) A comment statement starting with "!!" will never get echoed. <br>
+  4) The current version does not support a comment&nbsp; in a piped command.
+
+<p>
+  See also: 
+  <a href="edp_m.html#setenv">SETENV</a> and
+  <a href="edp_g.html#command_interpretation">command interpretation</a>
+<p>
+
+<hr><a name="clear">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        CLEAR       </h2>
+      Clear the terminal screen.
+<p>
+  Function: Miscellaneous
+<p>
+  Syntax: <br>
+      CLEAR
+<p>
+
+<hr><a name="file">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> FILE    </h2>
+      Show the file names which are currently used.
+<p>
+  Function: Information, Control
+<p>
+  Syntax: <br>
+  1)  FILE <br>
+  2)  FILE OUT <i>file_name</i> <br>
+  3)  FILE  LOG <i>file_name</i> <br>
+<p>
+  Note: <br>
+  1)  The first form lists the currently used files. For the input PDB
+      files, only the names of the first two and the last one will be
+      listed. <br>
+  2)  Using the OUT option, the intermediate result will be redirected
+      to a new scratch file, so that the old scratch file can be saved
+      for other purposes. <br>
+  3)  Using the LOG option, the result that is usually piped to the stdoutput/sys$output will be redirected to a file. <br>
+<p>
+  See also:
+  <a href="edp_c.html#access">ACCESS</a>,
+  <a href="edp_c.html#distance">DISTANCE</a>,
+  <a href="edp_m.html#help">HELP</a>,
+  <a href="edp_i.html#read">READ</a>,
+  <a href="edp_m.html#shdf">SHDF</a>,
+  <a href="edp_c.html#sort">SORT</a> and
+  <a href="edp_ctr.html#macro_file">@macro_file</a>
+<p>
+   Examples: <br>
+  1) List the currently used files.
+<pre>
+      file
+</pre>
+
+  2) Close the old scratch (<i>.out</i>) file,  say a.out, and pipe the
+  scratch output to a file called junk.out. Then one can type the old
+  scratch file.
+<pre>
+      file scr junk.out
+      system wait type/page a.out
+</pre>
+
+  3) Redirect some displayed result to a file tmp.log, and then switch
+  back to the terminal.
+<pre>
+      file log a.log
+      ...
+      file log tt:    ! for VMS terminal
+</pre>
+
+
+<hr><a name="help">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> HELP    </h2>
+List available commands.<p>
+  Function: Information
+<p>
+  Syntax: <br>
+1) HELP or ??? <br>
+2) <i>command</i> ???
+<p>
+  Note: The first form lists the current available commands, and the second form
+outputs the syntax of a given command.&nbsp;
+<p>
+  See also:
+  <a href="edp_m.html#file">FILE</a>,
+  <a href="edp_m.html#setenv">SETENV VERBOSE</a> and
+  <a href="edp_m.html#shdf">SHDF</a>
+<p>
+   Examples: <br>
+  1) Get help on the zone command.<br><pre>
+     help
+     zone ???</pre>
+
+<hr><a name="setenv">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       SETENV  </h2>
+      Change environmental variables.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  SETENV  <br>
+  2)  SETENV  <i>variable</i>  [<i> new_variables</i>] <br>
+  3)  SETENV  -s [<i>variable</i> [<i> new_variables</i>]] <br>
+  4)  SETENV  -r [<i>variable</i>]  <br>
+<p>
+  Note:  <br>
+  The first form shows the current values.<br>
+  The second form sets new value(s) or to the default. <br>
+  The third form saves the current value(s) and sets new values if given. <br>
+  The fourth one restores the saved value(s).
+<p>
+  Available variables include the following: <ul>
+<li>  <a href="edp_m.html#setenv_delimiter">DELIMITER 	</a>, 
+<li>  <a href="edp_m.html#setenv_echo"> 	ECHO 		</a>, 
+<li>  <a href="edp_m.html#setenv_edp_data"> 	EDP_DATA	</a>, 
+<li>  <a href="edp_m.html#setenv_inter"> 	INTERACTIVE	</a>, 
+<li>  <a href="edp_m.html#setenv_maxerr">   	MAXERR          </a>, 
+<li>  <a href="edp_m.html#prompt">   		PROMPT          </a>, 
+<li>  <a href="edp_m.html#setenv_tl"> 		TOLOWER		</a>, 
+<li>  <a href="edp_m.html#setenv_vb"> 		VERBOSE		</a>, 
+<li>  <a href="edp_m.html#setenv_wildcard"> 	WILDCARD	</a> and
+<li>  <a href="edp_m.html#setenv_ws"> 		WINDOW_SIZE 	</a>.</ul>
+<p>
+  See also:
+  <a href="edp_e.html#set">SET</a> and
+  <a href="edp_d.html">defining</a>.
+
+
+<hr><a name="setenv_delimiter">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  DELIMITER </h3>
+      Set the parameter delimiter.
+<p>
+  Syntax: <br>
+      SETENV  DELIMITER [<i>one_character</i>]
+<p>
+  Note:  <br>
+    The default delimiter is a single quotation mark ('). <br>
+<p>
+  Examples: <br>
+  1) Assume that we have a macro file, read.edp, which accepts a
+  text string as its parameter. We can use the delimiter to enclose a
+  text string containing spaces or commas as a single parameter,
+  which otherwise would be considered as multiple parameters.
+<pre>
+      @read 'this is a test.'
+</pre>
+  
+  2) If a quotation mark (') needs to be included in the text string,
+  the delimiter has to be changed to something else.
+<pre>
+      setenv delimiter #
+      @read #it's a test.#
+</pre>
+
+
+<hr><a name="setenv_echo">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  ECHO </h3>
+      Turn the echo option ON/OFF for input commands from a
+  macro file.
+<p>
+  Syntax: <br>
+      SETENV  ECHO [0,1,2]
+<p>
+  Note: <br>
+    The default option is 1.
+<p>
+  Examples: <br>
+  1) Turn the echo option off for the input from a macro.
+<pre>
+      setenv echo 0
+      @a_well_tested_macro
+</pre>
+
+  2) Turn the echo option on for the input from a macro only.
+<pre>
+      setenv echo 1
+      @a_macro_to_be_tested
+</pre>
+
+  3) Turn the echo option on for the input from both a macro and the 
+terminal, useful for testing commands.
+<pre>
+      setenv echo 2
+      @a_macro_to_be_tested
+</pre>
+
+
+<hr><a name="setenv_edp_data">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  EDP_DATA </h3>
+      A user may setup his/her owner directory to keep the <i>.edp</i>
+  macro files. By default, EdPDB reads an <i>.edp</i> file from the
+  predefined directory ($edp_data/ in unix), if it can not be found in the
+  user's current directory. However, a user may change back and
+  forth between the program-default and one's own default directory
+  using this edp_data option. A <a href="edp_ctr.html#parameter">variable</a>
+   named <i>edp_data</i> is automatically
+defined too.&nbsp;
+<p>
+  Syntax: <br>
+      SETENV  EDP_DATA  <i>directory_name</i>
+<p>
+  Example:
+<pre>
+      setenv edp_data /urs/zhangc/my_project/
+           ! set default to the user specified directory
+      @task.edp
+      ...
+      setenv edp_data
+           ! back to the program default directory
+      @task.edp
+      ...
+</pre>
+<a name="setenv_inter">
+<hr>
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  INTERACTIVE </h3>
+      EdPDB can run interactively or batch mode. The 
+  program will check the current working mode automatically, and
+  use it as the default. 
+      To speed up the calculation, an interactive user may switch
+  between the interactive and non-interactive modes. By doing this,
+  the program will turn on/off LIST and PAUSE, as well as
+  some screen outputs.
+<p>
+  Syntax: <br>
+  1)  SETENV  INTERACTIVE <br>
+  2)  SETENV  INTERACTIVE ON <br>
+  3)  SETENV  INTERACTIVE OFF <br>
+<p>
+  Note: <br>
+    The first form sets the mode to the default, without typing
+  the scratch file on the screen. The second form sets the mode to
+  the default, and will type the scratch file on the screen if the
+  default mode is <i>interactive</i>. The third form sets the mode to
+  'non-interactive'. The output mode is set to off in piped 
+  commands.
+<p>
+  Examples: <br>
+  1) Displaying the scratch file can be time consuming, especially
+  when it contains a large number of records. Therefore, the user
+  may deactivate the display and read the file later.
+<pre>
+      setenv interactive off   ! deactivate the display
+      ...
+      setenv interactive on    ! type the <i>.out</i> file.
+      ...
+</pre>
+<hr><a name="setenv_maxerr">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  MAXERR </h3>
+      Set the maximum tolerable number of errors.
+<p>
+  Syntax: <br>
+      SETENV MAXERR <i>max_err</i> [(EXIT, QUIT)] <br>
+<p>
+  Note: <br>
+  1)  This command sets the value of the
+      maximum tolerable number of errors (<i>max_err</i>) and initializes the
+      number of currently accumulated errors to zero. The initial
+      default is that <code>max_err=1024</code>. <br>
+  3)  If the option EXIT is used, the program will return to the upper
+      level (e.g. macro) when the number of errors is greater than 
+      <i>max_err</i>. If
+      the option QUIT is used, the program will quit in the case that
+      the number of errors becomes greater than <i>max_err</i>. The
+      default option is QUIT. <br>
+  4)  To prevent an infinite loop in a macro, the number of accumulated errors
+      increases by one whenever a <a href="edp_ctr.html#rewind">REWIND</a> 
+      <a href="edp_ctr.html#goto">GOTO</a> 
+      command (with blank option) is issued. <br>
+  5)  To prevent infinite <a href="edp_d.html#alias">ALIAS</a>
+      substitutions, the number of errors
+      increases by one for each substitution. <br>
+<p>
+   Examples: <br>
+  1) Show the current allowed maximum number of errors.
+<pre>
+      setenv
+</pre>
+  2) Set the maximum number of errors to 32 and choose EXIT
+  option.
+<pre>
+      setenv maxerr 32 exit
+</pre>
+
+<hr><a name="prompt">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>       PROMPT  </h3>
+      One may reset the prompt, which consists of up to nine
+  characters. 
+<p>
+  Syntax: <br>
+      SETENV PROMPT  <i>prompt_character_string</i>
+<p>
+   Examples: <br>
+  1) Set the prompt to the text string <code>CHK&gt</code> followed by a space.
+<pre>
+      setenv tolower off
+      setenv prompt 'CHK&gt; '
+</pre>
+  2) Use the prompt to send messages, eg. from a macro file.
+<pre>
+      setenv prompt 'ok_1&gt; '
+</pre>
+
+<hr><a name="setenv_tl">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  TOLOWER </h3>
+      By default, EdPDB converts all the characters in an input
+  statement to lower case before interpreting the commands. All the
+  build-in keyword are in lower case. The user can change the
+  default so that the program will not perform the conversion to the
+  input statement.  build-in keyword are in lower case. The user can change the
+  default so that the program will not perform the conversion to the
+  input statement.
+<p>
+  Syntax: <br>
+  SETENV  TOLOWER (ON, OFF)
+<p>
+  Examples: <br>
+  1) In the unix system, a file name is case sensitive. To read a file
+  named, eg. <code>UPPER_CASE.FILE</code>, the <i>tolower</i> parameter should
+  be set to off.
+<pre>
+      setenv tolower off
+      read UPPER_CASE.FILE
+      setenv tolower on 
+</pre>
+
+<hr><a name="setenv_vb">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  VERBOSE </h3>
+      This option sets output to different levels so that some diagnastic 
+  information can be output if necessary.  
+
+<p>
+  Syntax: <br>
+  SETENV  VERBOSE <i>level</i>
+<p>
+  Note: <br>
+  The <i>level</i> can be set between 0 and 12; the higher the <i>level</i> is, the
+  more information may be output. The default <i>level</i> is 1 (one). In the 
+  output, a string of "command-I6&gt", for exmaple, is followed by information on 
+  the "command" at verbose-level 6, which can be seen when VERBOSE is set to 6
+  or higher. 
+ <p>
+  Examples: <br>
+  1) List detailed results of a 
+  <a href="edp_c.html#match3d">MATCH3D</a> calculation.
+<pre>
+      setenv verbose 6
+      match3d a 4 4.0 
+</pre>
+
+<hr><a name="setenv_wildcard">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  WILDCARD </h3>
+      Set the wildcard, which is a single character and is used for
+  example in the SHDF and ATOM commands.
+<p>
+  Syntax: <br>
+      SETENV  WILDCARD [<i>one_character</i>]
+<p>
+  Note:  <br>
+    The default wildcard is an asterisk (*).
+<p>
+  Examples: <br>
+  1) Assume that, in the input PDB file, one of the atom name is
+  O5*. If we want to select this specific atom type and do not mix it
+  with other atom types such as O5 or O5A, the default wildcard (*)
+  must be changed.
+<pre>
+      setenv wildcard &amp; %
+      atom O5*
+</pre>
+
+<hr><a name="setenv_ws">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#setenv"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  WINDOW_SIZE </h3>
+      Set the number of lines per window. Because the unix version gets the 
+value from the system directly, this option is not used.
+<p>
+  Syntax: <br>
+      SETENV  WINDOW_SIZE [<i>number_of_lines_per_window</i>]
+<p>
+   Examples: <br>
+  1) Set the window size to 40 lines.
+<pre>
+      setenv window_size 40
+</pre>
+  2) Set the window size to the default value.
+<pre>
+      setenv window_size
+</pre>
+
+<hr><a name="shdf">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> SHDF    </h2>
+      Show the values defined by DFXXXX command.
+<p>
+  Function: Information
+<p>
+  Syntax: <br>
+      SHDF  [(*, MAIN, CA, AB, ABC, ABCD,
+           BRG, RES, NEWXYZ, CELL, SYMM)]
+<p>
+  Note: <br>
+     Dfxxxx series commands without following any parameters 
+  will display the corresponding definition too.
+<p>
+  See also: 
+  <a href="edp_m.html#file">FILE</a> and
+  <a href="edp_m.html#setenv">SETENV</a>
+<p>
+   Examples: <br>
+  1) To show the status of the ON/OFF switch
+<pre>
+      shdf
+</pre>
+
+  2) To show the current definitions, use the wildcard (which is an
+  asterisk `*' by default). 
+<pre>
+      shdf *
+</pre>
+
+  3) To show the current definition of the torsion angle
+<pre>
+      shdf abcd
+</pre>      
+<p>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+
+<hr><a name="end">
+<font size="1"> &copy </a> <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->.
+</font>
+</body>
+</html>

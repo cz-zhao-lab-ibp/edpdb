@@ -1,0 +1,38 @@
+! loop thru a (p1) to z (p2)
+
+!e.g. 
+!@x a z 8
+
+parameter ch1 = $(p1)
+loop1:
+init; chain $(ch1) | ca ; group $(ch1)
+parameter ch1 + 1 $(p2) ; if ( -i status == -3 ) goto loop20
+goto loop1
+
+loop20:
+group
+parameter ch1 = $(p1)
+init; load $(ch1) 
+loop2:
+parameter ch2 = $(p1) 
+loop3: 
+sdist $(ch2) $(p3) 
+parameter ch2 + 1 $(p2) ; if ( -i status == -3 ) goto loop30
+goto loop3
+loop30:
+parameter ch1 + 1 $(p2) ; if ( -i status == -3 ) goto loop40
+goto loop2
+
+loop40:
+return 
+
+
+edpdb my_pdb.pdb <<eof > a.log
+@x a d 8 
+eof
+
+grep symmetry -C 2 a.log
+
+@y.edp a 1 0 0 0 b 
+! reset; load $(p1) ; rtn symm $(p2) $(p3) $(p4) $(p5) ; over $(p6) ; axis , 
+

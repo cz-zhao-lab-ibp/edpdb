@@ -1,0 +1,49 @@
+! chi_bad.edp   by X. Cai Zhang, 030221
+! list residues having problematic side chain chi angles
+! and save them in a group called bad;
+! this macro calls the chi.edp and chi_bad0.edp
+
+! syntax: 
+! @chi_bad.edp 
+
+
+sort dfres
+@chi
+@chi_bad0 cys
+group bad
+@chi_bad0 asp
+load bad; group bad
+@chi_bad0 glu
+load bad; group bad
+@chi_bad0 phe
+load bad; group bad
+@@chi_bad0 his
+load bad; group bad
+@chi_bad0  ile
+load bad; group bad
+@chi_bad0  lys
+load bad; group bad
+@chi_bad0  leu
+load bad; group bad
+@chi_bad0  met
+load bad; group bad
+@chi_bad0  asn
+load bad; group bad
+@chi_bad0  pro
+load bad; group bad
+@chi_bad0  gln
+load bad; group bad
+@chi_bad0  arg
+load bad; group bad
+@chi_bad0  ser
+load bad; group bad
+@chi_bad0  ser
+load bad; group bad
+@chi_bad0  thr
+load bad; group bad
+@chi_bad0  val
+load bad; group bad
+@chi_bad0  trp
+load bad; group bad
+@chi_bad0   tyr
+load bad; group bad 

@@ -1,0 +1,148 @@
+! bad_chi.edp   by X. Cai Zhang, 000602
+! list residues of potentially bad side chain chi angles, 
+!  one type at a time.
+! it is usually used after 'sort dfres' and @chi.edp
+ 
+! syntax: 
+! @bad_chi.edp a.a.Residue
+! example:
+! @bad_chi ile
+
+initialize
+goto $(p1)
+
+ala:
+! nothing to show for ALA
+return
+
+cys: 
+{ ca | residue cys | x <> 85 150 }
+{ ca | residue cys | x <> -150 -85 }
+{ ca | residue cys | x <> -35 35 }
+list
+return
+
+asp:
+{ ca | residue asp | x <> 85 150 }
+{ ca | residue asp | x <> -150 -85 }
+{ ca | residue asp | x <> -35 35 }
+{ ca | residue asp | x <> -85 -35 | z > 0 }
+{ ca | residue asp | x <> 35 85   | z < 0 }
+{ ca | residue asp | x >< -150 150   | z < 0 }
+list
+return
+
+glu:
+{ ca | residue glu | x <> 85 150 }
+{ ca | residue glu | x <> -150 -85 }
+{ ca | residue glu | x <> -35 35 }
+list
+return
+
+phe:
+{ca | residue phe | x <> -30 150 }
+{ca | residue phe | x <> -145 -85 }
+{ca | residue phe | z <> -45 45 }
+{ca | residue phe | z >< -135 135 }
+list 
+return
+
+gly:
+return
+
+his:
+{ca | residue his | x <> -30 150 }
+{ca | residue his | x <> -145 -85 }
+{ca | residue his | z <> -45 45 }
+{ca | residue his | z >< -135 135 }
+list 
+return
+
+ile:	! good ones: -60/180 and 180/60
+{ca | residue ile | x <> -75 -45  | z <> -150 150 }
+{ca | residue ile | x >< -150 150 | z >< 40 80    }
+{ca | residue ile | x <> -45 150  }
+{ca | residue ile | x <> -150 -75 }
+list
+return
+
+lys: 
+{ ca | residue lys | x <> 85 150 }
+{ ca | residue lys | x <> -150 -85 }
+{ ca | residue lys | x <> -35 35 }
+list
+return
+
+leu:	! good ones: -60/180 and 180/60
+{ca | residue leu | x <> -75 -45 | z <> -150 150 }
+{ca | residue leu | x >< -150 150 | z >< 40 80 }
+{ca | residue leu | x <> -45 150}
+{ca | residue leu | x <> -150 -75}
+list
+return
+
+met: ! not coded
+{ ca | residue met | x <> 85 150 }
+{ ca | residue met | x <> -150 -85 }
+{ ca | residue met | x <> -35 35 }
+list
+return
+
+asn:
+{ ca | residue asn | x <> 85 150 }
+{ ca | residue asn | x <> -150 -85 }
+{ ca | residue asn | x <> -35 35 }
+list
+return
+
+pro: !not coded
+return
+
+gln:
+{ ca | residue gln | x <> 85 150 }
+{ ca | residue gln | x <> -150 -85 }
+{ ca | residue gln | x <> -35 35 }
+list
+return
+
+arg: 
+{ ca | residue arg | x <> 85 150 }
+{ ca | residue arg | x <> -150 -85 }
+{ ca | residue arg | x <> -35 35 }
+list
+return
+
+ser: 
+{ ca | residue ser | x <> 85 150 }
+{ ca | residue ser | x <> -150 -85 }
+{ ca | residue ser | x <> -35 35 }
+list
+return
+
+thr:	
+{ ca | residue thr | x >< -150 150 }
+{ ca | residue thr | x <> -35 35 }
+list
+return
+
+val:	! good ones: 180/-60
+{ca | residue val | x <> -150 150 }
+list
+return
+
+trp: 
+{ca | residue trp | x <> -30 150 }
+{ca | residue trp | x <> -145 -85 }
+{ca | residue trp | z <> -45 45 }
+list
+return
+
+tyr:
+{ca | residue tyr | x <> -30 150 }
+{ca | residue tyr | x <> -145 -85 }
+{ca | residue tyr | z <> -45 45 }
+{ca | residue tyr | z >< -135 135 }
+list 
+return
+
+

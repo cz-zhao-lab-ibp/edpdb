@@ -1,0 +1,103 @@
+setenv echo    2
+
+! This is a tutorial macro. at any pause point, you may entry <cr> to continue.
+!
+! Usually when you start to do a new calculation,  INITIALIZE is needed.
+!   But you can also use RESET to erase any changes made so far.
+! In the following the RESET command is overwritten 
+
+!!setenv tolower on; reset;setenv tolower off
+reset
+
+! After RESET, everything should be exactly the same as the very beginning.
+!
+! Rewind .out file to make sure there no junk there to confuse you.
+rewind scr
+! If you have run this macro more than once without leaving EdPDB, 
+!   the two commands, reset and rewind scr, may be helpful.
+!
+! Let's start from a general survey of the pdb file. Select every records.
+zone all; pause
+
+! Check zone information
+zone; pause
+
+! Check residue types in the current file(s)
+residue; pause
+
+! Check atom types in the current file(s)
+atom; pause
+
+! Check xyz, occupancy (Weight) and B factor distributions.
+doit; pause
+
+! Check Ca atoms.
+initialize; ca; doit
+
+! LIST will output the current selected records (ie. Ca records).
+!   The list may not complete simply because you are running a macro
+!   instead of inputing the command interactively.
+pause; list; pause
+
+! Now check ca-ca distance which should be about 3.8A.
+dfab ca ca 0 1 ; ab; pause
+
+! Create a file containing only Ca atoms
+write $(file1)_ca_.pdb; close
+
+! Check backbone phi-psi angles
+! Clean the text of Ca record to store phi-psi information.
+initial; ca; blank
+! Select backbone atoms which are defined by DFMAIN (default= n ca c and o).
+main
+setenv -s interactive off
+! Define the torsion angle to be calculated, phi
+! Calculate phi and store phi in the x colume of the third(i.e. c) atom (ca) 
+dfabcd c n ca c 0 1 1 1; abcd c x
+
+! Define the torsion angle to be calculated, psi 
+! Calculate psi and store psi in the y colume of the 2nd(i.e. b) atom (Ca) 
+! Next we will list the calculation result.
+dfabcd n ca c n  0 0 0 1; abcd b y; pause
+
+! Select the 'ca' records in which phi-psi angles are stored
+! Reset some colume to make the list more clear.
+initialize; ca; sete; seta FPS; setw 0.; setb 0.; pause
+setenv -r interactive; list
+
+! If you want, you can create a 'pdb' format file containing phi-psi
+!   angle at this point by inserting a command 'write phishi.lis'
+pause
+!
+! Now we will erase all the changes made to the records by type RESET
+
+!!setenv tolower on; reset;setenv tolower off
+reset
+
+! Rotate the entire model by (40.,50.,60.) degrees in polar angle, 
+!   translate by (10.,20.,30.) amstrongs in x,y and z directions and
+!   save the rotation-translation matrix to a file called rtn_.txt
+zone all; rtn polar 40. 50. 60. 10. 20. 30.  save; pause
+
+! test more funcitons
+initialize; atom cb; group cb
+initialize; ca ; access; access cb buried 1.4 0.2 
+sort w; list
+
+! We can analyze the rotation-translation matrix in rtn_.txt file.
+initial; axis rtn_.txt; pause
+
+! display the currently opened/created files.
+file; pause
+
+! You can change the prompt as you wish (but no too long).
+prompt 'myfavor> '
+!
+! Allright, we will stop here. I hope that you have got some flavor
+!   of how EdPDB work.
+! By typing 'QUIT SAVE', you will save two files which are of 
+!   the same file name of your input pdb file but different extensions 
+!   (.edp and .out). You may take a look of them. 
+! Happy EdPDB!
+quit save
+

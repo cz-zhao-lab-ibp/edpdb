@@ -1,0 +1,19 @@
+! rmsw.edp  by X. Cai Zhang, 000602
+! calculate rms of the OCC field over residue (stored in X),
+!  main chain (Y), and side chain (Z). this may be useful after storing
+!  information in the OCC field (e.g. using the 'diff rms' command). 
+! all there results are stored
+!  in the CA atom records, assuming each residue has a CA atom (for protein, 
+!  this is probably the best choice). 
+! you may save this result using the 'write' command.
+! also see: avb.edp, sumw.edp, swicthwb
+!
+! syntax: 
+! @rmsw.edp
+
+initialize ; ca ; blank ; more ; rmsw x
+exclude side ; rmsw y 
+more ; exclude main ; rmsw z
+
+initialize ; ca ; setw 0.0 ; sete ; seta rms ; list
+

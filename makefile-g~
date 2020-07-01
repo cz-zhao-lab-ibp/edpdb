@@ -1,0 +1,47 @@
+# this makefile is for a generic version of EdPDB, 
+#   which does not use the readline/ncurses libraries. 
+
+PROGRAM	      = edpdb_v06a
+
+#OPT           = -backslash -col80 -static -vms_cc -O -OPT:Olimit=0
+OPT           = 
+ENV           = 
+
+FC	      = g77  $(ENV) 
+
+#FFLAGS	      = -static (for Compag alpha)
+FFLAGS	      =  $(OPT) 
+
+LDFLAGS	      = 
+#LIBS          = -L/usr/local/lib
+LIBS          = /usr/lib/libg2c.a
+
+OBJS	      = clique.o       rtnout.o \
+		abcd.o        harker.o       pair.o  \
+	        setw.o \
+		atom.o        param.o  \
+	        snayb.o \
+		axis.o         eular.o  pickr.o  \
+		chklib.o       find1.o     polar.o  \
+		get_command.o   order.o          edpdb.o \
+		listatom.o        needlemen1d.o  volume.o subr-generic.o \
+		thread.o
+
+SRCS	      = clique.f        rtnout.f \
+		abcd.f        harker.f       pair.f  \
+	        setw.f \
+		atom.f     param.f  \
+	        snayb.f \
+		axis.f         eular.f  pickr.f  \
+		chklib.f       find1.f     polar.f  \
+		get_command.f       order.f  edpdb.f \
+  		listatom.f         needlemen1d.f  volume.f subr-generic.f \
+		thread.f
+
+.f.o :
+		$(FC) -c $(FFLAGS)  $*.f
+
+$(PROGRAM):     $(OBJS)
+		@echo -n "Loading $(PROGRAM) ... "
+		@$(FC) $(FFLAGS) $(LDFLAGS) $(OBJS) $(LIBS) -o $(PROGRAM)
+		@echo "done"

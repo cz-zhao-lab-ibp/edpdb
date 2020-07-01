@@ -1,0 +1,1614 @@
+<html>
+<head>  <title>EdPDB: Selection/Deselection </title> </head>
+
+<body background="trebuche2.gif">
+<hr><a name="top"></a><a name="selection">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1>      	Selection/Deselection 	</h1>
+Available commands:
+	<a href="edp_s.html#align3d">	ALIGN3D </a>,
+	<a href="edp_s.html#atom">	ATOM	</a>,
+	<a href="edp_s.html#bfactor">	B	</a>,
+	<a href="edp_s.html#ca">	CA	</a>,
+	<a href="edp_s.html#chain">	CHAIN 	</a>,
+	<a href="edp_s.html#exclude">	EXCLUDE	</a>,
+	<a href="edp_s.html#extract">	EXTRACT	</a>,
+	<a href="edp_s.html#group">	GROUP	</a>,
+	<a href="edp_s.html#include">	INCLUDE	</a>,
+	<a href="edp_s.html#initial">	INITIAL	</a>,
+	<a href="edp_s.html#load">	LOAD	</a>,
+	<a href="edp_s.html#main">	MAIN	</a>,
+	<a href="edp_s.html#match">	MATCH	</a>,
+	<a href="edp_s.html#match1d">	MATCH1D </a>,
+	<a href="edp_s.html#snayb">	SNAYB	</a>,
+	<a href="edp_s.html#snaybr">	SNAYBR	</a>,
+	<a href="edp_s.html#more">	MORE	</a>,
+	<a href="edp_s.html#nayb">	NAYB 	</a>,
+	<a href="edp_s.html#naybr">	NAYBR	</a>,
+	<a href="edp_s.html#pattern">	PATTERN	</a>,
+	<a href="edp_s.html#residue">	RESIDUE	</a>,
+	<a href="edp_s.html#side">	SIDE	</a>,
+	<a href="edp_s.html#swap">	SWAP	</a>,
+	<a href="edp_s.html#text">	TEXT	</a>,
+	<a href="edp_s.html#wfactor">	W	</a>,
+	<a href="edp_s.html#xcoor">	X,Y,Z	</a> and
+	<a href="edp_s.html#zone">	ZONE	</a>.
+<p>
+      Selection/deselection commands define the ON/OFF status of
+  the atom records, thereby preparing objects for other EdPDB
+  commands or other programs. For example, EdPDB can easily be
+  used to select atoms for some images utilities, which can read a
+  PDB file as input but might be less powerful in selecting atoms.
+  EdPDB selects records based on matching one of the PDB fields
+  (except entry number) with a selection criterion. Three dimensional
+  intra- or inter- molecular distances, including between symmetry
+  related molecules, can be used as selection criteria, too.
+<p>
+      Selection strategies of different logic, eg. logic <i>and</i>, 
+  logic <i>or</i>
+  and logic <i>not</i>, can be constructed with selection commands. In
+  particular, one has the following:
+<p>      logic <i>or</i>      -- parallel selection statements, using a series of
+                      selection command consequently.
+<p>      logic <i>and</i>     -- see <a href="edp_ctr.html#pipe">piping</a> 
+{ ... | ... }.
+<p>      logic <i>not</i>     --   
+		<a href="edp_s.html#exclude">EXCLUDE</a>,
+		<a href="edp_s.html#swap">SWAP</a> commands, and the EXCEPT
+                      option in 
+		<a href="edp_s.html#atom">ATOM</a> and
+		<a href="edp_s.html#residue">RESIDUE</a> commands.
+
+
+<hr><a name="align3d">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        ALIGN3D   </h2>
+      Select atom pairs from two overlapped structures (groups) 
+based on 3D distances so that the two structures can be aligned 
+better in 3D.
+<p>
+  Function: Selection
+<p>
+  Syntax:  <br>
+  load <i>grp_id2</i> | ALIGN3D <i>grp_id1</i> sub_<i>grp_id1</i> 
+           [<i>distance_cutoff</i>  [<i>penalty_to_break</i>]]
+           <br>
+<p>
+  Note: <br>
+  1)  This routine creates two sets of atoms that are close to each 
+      other in 3D from two groups of atoms.
+      One group is specified by <i>grp_id1</i>,
+      the other (<i>grp_id2</i>) is selected previously and 
+<a href="edp_ctr.html#pipe">piped</a> 
+      to this command.
+      The matched atoms from
+      <i>grp_id1</i> are stored in a group sub_<i>grp_id1</i>; 
+      and those from the 
+      piped-in group become ON atoms. <br>
+<p>
+  2)  The matching is based on a balance between maximazing 
+      the number of matched atom pairs and minimazing the overall
+      coordinate difference. Needleman's alignment algorithem is used. 
+      The score method for a given atom pair (i,j) is the following.
+<pre>
+	s(i,j) = max(0.0, (distance_cutoff^2 - distance(i,j)^2) ). 
+</pre>
+      The default value of <i>distance_cutoff</i> is 2.0.
+ The default value of <i>penalty_to_break</i> is -<i>distance_cutoff</i>^2.
+<p>
+  3)  If verbose level is set to 4 or above, a list of matched atoms is 
+      output to the .out file. If the verbose level is set to 6 or above,
+      a more complete list, including both matched and others, 
+      is output to the .out file. (Use QUIT SAVE to save them).
+<p>
+  Output Status: -3, there is no matched atoms; positive number, Status= number of
+  matched atoms.&nbsp;  
+<p>
+  See also:
+  <a href="edp_s.html#extract">EXTRACT</a>,
+  <a href="edp_s.html#match">MATCH</a> and
+  <a href="edp_c.html#match3d">MATCH3D</a>.
+<p>
+    Examples: <br>
+  1) The following example calculates the least square rms
+  difference of alpha-carbone atoms between two homologous 
+  structure A and B which 
+  have been roughly overlaied on each other but may contain
+  insertion or deletion in their sequences.
+<pre>
+      { ca | chain a ;  group a}
+      initialize
+      { ca | chain b | align3d a suba 3.0}
+      overlay suba rtn_.txt
+      chain b
+      rtn file rtn_.txt   ! apply the overlay matrix to molecule B
+</pre>
+  This process can be repeated to improve the match.
+  
+<hr><a name="atom">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>         ATOM    </h2>
+  Select specific types of atoms. 
+<p>
+  Function: Selection, Information
+<p>
+  Syntax: <br>
+  1)  ATOM <br>
+  2)  ATOM <i>atom_1</i> [<i>atom_2</i> ... ]
+           <br> 
+  3)  ATOM EXCEPT <i>atom_1</i> [<i>atom_2</i> ... ]
+           <br> 
+<p>
+  Note: <br>
+  1)  The first form lists the atom names in the current input PDB
+      file. The second form selects up to sixteen types of atoms. The
+      third form selects every atom except the ones specified.  <br>
+  2)  The specified atom names, <i>atom_n</i>, should be one of the
+      input atom names. <br>
+  3)  ATOM is the only selection command where a wildcard (* or %) is
+      accepted. '*' can only be used at the end of an <i>atom_n</i> and stands
+      for <i>any</i> character string. 
+      '%' is used to replace <i>one</i> character in an <i>atom_n</i>.
+      RESIDUE and ATOM are the only two commands
+      where one can use the EXCEPT option.  <br>
+  4)  Because of the wildcard (* or %) as well as the use of (') for default
+      delimiter in the command interpreter, atom names with these
+      characters included may not be handled properly unless the
+      wildcard or the delimiter is reset to some other character using
+      SETENV command.  <br>
+<p>
+  See also: 
+  <a href="edp_m.html#setenv_wildcard">WILDCARD</a> and
+  <a href="edp_s.html#zone">ZONE</a>
+<p>
+  Examples:  <br>
+  1) List out all the atom names. The number appearing in each pair
+  of brackets [ ] is the number of ON atoms for the corresponding
+  atom name. 
+<pre>
+      atom
+</pre>
+  2) Select every N, CA, C, CB atoms. 
+<pre>
+      atom n ca c cb
+</pre>
+  3) Select all atoms from a group of records (TMP), except those
+  atoms whose names start with characters NE (eg. NE1, NE2) 
+<pre>
+      { load tmp | atom except ne*}
+</pre>
+  4) Select all gamma atoms, eg. SG, OG1, CG1 etc.. 
+<pre>
+      atom %g*
+</pre>
+
+<hr><a name="bfactor">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      B       </h2>
+      Select atoms which have B value greater, less than, between or beyond
+  the given value(s), or select the (1st) single record that has the
+  max B factor.
+<p>
+  Function: Selection
+<p>
+  Syntax: <br>
+  1)  B  (&lt, &gt, &lt&gt and =) <i>cutoff(s)</i> [ANGLE] <br>
+  2)  B  MAX 
+<p>
+  Note: If the ANGLE option is selected, the values are considered as 
+angles.  
+
+<p>
+  See also:
+  <a href="edp_s.html#wfactor">W</a> and
+  <a href="edp_s.html#xcoor">X,Y and Z</a>
+<p>
+  Examples: <br>
+  1) Select atoms of 10.0 &lt;= B &lt; 20.0
+<pre>
+      b &lt; 20.
+      exclude  b &lt; 10.
+  or  
+      b &lt;&gt; 9.999 20. 
+  or
+      { b &gt; 9.999 | b &lt; 20.0 }
+  or
+      b = 14.999 5.0 
+</pre>
+
+<hr><a name="ca">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>           CA      </h2>
+      Select CA atoms.
+<p>
+  Function: Selection
+<p>
+  Syntax: <br>
+      CA  <br>
+<p>
+  See also:
+  <a href="edp_d.html#dfca">DFCA</a> and
+  <a href="edp_s.html#zone">ZONE</a>
+<p>
+   Examples: <br>
+  1) Select Ca atoms in region 1 - 50
+<pre>
+      { ca | zone 1 - 50}
+  or
+      ca 1 - 50
+           ! this syntax works for the CA, MAIN and SIDE 
+           ! as well as the ZONE commands
+           ! Do not use a syntax like
+           ! { ca 1 - 50 | ... }
+</pre>
+  2) Select every amino acids
+<pre>
+      ca      ! select ca first
+      more    ! extent the selection to every residues
+</pre>
+  3) Select every O5 atoms
+<pre>
+      dfca o5
+      ca
+</pre>
+
+<hr><a name="chain">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        CHAIN   </h2>
+      Select the atoms which have residue ID starting with the given
+  chain name.
+<p>
+  Function: Selection, Information
+<p>
+  Syntax:<br>
+  1)  CHAIN <br>
+  2)  CHAIN [<i>chn_mark_1</i> <i>chn_mark_2</i> ...]
+           <br> 
+<p>
+  Note: <br>
+  1)  The first form lists the available chains. The numbers listed in
+      the parentheses are the number of records selected from the
+      corresponding chain. <br>  
+  2)  A chain name is read in from the input PDB file. It can not be
+      redefined, although the corresponding text string can be edited
+      using SETC command. <br>
+  3)  A chain name in the residue ID can not be changed with the
+      SETC command. Therefore the chain name in the residue ID
+      may be different from that in the displayed text string. <br>
+<p>
+  See also: 
+  <a href="edp_s.html#group">GROUP</a>
+<p>
+   Examples: <br>
+  1) List all the chain names and the atom numbers in each chain
+<pre>
+      zone all
+      chain
+</pre>
+
+  2) Select chains A and C 
+<pre>
+      initialize
+      chain a c
+</pre>
+
+  3) Select atoms of B &lt 10.0 from chain A only
+<pre>
+      { chain a |  b &lt; 10.0 }
+  or       
+      { b &lt; 10.0 | chain a }
+</pre>
+ 
+
+<hr><a name="exclude">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      EXCLUDE </h2>
+      Records selected following the EXCLUDE command will be
+  set to OFF status until an INCLUDE, INITIAL or RESET
+  command is issued.
+<p>
+  Function: Selection, Definition
+<p>
+  Syntax: <br>
+  1)  EXCLUDE <br>
+  2)  EXCLUDE  <i>another_selection_command</i> <br>
+<p>
+  Note: <br>
+  1)  The first form sets the selection switch to OFF. <br>
+  2)  In the second form, the OFF status effects only the selection-
+      command which follows. The switch will be set back to
+      whatever it was before the current command. <br>
+<p>
+  See also:
+  <a href="edp_s.html#include">INCLUDE</a>,
+  <a href="edp_s.html#initial">INITIALIZE</a>,
+  <a href="edp_ctr.html#reset">RESET</a> and
+  <a href="edp_m.html#shdf">SHDF</a>
+<p>
+
+   Examples: <br>
+  1) Turn off the CB atom.
+<pre>
+      exclude atom CB
+</pre>
+
+  2) Analyze the x, y, z, w, b of main chain, side chain atoms and
+  the whole protein. 
+<pre>
+      initialize
+      main
+      analyze     ! analyze the main chain
+      more
+      analyze     ! analyze the whole protein
+      exclude main
+      analyze     ! analyze the side chain
+</pre>
+  3) Select the side chain atoms of all none charged residues 
+<pre>
+      zone all
+      exclude     ! set the switch to OFF
+      residue  asp glu   ! turn Asp Glu off
+      residue  arg lys   ! turn Arg Lys off
+      main        ! turn the backbone atoms off
+      include     ! set the switch back to ON
+</pre>
+
+
+<hr><a name="extract">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      EXTRACT </h2>
+      Select atoms (from a given GROUP) based on the matching
+  between atoms of other two groups.
+<p>
+  Function: Selection
+<p>
+  Syntax: <br>
+      load <i>grp_id2</i> | EXTRACT <i>grp_id1</i> <i>sub_grp_id1</i> 
+<br>
+<p>
+  Note:
+   <i>grp_id1</i> and <i>grp_id2</i> are the ID of the two groups
+  which should have the same number of atoms. The <i>sub_grp_id1</i>
+  contains a subset of atoms of <i>grp_id1</i>. The selected atoms will
+  be a subset of <i>grp_id2</i> which corresponds to the sub_<i>grp_id1</i>
+  of <i>grp_id1</i>.
+<p>
+  See also:
+  <a href="edp_s.html#group">GROUP</a> and
+  <a href="edp_s.html#match">MATCH</a>
+<p>
+    Examples: <br>
+  1) In the following example, we are going to superimpose two sets
+  of atoms from two models of the same protein molecule. One set
+  of atoms in model A (chain A) are within a sphere of radius 8.0 Å
+  and centered at CB atom of residue A10. The other set of atoms is
+  the corresponding atoms in model B (chain B), but they may not
+  fall in a sphere of radius 8.0 Å and centered at CB atom of residue
+  B10.
+<pre>
+      { chain a ;  group moda}
+           ! define group moda 
+      { chain b ;  group modb}
+           ! define group modb
+      { nayb  8.0 A10  cb | load moda ;  group spha }
+           ! select atoms from chain a within the sphere
+      initialize
+      { load modb | extract moda spha }
+           ! select corresponding atoms from chain b
+      overlay spha
+           ! overlay b to a
+</pre>
+
+  If chain A and chain B are not identical (eg. they may have
+  different number of atoms because of mutation), the following
+  procedure may be required.
+<pre>
+      { chain a ;  group ch_a}
+      { chain b ;  group ch_b}
+      { match ch_a moda | load ch_b ;  group modb}
+           ! make sure the B model (modb) has 
+           ! the same number of atoms as A model (moda).
+      { nayb  8.0 A10  cb | load moda ;  group spha }
+           ! select atoms from a model (moda)
+      initialize
+      { load modb | extract moda spha}
+           ! select corresponding atoms from b model (modb)
+      overlay spha           
+           ! overlay b to a
+</pre>
+
+<hr><a name="group">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        GROUP   </h2>
+      Define a set of atoms as one group, which can be used in
+  calculations such as DISTANCE, SDISTANCE, OVERLAY, DIFF as
+  well as other selection commands.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  GROUP <br>
+  2)  GROUP <i>group_id</i> <br> 
+<p>
+  Note: <br>
+  1)  The first form will list the current non-empty group names. <br>
+  2)  The <i>group_id</i> is a character string of up to 4 characters. The
+      group specified with the <i>group_id</i> will be created/overwritten to
+      store the selected records. <br>
+  3)  The <i>group_id</i> SCR is reserved for the program. <br>
+  4)  If the number of groups exceeds the program limit an error
+      message will appear: some groups must be deleted before a
+      new group can be defined. <br>
+<p>
+  See also:
+  <a href="edp_s.html#load">LOAD</a>,
+  <a href="edp_s.html#swap">SWAP</a> and
+  <a href="edp_g.html#max_gr">maximum number of groups</a>.
+
+<p>
+    Examples: <br>
+  1) List all the currently defined group names
+<pre>
+      group
+</pre>
+
+  2) Define the current ON atoms as group A 
+<pre>
+      group a
+</pre>
+
+  3) Define CA atoms as group g_ca without change the current ON
+  atom list.
+<pre>
+      {ca | group g_ca }
+</pre>
+
+
+  4) Delete the group <i>g_ca</i> by defining it as an empty group.
+<pre>
+      initialize         
+      group g_ca
+  or
+      { group g_ca }
+</pre>
+
+<hr><a name="include">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      INCLUDE </h2>
+      Records selected following the INCLUDE command will be set
+  to ON status until an EXCLUDE command is issued.
+<p>
+  Function: Selection, Definition
+<p>
+  Syntax: <br>
+  1)  INCLUDE  <br>
+  2)  INCLUDE <i>another_selection_command</i> <br>
+<p>
+  Note: <br>
+  1)  The first form sets the selection switch to ON.  <br>
+  2)  In the second form, the ON status effects only the selection-
+      command which follows. The switch will be set back whatever
+      it was before the current command. <br>
+<p>
+  See also:
+  <a href="edp_s.html#exclude">EXCLUDE</a>,
+  <a href="edp_s.html#initial">INITIALIZE</a>,
+  <a href="edp_ctr.html#reset">RESET</a> and
+  <a href="edp_m.html#shdf">SHDF</a>
+<p>
+    Examples: <br>
+  1) Set the selection switch to ON
+<pre>
+      include
+</pre>
+
+  2) Turn the backbone atoms to ON
+<pre>
+      include main
+</pre>
+
+
+<hr><a name="initial">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      INITIALIZE </h2>
+      Set status of all atoms to OFF (ie. to empty the main buffer).
+  Selection status is automatically switched to INCLUDE, ie. all
+  atoms that are selected after INITIALIZE will be put into the main
+  buffer. 
+<p>
+  Function: Selection, Definition
+<p>
+  Syntax: <br>
+      INITIALIZE
+<p>
+  Note: INITIAL will change only the ON/OFF status (ie. pointer, or
+  flag) of the records, but not any modification made to the records
+  (eg. a coordinate transformation). 
+<p>
+  See also:
+  <a href="edp_ctr.html#reset">RESET</a>
+<p>
+    Examples: <br>
+  1) Turn all records OFF.
+<pre>
+      initialize
+</pre>
+
+  2) Analyze the x, y, z, W and B of the backbone and side chain
+  atoms of zone 1 - 100.
+<pre>
+      { main | zone 1 - 100 }
+      analyze
+           ! next to analyze the side chain of zone 1 - 100
+      initialize 
+           ! the backbone atoms need to be turned OFF 
+           ! before selecting the side chain atoms.
+      { side | zone 1 - 100 }
+      analyze
+</pre>
+
+
+<hr><a name="load">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>         LOAD    </h2>
+      Select a group of records which has been defined, for example,
+  using the command GROUP. 
+<p>
+  Function: Selection
+<p>
+  Syntax: <br>
+      LOAD <i>group_id</i> <br>
+<p>
+  Note: <br>
+  A group named as SCR can be defined with some
+  calculation commands such as DISTANCE.
+<p>
+  See also:
+  <a href="edp_c.html#distance">DISTANCE</a> and
+  <a href="edp_s.html#group">GROUP</a>
+<p>
+    Examples: <br>
+  1) Calculate the backbone coordinate rms deviation between
+  molecules A, B and C, assuming they have the same number of
+  atoms.
+<pre>
+      { main | chain a ;  group a}
+      { main | chain b ;  group b}
+      { main | chain c ;  group c}
+      initialize
+      load  a ! turn the main chain atoms of molecule A ON
+      overlay b   ! get rms between A and B
+      overlay c   ! get rms between A and C
+      initialize 
+      load b  ! turn the main chain atoms of molecule B ON
+      overlay c   ! get rms between B and C
+</pre>
+
+  2) Select atoms in molecule B which contact molecule A.
+<pre>
+      { chain a ;  group mola}
+      { chain b ;  group molb}
+      initialize
+      load mola
+      distance molb 0.0 3.5 1 2000 LOAD 
+           ! the LOAD option of DISTANCE is turned on.
+           ! it creates a new group SCR to store the contacted atoms;
+           ! also the occupancy field of each ON atoms will be 
+           ! changed to the number of its neighbor atoms.
+      initialize
+      load SCR
+           ! select the atoms 
+</pre>
+
+<hr><a name="main">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>         MAIN    </h2>
+      Select the main-chain atoms. Main-chain atoms are defined
+  with the command DFMAIN. The program default is N, CA, C
+  and O atoms.
+<p>
+  Function: Selection
+<p>
+  Syntax:  <br>
+      MAIN <br>
+<p>
+  See also:
+  <a href="edp_d.html#dfmain">DFMAIN</a> and
+  <a href="edp_s.html#zone">ZONE</a>
+<p>
+    Examples: <br>
+  1) Select N CA CB C atoms 
+<pre>
+      dfmain N Ca Cb C 
+      main
+</pre>
+
+  2) Select main chain atoms in zone 1 - 50
+<pre>
+      { main | zone 1 - 50 }
+  or
+      main 1 - 50
+           ! this   syntax works for the CA, MAIN and SIDE  
+           ! as well as the ZONE commands
+</pre>
+
+
+<hr><a name="match">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        MATCH   </h2>
+      Select atoms based on a matching with residues from a given group AND
+ selected text (default:atom-names). 
+<p>
+  Function: Selection
+<p>
+  Syntax:  <br>
+      load <i>grp_id2</i> | MATCH <i>grp_id1</i> sub_<i>grp_id1</i>
+           [<i>fortran_format</i>]<br>
+<p>
+  Note: <br>
+  1)  This routine creates two sets of common atoms shared
+      between list of records (common in terms of their atom name 
+      and residue names). One list is specified by <i>grp_id1</i>,
+      the other is pecified by <i>grp_id2</i>. 
+      The matched atoms from
+      group id1 are stored in sub_<i>grp_id1</i>, and those specified by
+      the <i>grp_id2</i> become ON atoms. <br>
+  2)  The matching is based on the order of the atoms in each list.
+      The atom of each record are compared on a 
+      residue-by-residue basis, and those that match are stored. Then
+      matches for the next residue in each record are compared, until
+      one of the lists are completed. The residue numbers are NOT
+      compared, residue comparisons are determined solely by their
+      ordering in each list. <br>
+  3)  The <i>fortran_format</i> is used to read selected parts of the 
+      record text into one-char arrays for comparing records. 
+      Default is (13X,4A1), for selecting atom-names.
+<p>
+  See also:
+  <a href="edp_s.html#align3d">ALIGN3D</a>,
+  <a href="edp_s.html#extract">EXTRACT</a> and
+  <a href="edp_s.html#group">GROUP</a>
+<p>
+    Examples: <br>
+  1) The following example calculates the least square rms
+  difference between segments 1 - 162 of model A and of model B,
+  where model A is the wild type enzyme and model B is a mutant,
+  eg. M6I, in which the methionine at position 6 has been
+  substituted with a Isoleucine. In order to preform the OVERLAY
+  calculation, one need to select two sets of records between which
+  the records match one to one.
+      It is assumed that the atom order in each residue is the same in
+  both models, except for the residue 6. If it is not the case, the file
+  needs to be standardized (See the command 
+  <a href="edp_c.html#sort">SORT DFRES</a>).
+<pre>
+      { zone a1 - a162 ;  group wt }
+           ! define model A as group wt
+      { zone b1 - b162 ;  group m6i}
+           ! define model B as group m6i
+      initialize 
+      { load m6i | match wt wt_m }
+           ! this command should be interpreted as 
+           ! select records from <i>m6i</i> which match with <i>wt</i>;
+           ! the records in group <i>wt_m</i> are 
+           ! the matched atoms from model A (ie. the wild type);
+           ! the selected records (ie. the ON atoms) are 
+           ! the matched atoms from model B (ie. m6i).
+      overlay wt_m
+           ! overlay the model B to model A
+</pre>
+
+  2) Another way to program the above example.
+
+<pre>
+      { zone a1 - a162 ;  group a ;  init}
+      { zone b1 - b162 |  match a wt ;  group m6i}
+           ! this command should be interpreted as 
+           ! match records from group a with those of &quot;zone b1-b162&quot;
+           ! the records in group <i>wt</i> are 
+           ! the matched atoms from model A (ie. the wild type);
+           ! the records in group <i>m6i</i> are
+           ! the matched atoms from model B (ie. m6i).
+      initialize
+      load m6i
+      overlay wt
+</pre>
+
+<hr><a name="match1d">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        MATCH1D   </h2>
+      Select atom pairs from two overlapped structures (groups) 
+based on sequence homology so that the two structures can be superimposed.
+<p>
+  Function: Selection
+<p>
+  Syntax:  <br>
+  load <i>grp_id2</i> | MATCH1D <i>grp_id1</i> sub_<i>grp_id1</i> 
+        [<i>score_threshold</i>  
+	[<i>list_threshold(1)</i>,
+	[<i>list_threshold(2)</i>,
+	[<i>extension_penalty</i>,
+	[<i>num_of_random_trial</i>,
+	[<i>random_seed</i>]]]]]]
+           <br>
+<p>
+  Note: <br>
+  1)  This routine creates two sets of atoms that have homologous 
+      sequences. The sequence is based on residue types and data from
+      the file, pdbstd.dat.
+      One group is specified by <i>grp_id1</i>,
+      the other (<i>grp_id2</i>) is selected previously and 
+<a href="edp_ctr.html#pipe">piped</a> 
+      to this command.
+      The matched atoms from
+      <i>grp_id1</i> are stored in a group sub_<i>grp_id1</i>; 
+      and those from the 
+      piped-in group become ON atoms. <br>
+<p>
+  2)  The homology comparison is based on a 
+      score table from the file score_seq.txt.
+      Needleman's alignment algorithem is used.
+<p>
+  3)  The defaults are 1.5 for <i>score_threshold</i>,
+	1.0 for <i>list_threshold(1)</i>,
+	0.5 for <i>list_threshold(2)</i>,
+	0.1 for <i>gap_extension_penalty</i>,
+	0 for <i>num_of_random_trial</i>, and
+	1 for <i>random_seed</i>, respectively.
+<p>
+  4)  The occupancy field of the selected ON atom will be changed to the 
+score associated with that atom pair.
+<p>
+  See also:
+  <a href="edp_s.html#extract">EXTRACT</a>,
+  <a href="edp_s.html#align3d">ALIGN3D</a> and
+  <a href="edp_c.html#match3d">MATCH3D</a>.
+<p>
+    Examples: <br>
+  1) The following example superimposes two protein structures (A & B)
+     which share strong homology but may contain
+     insertion or deletion in their sequences.
+<pre>
+      {ca | chain a ;  group a}
+      initialize
+      {ca | chain b | match1d a suba }
+      overlay suba rtn_.txt
+      chain b
+      rtn file rtn_.txt   ! apply the overlay matrix to molecule B
+</pre>
+
+<hr><a name="snayb">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>          SNAYB     </h2>
+      Select the neighbor atoms of a given atom from symmetry
+  related molecules. (it replaces the old MMI command).
+<p>
+  Function: Calculation, Selection
+<p>
+  Syntax:  <br>
+  1)  SNAYB <i>radius</i> [<i>res_id</i> [<i>atom_name</i>]] 
+           <br> 
+  2)  SNAYB <i>radius</i> CENTER x, y, z
+           <br> 
+<p>
+  Note: <br>
+  1)  In the first format, the atom specified with <i>res_id</i> and
+      <i>atom_name</i> serves as the search center. The default atom of
+      the specified residue is the first atom in that residue. If there is
+      no <i>res_id</i> specified, the first ON atom will serve as the search
+      center. <br>
+  2)  The second form uses user specified x, y, z as the search
+      center. <br>
+  3)  The W column of the selected records will be changed to the
+      distance between the specified center atom and its neighboring
+      atoms. <br>
+  4)  The symmetry operator listed in the output should be applied to
+      the specified atom to achieve the contact. No unitary symmetry
+      operator is included in this calculation. <br>
+<p>
+  See also:
+  <a href="edp_c.html#sdist">SDISTANCE</a>,
+  <a href="edp_s.html#snaybr">SNAYBR</a>,
+  <a href="edp_s.html#nayb">NAYB</a> and
+  <a href="edp_s.html#naybr">NAYBR</a>
+<p>
+    Examples: <br>
+  1) Select atoms that are in 4.0 Å crystal contact with Nd2 atom of
+  residue 116.
+<pre>
+      cell 61.2 61.2 96.8 90.0 90.0 120.0 6
+           ! input the cell parameters
+      @symmetry P3221
+           ! input symmetry operators
+      snayb 4.0 116 Nd2
+</pre>
+
+<hr><a name="snaybr">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>         SNAYBR    </h2>
+      Select neighbor atoms of a given residue from symmetry
+  related molecules. (it replaces the old MMIR command)
+<p>
+  Function: Selection
+<p>
+  Syntax:  <br>
+      SNAYBR <i>radius</i> <i>res_id</i> 
+<p>
+  Note: <br>
+  1)  Atoms in the symmetry related molecule that are within the
+      radius of any atom in the specified residue will be selected. <br>
+  2)  Cell parameters and symmetry operator(s) are required for this
+      command. <br>
+<p>
+  See also:
+  <a href="edp_s.html#snayb">SNAYB</a>,
+  <a href="edp_c.html#sdist">SDISTANCE</a> and
+  <a href="edp_s.html#naybr">NAYBR</a>
+<p>
+    Examples: <br>
+  1) Select atoms that are in 4.0 Å crystal contact with residue 116.
+<pre>
+      cell 61.2 61.2 96.8 90 120 6
+           ! input the cell parameters
+      @symmetry p3221
+           ! input symmetry operators
+      snaybr 4. 116 
+</pre>
+
+
+<hr><a name="more">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>         MORE    </h2>
+      Expand the current selection to the entire residue(s) or the
+  entire molecule (ie. entire chain). 
+<p>
+  Function: Selection
+<p>
+  Syntax: <br>
+  1)  MORE  [<i>i0</i> [<i>i1</i>]] 
+      <br> 
+  2)  MORE  CHAIN <br>
+<p>
+  Note: <br>
+  1)  If there is any atom in the i-th residue that is currently ON,
+      MORE command will turn every atoms in the zone from
+      position (<i>i+i0</i>)th to position (<i>i+i1</i>)th to ON. 
+      The default <i>i0</i> is 0,
+      and the default <i>i1</i> is <i>i0</i>. <br>
+  2)  MORE functions indepent of the status of the
+      INCLUDE/EXCLUDE switch. <br>
+  3)  The CHAIN option will expand ON status from a single atom
+      to the entire molecule.  <br>
+  4)  Do NOT use MORE after a pipe operator (ie. '|'). 
+<p>
+    Examples: <br>
+  1) Select the protein molecule only, ie. all residues that contain Ca
+  atoms.
+<pre>
+      initialize
+      ca
+      more
+  or
+      { ca ;  more}
+</pre>
+
+  2) Select all residues that contain atoms within 4.0 Å from residue
+  99.
+<pre>
+      initialize
+      naybr 4.0 99    ! select atoms 
+      more            ! expand to residues
+  or
+      { naybr 4.0 99 ;  more}
+</pre>
+
+  3) Select all tripeptides that have a Gly as the middle residue.
+<pre>
+      initialize
+      residue Gly
+      more -1 1
+</pre>
+
+  4) Shift selection by one-residue forward.
+<pre>
+      initialize
+      {zone 10-19 | ca ; list }  ! select Ca atoms of resideus 10-19
+      more 1 1 | ca ; list       ! shift by one residue (residues 11-20)
+</pre>
+
+<hr><a name="nayb">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>         NAYB    </h2>
+      Select neighbor atoms of a specified atom. (NAYB is an
+  odd word borrowed from the program FRODO).
+<p>
+  Function: Calculation, Selection
+<p>
+  Syntax: <br>
+  1)  NAYB <i>radius</i> [<i>res_id</i> [<i>atom_name</i>]] 
+           <br> 
+  2)  NAYB <i>radius</i> CENTER <i>x, y, z</i>
+           <br> 
+<p>
+  Note: <br>
+  1)  In the first format, the atom specified with <i>res_id</i> and
+      <i>atom_name</i> serves as the search center. The default atom of
+      the specified residue is the first atom in that residue. If there is
+      no <i>res_id</i> specified, the first ON atom will serve as the search
+      center.  <br>
+  2)  No crystallographic symmetry information is required or used. <br>
+<p>
+  See also:
+  <a href="edp_c.html#ab">AB</a>,
+  <a href="edp_c.html#distance">DISTANCE</a>,
+  <a href="edp_s.html#snayb">SNAYB</a> and
+  <a href="edp_s.html#naybr">NAYBR</a>
+<p>
+    Examples: <br>
+  1) Select all polar atoms (ie. oxygen and nitrogen atoms) within
+  8.0 Å sphere from Oe1 of Glu 11.
+<pre>
+      { nayb 8.0 11 Oe1 | atom O* N* }
+</pre>
+
+  2) Select all atoms that are close (eg. 6.0 Å) to the point (10.0,
+  20.0, 30.0).
+<pre>
+      nayb 6.0 center 10.0 20.0 30.0
+</pre>
+
+
+<hr><a name="naybr">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        NAYBR   </h2>
+      Select neighboring atoms of a specified residue. 
+<p>
+  Function: Calculation, Selection
+<p>
+  Syntax:  <br>
+      NAYBR <i>radius</i> <i>res_id</i> <br>
+<p>
+  Note:  <br>
+      No crystallographic symmetry information is required or used.
+<p>
+  See also:
+  <a href="edp_c.html#ab">AB</a>,
+  <a href="edp_c.html#distance">DISTANCE</a>,
+  <a href="edp_s.html#snaybr">SNAYBR</a> and
+  <a href="edp_s.html#nayb">NAYB</a>
+<p>
+    Examples: <br>
+  1) Select atoms within 4.0 Å shell from residue 11
+<pre>
+      naybr 4.0 11
+</pre>
+
+  2) Select residues that have atoms within 4.0 Å shell from residue
+  11.
+<pre>
+      initialize
+      naybr 4.0 11 
+      more
+  or
+      { naybr 4.0 11 ;  more}
+</pre>
+
+
+<hr><a name="pattern">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      PATTERN </h2>
+      Select groups of records that fit with a given pattern in their 
+text string.
+<p>
+  Function: Selection
+ <p>
+  Syntax:  <br>
+  load <i>grp_id</i> | PATTERN <i>pattern_string</i> [<i>position</i>]
+           <br> 
+<p>
+  Note: <br>
+  1)  The <i>pattern_string</i> is a text string to be searched for.
+      One letter of the <i>pattern_string</i> is searched from one record, 
+      unless they are flanked by a pair of blackets []. The later case 
+      represents one position. Within a blacket pair, '^' indicates logical 
+      NOT.   
+      For example, if the single letter code of a.a. is enbedded 
+      in the text string of records of Ca atoms,
+      one can use this command to find the position of the a.a. sequence
+      'where' in the protein, and to select the five records of the 
+      corresponding Ca atoms. '%' is used as a one-letter wild card, which
+      can be changed with the <a href="edp_m.html#setenv_wildcard"> SETENV</a> 
+      command.
+<br>
+  2)  The <i>postion</i> is an integer. It tells where to look for the 
+      letter that composes
+      the pattern. The default <i>position</i> is the chain mark 
+      position (15). <br>
+<p>
+  See also:
+  <a href="edp_e.html#permute">PERMUTE</a> and
+  <a href="edp_s.html#text">TEXT</a>.
+<p>
+    Examples: <br>
+  1) Find the a.a. sequence 'herewego'.
+<pre>
+      @aaa2a     ! enbed single a.a. code at the chain mark position
+      initialize ;  ca | pattern  herewego 15 ;  list 
+                 ! your protein is unlikely to contain this bizarre sequence.
+                 ! how about a metal binding motif 'HD%%H'? try it! 
+</pre>
+  2) Search for a sequence of Ala-Ser/Thr-none_Pro-Phe/Tyr-anything-Cys
+<pre>
+      @aaa2a     ! enbed single a.a. code at the chain mark position
+      initialize ;  ca | pattern  a[st][^p][fy]%c ;  list 
+      
+</pre>
+
+<hr><a name="residue">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      RESIDUE </h2>
+      Select specific type(s) of residues. 
+<p>
+  Function: Selection, Information
+ <p>
+  Syntax:  <br>
+  1)  RESIDUE <br>
+  2)  RESIDUE  <i>res_type1</i> [<i>res_type2</i> ... ]
+           <br> 
+  3)  RESIDUE  EXCEPT  <i>res_type1</i> [<i>res_type2</i> ... ]
+           <br> 
+<p>
+  Note: <br>
+  1)  The first form shows a list of residue types. The number
+      enclosed in the brackets are the numbers of selected residues
+      for every residue types. <br>
+  2)  RESIDUE and ATOM are the only commands where EXCEPT
+      keyword can be used. <br>
+<p>
+  See also:
+  <a href="edp_s.html#atom">ATOM</a> and
+  <a href="edp_s.html#zone">ZONE</a>
+<p>
+    Examples: <br>
+  1) List out all the residue types, and count the number of each
+  type of residue.
+<pre>
+      zone all
+      residue
+</pre>
+
+  2) Select alanine residues.
+<pre>
+      residue ala
+</pre>
+
+  3) Select all amino acid residues (ie. the residues that have Ca
+  atoms) that have side chain atoms beyond the CB atom.
+<pre>
+      { ca ;  more |  residue except Ala Gly }
+  or
+      initialize
+      { ca ;  more }
+      exclude residue ala gly
+</pre>
+
+
+<hr><a name="side">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>         SIDE    </h2>
+      Select the non-main-chain atoms.
+<p>
+  Function: Selection
+<p>
+  Syntax:  <br>
+      SIDE <br>
+<p>
+  Note: <br>
+  1)  The main chain atoms are defined with DFMAIN command. <br>
+  2)  Non main chain atoms often include solvent molecules. <br>
+<p>
+  See also:
+  <a href="edp_s.html#ca">CA</a>,
+  <a href="edp_d.html#dfmain">DFMAIN</a>,
+  <a href="edp_s.html#main">MAIN</a> and
+  <a href="edp_s.html#zone">ZONE</a>
+<p>
+    Examples: <br>
+  1) Select side chain atoms in zone 1 - 50
+<pre>
+      { side |  zone 1 - 50 }
+  or
+      side 1 - 50
+           ! this syntax works for the CA, MAIN and SIDE
+           ! as well as the ZONE commands 
+</pre>
+
+  2) Select side chain atoms, including Ca atoms, of all Trp residues
+<pre>
+      dfmain n c o
+      { side | residue trp }
+</pre>
+
+<hr><a name="swap">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>         SWAP    </h2>
+      Set ON atoms to OFF and vice versa or switch the ON atoms
+  with those in a given group.
+<p>
+  Function: Selection
+<p>
+  Syntax: <br>
+  1)  SWAP <br>
+  2)  SWAP <i>group_id</i> <br>
+<p>
+  Note:  <br>
+  1)  In the first form, all the ON records will be switched to OFF,
+      and vice verse. By definition, the two sets of records have no
+      overlap. <br>
+  2)  In the second form, all the records in the specified group (if
+      there is any) will be turned ON; and the specified group will
+      be redefined as the previous ON records (if there is any). A
+      previous ON record will be turned OFF if it was not included
+      in the specified group previously. An overlap between the set
+      of the ON records and the set of the grouped records is
+      allowed. <br>
+<p>
+  See also: 
+  <a href="edp_c.html#sort">SORT</a>
+<p>
+   Examples: <br>
+  1) Select all atoms
+<pre>
+      initialize
+      swap
+</pre>
+
+  2) Select all non-protein atoms
+<pre>
+      initialize
+      ca
+      more
+      swap
+</pre>
+
+  3) Calculate the rotation-translation matrix of overlaying molecule
+  A to molecule B  and that of overlaying molecule B to molecule
+  A.
+<pre>
+      initialize
+      { ca |  chain b ;  group tgt }
+      { ca |  chain a }
+      overlay tgt a_to_b.dat
+              ! calculate matrix a_to_b
+      swap tgt
+      overlay tgt b_to_a.dat
+              ! calculate matrix b_to_a
+</pre>
+
+<hr><a name="text">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> TEXT </h2>
+     Select records which contains a given text-string.
+<p>
+ Function: Selection
+<p>
+ Syntax: <br>
+     TEXT <i>text_string</i>  [<i>t1, t2</i>]
+        <br>
+<p>
+ Note: <br>
+ <i>t1</i> and <i>t2</i> specify the column number in the displayed text
+     string between which the given string will be searched. The default
+     is to search the entire displayed text string.
+<p>
+ See also: 
+<a href="edp_e.html#permute">PERMUTE</a> and
+<a href="edp_e.html#sett">SETT</a>
+<a href="edp_e.html#update">UPDATE</a>
+<p>
+  Examples
+ 1) select all the records that contain <code>12.345</code>.
+<pre>
+         text 12.345
+</pre>
+ 2) select all the records that contain <code>a</code> in the chain mark column.
+<pre>
+         text ' a ' 14 16
+</pre>
+ 3) select all the records that contain both <code>cb</code> and <code>arg</code>.
+<pre>
+         { text cb | text arg}
+</pre>
+ 4) Define an alias 'selr' to select residues. It can be used to select 
+  residues of names containing '???'.
+ (Note that 'residue ???' results in help-text on the 'residue' command.) 
+<pre>
+      alias sela text $ 14 $=
+      alias selr text $ 18 $=
+      alias selc text $ 22 $=
+      selr ??
+</pre>
+
+<hr><a name="wfactor">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      W       </h2>
+      Select atoms which have W value (weight or occupancy)
+  greater, less than, between or beyond the given value(s).
+<p>
+  Function: Selection
+<p>
+    Syntax: <br> 
+      W  (&lt, &gt, &lt&gt and =) <i>cutoff(s)</i> [ANGLE]<br>
+<p>
+  Note: If the ANGLE option is selected, the values are considered as 
+angles.  
+
+<p>
+  See also:
+  <a href="edp_s.html#bfactor">B</a>,
+  <a href="edp_s.html#xcoor">X,Y,Z</a> and
+  <a href="edp_s.html#zone">ZONE</a>
+<p>
+    Examples: <br>
+  1) Select atoms that have W smaller than 1.0
+<pre>
+      W &lt; 1.0
+</pre>
+
+  2) Select solvent exposed atoms (eg. those atoms of solvent
+  accessible area (<i>SAA</i>) larger than 5.0 Å²).
+<pre>
+      initialize
+      zone 1 - 162
+           ! assume the protein molecule contains zone 1 - 162
+      access      
+           ! calculate SAA, overwrite the W field with SAA
+      exclude W &lt; 5.0
+           ! exclude the atoms with less than 5.0 Å² SAA.
+</pre>
+
+<hr><a name="xcoor">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        X (Y or Z) </h2>
+      Select atoms which have X (Y or Z) values (in the displayed text)
+  greater, less than, between or beyond the given value(s).
+<p>
+  Function: Selection
+<p>
+  Syntax: <br>
+      X (&lt, &gt, &lt&gt, &gt&lt and =) <i>cutoff(s)</i> [ANGLE] <br> 
+<p>
+  Note: If the ANGLE option is selected, the values are considered as 
+angles.  
+
+<p>
+  See also:
+  <a href="edp_s.html#bfactor">B</a> and
+  <a href="edp_s.html#wfactor">W</a>
+<p>
+    Examples: <br>
+  1) Select atoms of X larger than 0.0
+<pre>
+      x &gt; 0.0 
+</pre>
+  2) Select atoms of -10.0 &lt x &lt 10.0
+<pre>
+      initialize
+      x &lt;&gt; -10.0 10.0
+</pre>
+  3) Select atoms of X = 5.0 
+<pre>
+      initialize
+      x = 5.0
+</pre>
+
+  3) Select atoms of X in the range of zero +/- ten (<i>i.e.</i> from -10 to +10).  
+<pre>
+      initialize
+      x = 0 10
+</pre>
+
+<hr><a name="zone">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>         ZONE    </h2>
+      Select residue zone(s) or show the zones 
+<p>
+  Function: Selection, Information
+<p>
+    Syntax: <br>
+  1)  ZONE  <br>
+  2)  ZONE <i>res_id1</i> [<i>res_id2</i> ... <i>res_id1</i>6]
+           <br> 
+<p>
+  Note:  <br>
+  1)  The first form shows the zone information. In the output, the number
+      enclosed in the brackets is the number of currently selected
+      records in the corresponding zone. <br>
+  2)  The <i>res_idn</i> can be a simple residue_id, a 
+      relative residue_id or a complex residue_id,or a range. 
+      This provides flexibility for writing macros. <br>
+<blockquote>
+      a) A <dfn>simple residue_id</dfn> is a chain name (which can be a blank)
+      immediately followed by the residue number. The simple
+      <i>res_id</i> will be used as the register-zero for the next relative
+      <i>res_id</i> if there is one. <br>
+      b) A <dfn>relative residue_id</dfn> is a character `+' followed by an
+      integer. It represents a residue separated from the register-zero
+      by the given integer number of residues. The initialize register-
+      zero is the position before the first residue. <br>
+      c) A <dfn>complex residue_id</dfn> is a chain name immediately followed
+      by a relative residue_id. An underscore can be used for a chain
+      which have a blank chain name. The corresponding residue_id
+      is the one represented with the same text string but without the
+      `+', and the register is adjusted so that the selected residue is
+      the consistent with the relative residue_id in the text string. <br>
+      d) A range contains two residue Ids separated with a hyphen `-'. <br>
+</blockquote>
+  3)  A keyword <code>first</code> stands for the first residue, and a keyword
+      <code>last</code> strands for the last residue. A keyword <code>ALL</code> 
+      is a shortcut of <code>first - last</code>.
+<p>
+  See also:
+  <a href="edp_s.html#group">GROUP</a> and
+  <a href="edp_g.html#subcommand">{subcommand}</a>
+<p>
+    Examples: <br>
+  1) Select all atoms
+<pre>
+      zone all
+           ! In this syntax, the keyword <i>all</i> means  
+           ! <i>every records</i>
+</pre>
+  2) List the zone information
+<pre>
+      zone all
+      zone    ! list the number of selected atoms in each zone
+</pre>
+ 
+
+  3) Select residues 1 and 3 in chain A, and the range from residues
+  5 to 10 in chain B.
+<pre>
+      zone A1 A3  B5 - B10
+</pre>
+
+  4) Select residues from A10 to A21
+<pre>
+      zone A10 - +11
+           ! where A10 is a simple residue_id
+           ! and +11 is a relative residue_id with A10 as 
+           ! the register-zero.
+  or 
+      zone a+10 - +21
+           ! where a+10 is a complex residue_id for A10
+           ! and +21 is a relative residue_id with A10 as 
+           ! the register 10.
+           ! 
+</pre>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-04<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->.
+</font>
+</body>
+</html>

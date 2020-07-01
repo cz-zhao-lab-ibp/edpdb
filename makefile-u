@@ -1,0 +1,48 @@
+# this makefile is for the SGI unix computer
+
+PROGRAM	      = edpdb_v12a
+
+OPT           = -O 
+ENV           = -col80
+FC	      = f77  $(ENV) 
+CC            = cc 
+
+FFLAGS	      = -static -vms_cc $(OPT) -backslash -OPT:Olimit=0
+CFLAGS        = -I/usr/local/include $(OPT) $(ENV)
+
+LDFLAGS	      = -L/usr/local/lib
+
+#LIBS	      = -B dynamic -lreadline -B dynamic -lcurses
+LIBS          = -lreadline
+
+OBJS	      = clique.o       rtnout.o \
+		abcd.o        harker.o       pair.o  \
+	        setw.o \
+		atom.o        param.o  \
+	        snayb.o \
+		axis.o         eular.o  pickr.o  \
+		chklib.o       find1.o     polar.o  \
+     		smg.o  \
+		get_command.o   order.o          edpdb.o \
+		listatom.o        needlemen1d.o  volume.o subr-unix.o \
+		thread.o
+
+SRCS	      = clique.f        rtnout.f \
+		abcd.f        harker.f       pair.f  \
+	        setw.f \
+		atom.f     param.f  \
+	        snayb.f \
+		axis.f         eular.f  pickr.f  \
+		chklib.f       find1.f     polar.f  \
+		smg.c \
+		get_command.f       order.f  edpdb.f \
+  		listatom.f         needlemen1d.f  volume.f subr-unix.f \
+		thread.f
+
+.f.o :
+		$(FC) -c $(FFLAGS) $*.f
+
+$(PROGRAM):     $(OBJS)
+		@echo -n "Loading $(PROGRAM) ... "
+		@$(FC) $(FFLAGS) $(LDFLAGS) $(OBJS) $(LIBS) -o $(PROGRAM)
+		@echo "done"

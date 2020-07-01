@@ -1,0 +1,3978 @@
+<html>
+<head>  <title>EdPDB: Calculation </title> </head>
+
+<BODY background="trebuche2.gif">
+<hr><a name="top"></a><a name="calculation">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1>    	Calculation 		</h1>
+Available commands:
+	    <a href="edp_c.html#ab">	AB	</a>,
+	    <a href="edp_c.html#abc">	ABC	</a>,
+	    <a href="edp_c.html#abcd">	ABCD	</a>,
+	    <a href="edp_c.html#access">	ACCESS	</a>,
+	    <a href="edp_c.html#analyze">	ANALYZE	</a>,
+	    <a href="edp_c.html#avb">	AVB	</a>,
+	    <a href="edp_c.html#axis">	AXIS	</a>,
+	    <a href="edp_c.html#bridge">	BRIDGE	</a>,
+	    <a href="edp_c.html#clique">	CLIQUE	</a>,
+	    <a href="edp_c.html#closer">	CLOSER	</a>,
+	    <a href="edp_c.html#correlation">	CORRELATION	</a>,
+	    <a href="edp_c.html#diff">	DIFF	</a>,
+	    <a href="edp_c.html#distance">	DISTANCE	</a>,
+	    <a href="edp_c.html#dock">	DOCK	</a>,
+	    <a href="edp_c.html#doit">	DOIT	</a>,
+	    <a href="edp_c.html#eigen">	EIGEN	</a>,
+	    <a href="edp_c.html#euler">	EULER	</a>,
+	    <a href="edp_c.html#harker">	HARKER	</a>,
+	    <a href="edp_c.html#jiggle">	JIGGLE	</a>,
+	    <a href="edp_c.html#match3d">	MATCH3D	</a>,
+	    <a href="edp_c.html#momentinertia">	MOMENTINERTIA	</a>,
+	    <a href="edp_c.html#movecenter">	MOVECENTER	</a>,
+	    <a href="edp_c.html#mw">	MW 	</a>,
+	    <a href="edp_c.html#newxyz">	NEWXYZ	</a>,
+	    <a href="edp_c.html#overlay">	OVERLAY	</a>,
+            <a href="edp_c.html#pclique">	PCLIQUE</a>, 
+	    <a href="edp_c.html#pdist">	PDIST	</a>,
+            <a href="edp_c.html#pdoit">	PDOIT</a>, 
+            <a href="edp_c.html#poverlay">	POVERLAY</a>, 
+            <a href="edp_c.html#psdist">	PSDIST</a>, and
+	    <a href="edp_c.html#planar">	PLANAR	</a>,
+	    <a href="edp_c.html#polar">	POLAR	</a>,
+	    <a href="edp_c.html#ratio">	RATIO	</a>,
+	    <a href="edp_c.html#rmsw">	RMSW	</a>,
+	    <a href="edp_c.html#rtn">	RTN	</a>,
+            <a href="edp_c.html#sclique">	SCLIQUE</a>.  
+	    <a href="edp_c.html#sdist">	SDISTANCE	</a>,
+	    <a href="edp_c.html#shape">	SHAPE	</a>,
+	    <a href="edp_c.html#sort">	SORT	</a>,
+	    <a href="edp_c.html#sumw">	SUMW	</a>,
+	    <a href="edp_c.html#touch">	TOUCH	</a>,
+	    <a href="edp_c.html#vector">	VECTOR 	</a>,
+	    <a href="edp_c.html#vm">	VM	</a> and
+	    <a href="edp_c.html#volume">	VOLUME	</a>.
+<p>
+      EdPDB performs various structural analyses and coordinate
+  rotation-translation operations.
+<p>
+      The commands SDISTANCE, MOVECENTER, RTN, HARKER will apply
+  crystallographic symmetry operators on the selected atoms. The
+  commands ANALYZE, OVERLAY, MOMENTINERTIA,
+  MOVECENTER, RTN, AXIS can be used to create, apply and analyze a
+  rotation-translation or other coordinate transformation.
+<p>
+      The calculation commands HARKER, EULER and POLAR
+  reference the xyz coordinate as non-Cartesian. In these cases, the
+  PDB format is nothing more than a format to input data to
+  EdPDB.
+<p>
+      The result of a calculation will be written to the standard
+  output device (eg. the terminal in an interactive process) and/or to
+  a scratch file (file_name.scr). Some result may overwrite the
+  field(s) of related records, eg. ACCESS command will overwrite
+  the W field of each ON atom with the solvent accessible area of
+  that atom. Therefore, these calculation commands can be
+  considered as editing commands as well.
+<p>
+      Similarly, some calculation commands can also be considered
+  as selection commands.
+   
+<hr><a name="ab">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>	AB	</h2>
+      Calculate the distance of every DIST pair defined by DFAB.
+<p>
+  Function: Calculation, Selection, Editing
+<p>
+  Syntax: <br>
+      AB  [(A, B) [(X, Y, Z)]]
+<p>
+  Note: <br>
+  1)  If A or B is specified, the corresponding atoms, which satisfy
+      the bond criterion defined with DFAB, will be selected and
+      stored in (ie. overwrite) the group SCR. <br>
+  2)  Furthermore, if the X, Y or Z option is used, the corresponding
+      field in the displayed text string will be overwritten with the A-
+      B distance. <br>
+<p>
+  See also:
+  <a href="edp_c.html#abc">ABC</a>,
+  <a href="edp_c.html#abcd">ABCD</a>,
+  <a href="edp_d.html#dfab">DFAB</a> and
+  <a href="edp_s.html#load">LOAD</a>
+<p>
+   Examples: <br>
+  1) Calculate the N-CA bonds in amino acid residues
+<pre>
+      dfab n ca
+      atom n ca
+      ab
+</pre>
+
+  2) Calculate the CA-CA bonds between successive residues.
+<pre>
+      dfab ca 0 1
+      ca
+      ab
+</pre>
+
+  3) List all the CB atoms which are within 3.0 Å from the carbonyl
+  oxygen of the same residue.
+<pre>
+      initial
+      dfab cb o  ,,,,  0.0 3.0
+      atom cb o
+      ab a
+      initial
+      load scr
+      list
+</pre>
+
+  4) Make a list of N-Ca, Ca-Cb, Ca-C distances, and store them in
+  the x, y, z fields respectively.
+<pre>
+      atom ca cb n c
+      dfab n ca
+      ab b x  ! store N-Ca to the x field of Ca
+      dfab ca cb
+      ab a y  ! store Ca-Cb to the y field of Ca
+      dfab ca c
+      ab a z      ! store Ca-C to the z field of Ca
+      initial
+      load scr
+      list
+</pre>
+
+<hr><a name="abc">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+
+<h2>	ABC	</h2>
+      Calculate angles using the angle group defined with the
+  command DFABC.
+<p>
+  Function: Calculation, Selection, Editing
+<p>
+  Syntax: <br>
+      ABC  [(A, B, C) [(X, Y, Z)]]
+<p>
+  Note: <br>
+  1)  If A, B or C is specified, the corresponding atoms which
+      satisfy the angle criterion defined with DFABC will be selected
+      and stored in (ie. overwrite) the group SCR. <br>
+  2)  Furthermore, if the X, Y or Z option is used, the corresponding
+      field in the displayed text string will be overwritten with the A-
+      B-C angle. <br>
+<p>
+  See also:
+  <a href="edp_c.html#ab">AB</a>,
+  <a href="edp_c.html#abcd">ABCD</a>,
+  <a href="edp_d.html#dfabc">DFABC</a> and
+  <a href="edp_s.html#load">LOAD</a>
+<p>
+   Examples: <br>
+  1) Calculate the N-CA-C angles in amino acid residues
+<pre>
+      dfabc n ca c
+      atom  n ca c
+      abc
+</pre>
+
+  2) Calculate the CA-CA-CA angles in successive residues.
+<pre>
+      dfabc ca 1 2 3
+      ca
+      abc
+</pre>
+
+  3) Calculate a hydrogen bond angle formed with C(residue 10) -
+  O(residue 10) - HOH (solvent 200).
+<pre>
+      dfabc c o hoh 10 10 200
+      { atom c o hoh | zone 10 200 }
+      abc
+</pre>
+
+<hr><a name="abcd">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>	ABCD	</h2>
+      Calculate torsion angles using the torsion angle group defined
+  with the command DFABCD.
+<p>
+  Function: Calculation, Selection, Editing
+<p>
+  Syntax: <br>
+      ABCD  [(A, B, C, D), [(X, Y, Z)]]
+<p>
+  Note: <br>
+  1)  If A,B,C or D is specified, the corresponding atoms which
+      satisfy the angle criterion defined with DFABCD will be
+      selected and stored in (ie. overwrite) the group SCR. <br>
+  2)  Furthermore, if x,y or z option is used, the corresponding field
+      in the displayed text string will be overwritten with the A-B-C-
+      D torsion angle. <br>
+<p>
+  See also:
+  <a href="edp_c.html#ab">AB</a>,
+  <a href="edp_c.html#abc">ABC</a>,
+  <a href="edp_d.html#dfabcd">DFABCD</a> and
+  <a href="edp_s.html#load">LOAD</a>
+<p>
+   Examples: <br>
+  1) Calculate the N-CA-C-N (psi) angles in the peptide.
+<pre>
+      dfabcd n ca c n 0 0 0 1
+      atom   n ca c
+      abcd
+</pre>
+
+  2) Calculate the CA-CA-CA-CA torsion angles in the peptide.
+<pre>
+      dfabcd ca ca ca ca 1 2 3 4
+      ca
+      abcd
+</pre>
+
+  3) Check the chirality of each amino acid residue
+<pre>
+      initial
+      dfabcd ca n c cb
+           ! define zeta angle
+      atom ca n c cb
+      abcd
+           ! the zeta angle should be about 33.5 degrees.
+</pre>
+
+  4) List amino acid residues which have the <i>alpha</i> conformation,
+  ie. -90.0 &lt phi &lt 0. and -90.0 &lt psi &lt 0.0 .
+<pre>
+      ca
+      blank
+           ! erase the displayed text in ca records
+      dfabcd c n ca c 0 1 1 1 f f t f -90. 0.0
+           ! define phi torsion angle,
+           ! limited between -90.0 and 0.0 degrees
+      abcd c x
+           ! store the torsion angle in x field of the third atom (ca)
+      initial
+      load scr
+           ! select only the ca atoms of residues of
+           ! -90.0 &lt; phi &lt; 0.0
+      Dfabcd n ca c n 0 0 0 1 f t f f -90.0 0.0
+           ! define psi torsion angle,
+           ! limited between -90.0 and 0.0 degrees
+      Abcd b y
+           ! store the torsion angle in y field
+           ! of the second atom (ca)
+      initial
+      load scr
+           ! select only the ca atoms of residues
+           ! that satisfy the double selection criteria
+      list
+           ! note that the x and y field are filled with
+           ! phi and psi angles, and the z field is blank.
+</pre>
+
+<hr><a name="access">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>	ACCESS	</h2>
+      Calculate the solvent accessible area of each ON atom in the
+  presence of other specified atoms (Ref. Lee & Richards. J. Mol. Biol. 
+  55, 379-400, 1971).
+<p>
+  Function: Calculation, Editing
+<p>
+  Syntax: <br>
+      ACCESS [<i>grp_id</i>] [(BURIED,ISOLATED)] [<i>r_probe</i>] [<i>zstep</i>] 
+[<i>file_name</i>]
+<p>
+  Note: <br>
+  1)  <i>grp_id</i> is a group ID defined with command GROUP. If it is
+      not specified, no background atoms will be considered. In other
+      words, the default background is an empty group. <br>
+  2)  <i>r_probe</i> is the probe radius. The default is 1.4 Å. <br>
+  3)  <i>zstep</i> is the integration step size along z direction. The default
+      is 0.2 Å . <br>
+  4)  If the option BURIED is used, the output will be the buried surface 
+      area of ON atoms in the context of the background group. 
+      If the option ISOLATED is used, the solvent accessible area of
+      each ON atom will be evaluated in a context free of other ON
+      atoms.  <br>
+  5)  A database file in the current directory or in the default
+      directory (ie.<i>edp_data/</i> for unix) is
+      required to define VDW radii. A file in the current directory
+      has higher priority than the file in the default directory. The
+      default file name is the one previously specified, initially
+      <i>acc.txt</i>. The <i>acc.txt</i> file can be used as a template to create
+      user specific data files. <br>
+  6)  After the calculation, the occupancy of each ON atom will be
+      replaced by the accessible area. If there is only one atom in the
+      ON atom buffer, a list of accessible area vs. Z-section will be
+      output in a Z-increasing order.  <br>
+<p>
+  <a href="edp_m.html#setenv_vb">Verbose</a> range:1,3
+<p>
+  See also:
+  <a href="edp_m.html#file">FILE</a>,
+  <a href="edp_c.html#shape">SHAPE</a>,
+  <a href="edp_c.html#sumw">SUMW</a> and
+  <a href="edp_c.html#volume">VOLUME</a>
+<p>
+   Examples: <br>
+  1) Calculate the solvent accessible area (<i>SAA</i>) of an isolated
+  residue, eg. residue 99.
+<pre>
+      initial
+      zone 99
+      access
+</pre>
+
+  2) Calculate the <i>SAA</i> of molecule A (ie. chain A ) in the presence
+  of molecule B (ie. chain B).
+<pre>
+      { chain B ;  group molB }
+      initial ;  chain A ;   access molB 1.4 0.2
+</pre>
+
+  3) Calculate the <i>SAA</i> of all the crystallographical located solvent
+  molecule (residue type = SOL) to the bulk water, within the
+  context of the protein molecule (say, zone 1 - 162), using a data
+  file called <i>my_acc.txt</i> to assigning the Van de Waals radii. In this
+  calculation, each solvent molecule should be calculated
+  independently, without considering other solvent molecules. The
+  individual <i>SAA</i> is stored in the W field of each ON atom.
+<pre>
+      { zone 1 - 162 ;  group prt }
+      initial ;  residue sol ;  access prt 1.4 0.2 isolated my_acc.txt
+</pre>
+
+
+<hr><a name="analyze">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>	ANALYZE	</h2>
+      Calculate the average, min., max., max-min, and sigma or rms
+  of the displayed <i>X,Y,Z</i> coordinates, Occupancy and B values.
+  The displayed XYZ are the coordinate fields shown on the screen
+  with the LIST command that may be different from those stored in
+  the x,y,z arrays for geometry calculations.
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      ANALYZE [ANGLE]
+<p>
+  Note: <br>
+  1)  The definitions of sigma and rms are the following. <br>
+<blockquote>
+      sigma(R)	= sqrt(av((X-av(X))²+(Y-av(Y))²+(Z-av(Z))²)) <br>
+      sigma(B)	= sqrt(av((B-av(B))²)) <br>
+      rms(R)	= sqrt(av(X²+Y²+Z²)) <br>
+      rms(W)	= sqrt(av(W²)) <br>
+      3rd	= sign of sigma(X*(Y²+Z²)) etc. <br>
+</blockquote>
+      where <code>av()</code> stands for average, and <code>sqrt()</code>
+      stands for square root. <br>
+  2)  If the ANGLE option is chosen, the x,y,z,w and b values will
+      be considered as angles in degrees. All the angles are first
+      converted into the region between -180 and 180 degrees before
+      the statistics is done. The statistics for each field is done by
+      shifting a 360 degree window to find the minimum sigma, so
+      that eg. the average of -179.0 and 179.0 degrees would be
+      180.0 degrees, not 0.0 degree. (This option has bugs!)
+ <p>
+  Output  <a href="edp_ctr.html#parameter">Status</a>: 
+ -3, no record is selected for analysis.&nbsp;</p>
+<p>
+  See also:
+  <a href="edp_c.html#avb">AVB</a>,
+  <a href="edp_c.html#momentinertia">MOMENTINERTIA</a>,
+  <a href="edp_c.html#rmsw">RMSW</a> and
+  <a href="edp_c.html#sumw">SUMW</a>
+<p>
+   Examples: <br>
+  1) Calculate the statistics of backbone atoms
+<pre>
+      Main
+      Analyze
+</pre>
+  2) Count number of atoms of solvent molecules
+<pre>
+      Residue SOL
+      Analyze
+</pre>
+
+<hr><a name="avb">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>	AVB	</h2>
+      Average the B value of the ON atoms over each residue, and
+  overwrite the X, Y, Z or W fields of the <i>CA</i> atom with the
+  average B.
+<p>
+  Function: Calculation, Editing
+<p>
+  Syntax: <br>
+      AVB [(X, Y, Z, W)]
+<p>
+  See also:
+  <a href="edp_c.html#analyze">ANALYZE</a>,
+  <a href="edp_c.html#rmsw">RMSW</a> and
+  <a href="edp_c.html#sumw">SUMW</a>
+<p>
+   Examples: <br>
+  1) In the following example, we will calculate the average B factor
+  of each amino acid residue, of its main chain atoms and of its side
+  chain atoms. The result will be stored in the x, y, z fields of the
+  corresponding Ca record.
+<pre>
+      Initial
+      Ca
+      Blank       ! clear the Ca x,y,z fields.
+           ! This is particularly for the Gly residue which
+           ! does not have side chain atoms
+      Main
+      Avb  y      ! store the main chain average B in the y column
+      More
+      Avb  x      ! store the residue average B in the x column
+      Exclude Main
+      Avb  z  ! store the side chain average B in the z column
+      initial
+      Ca
+      List        ! display the statistic results
+</pre>
+
+  2) Select residues that have an average B larger than 40.0 A².
+<pre>
+      { ca ;  more } 
+           ! select the amino acid residues
+      Avb w
+           ! store the average B in the W column of Ca atom
+      Initial
+      { ca | W &gt; 40.0 }
+           ! select the Ca atoms of W &gt; 40.0
+      More
+           ! Expand the selection to residues
+</pre>
+
+<hr><a name="axis">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> AXIS    </h2>
+      Read a matrix file (eg. <i>rtn_.txt</i> created with the command RTN),
+  analyze the rotation translation of the matrix. Then, replace the W
+  field of each ON atoms with the distance from the atom to the
+  axis.
+<p>
+  Function: calculation
+<p>
+  Syntax: <br>
+      AXIS <i>file_name</i> [<i>vector_id</i>, [<i>axis_id</i>]]
+<p>
+  Note: <br>
+  1)  A matrix file is required to input the matrix to be analyzed.  <br>
+  2)  If a <i>vector_id</i> is specified 
+      rotation axis will be stored as the vector. The vector will start
+      at the point listed in the output of the AXIS command (ie. the
+      point that the screw axis passes through). If specified, the
+      vector may start from the y-z, z-x or x-y planes; the
+      corresponding <i>axis_id</i> would be X,Y and Z. <br>
+<p>
+  See also:
+  <a href="edp_c.html#rtn">RTN</a> and
+  <a href="edp_c.html#vector"> VECTOR</a>
+<p>
+   Examples: <br>
+  1) Analyze the rotation-translation matrix in the file <i>rtn_.txt</i> which
+  is the default file name.
+<pre>
+      axis rtn_.txt
+</pre>
+  See also: the example on how to calculate a 
+  <a href="edp_h.html#hinge_bending_angle">Hinge bending angle</a>.
+<p>
+
+<hr><a name="bridge">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       BRIDGE  </h2>
+      Calculate the distance X-Y, the angle W-X-Y and the torsion
+  angle W-X-Y-Z (or elevation angle arcsin(sin(W-X-Y)sin(Z-W-X-Y))) 
+  defined with the command DEFINE BRIDGE. This may be
+  useful for studying a structural geometry between two atom groups
+  (ie. the X and Y groups) which may be close in 3D space but not
+  in the amino acid sequence.
+<p>
+  Function: Calculation, Selection
+<p>
+  Syntax: <br>
+      BRIDGE  [(W, X, Y, Z)]
+<p>
+  Note:  <br>
+  1) The optional atom_id W, X, Y or Z, determines which atom
+  in the bridge group is going to be stored in the SCR group. <br>
+  2) If wildcards are used in DEFINE BRIDGE,BRIDGE will list multiple 
+  matches for both atom_x and atom_y, but will list only the first match 
+  for both atom_w and atom_z. 
+<p>
+  See also:
+  <a href="edp_c.html#ab">AB</a>,
+  <a href="edp_c.html#abc">ABC</a>,
+  <a href="edp_c.html#abcd">ABCD</a> and
+  <a href="edp_d.html#dfbrg">DEFINE BRIDGE</a>
+<p>
+   Examples: <br>
+  1) Search for candidates of sites of engineered disulfide bridges.
+  The search criterion is the following. The two residues should be
+  20 residues apart in the amino acid sequence. The Cb-Cb distance
+  should be between 2.5 and 6.0 Å.  One of the Ca-Cb-Cb angle
+  should be between 80.0 and 180.0 degrees. (The Ca-Cb-Cb-Ca
+  torsional angle is unrestricted).  <br>
+<pre>
+      define bridge ca cb cb ca x 0 y 0 t t t t 2.5 6.0 80 180 0 360 wxyz 20
+      initial
+      atom ca cb
+      bridge xy
+      initialize; load scr
+      list
+</pre>
+
+<hr><a name="clique">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       CLIQUE  </h2>
+      Find matches between subsets of the ON atoms and subsets of
+  atoms in a given group.
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      CLIQUE <i>group_id</i>  <i>min_clique</i> <i>rms_cutoff</i> 
+           <i>eps</i> <i>max_#_cliques</i> [<i>mch_char</i>, [<i>no_dup</i>]]
+<p>
+  Note: <br>
+  1)  The <i>min_clique</i> is the minimum number of atomic matches
+      for a clique to be listed. The <i>rms_cutoff</i> sets restriction of the
+      rms coordinate difference for a clique to be listed. The <i>eps</i>
+      sets criterion for a pair of distances to be considered as similar.
+      The <i>max_#_cliques</i> sets limit to the output list. Only will the
+      first few cliques be listed. <br>
+  2)  If <i>mch_char</i> greater than zero, 
+      for a pair of atoms to match, the first <i>mch_char</i> 
+      character(s) of their atom name must be the same. 
+      If <i>mch_char</i> less than zero, 
+      for a pair of atoms to match, the first <i>mch_char</i> 
+      character(s) of their atom name must be different. 
+      If <i>mch_char</i> equals zero, 
+      for a pair of atoms to match, their weights (occ) must be the same. 
+      (The default is 1).<br>
+  3)  If <i>no_dup</i> equals 1 (one), 
+      for a clique to be listed, the atom+residue names within one clique 
+      must not contain duplications (this is desinged to prevent symmetry
+      related atoms to occur more one once); otherwise, no check is made.
+      (The default is 0). <br>
+  4)  This calculation requires large arrays. To solve a real problem,
+      the array dimension, <code>max_l</code>, which is stored in the file 
+      <code>edp_dim.inc</code>, may need to
+      be modified. <br>
+<p>
+  Reference: H.M. Grindley et.al. <i>J. Mol. Biol.</i> (1993), 229, 707-721.
+<p>
+  See also:
+  <a href="edp_c.html#bridge">BRIDGE</a> and
+  <a href="edp_c.html#overlay">OVERLAY</a>
+<p>
+   Examples: <br>
+  1) To find a similar residue arrangement to the Ser-His-Asp
+  catalytic triangle.
+<pre>
+      initial
+      {atom oh       | load a1 } !a1 defined as the Ser
+      {atom nd1 ne2  | load a2 } !a2 defined as the His
+      {atom od1 od2  | load a3 } !a3 defined as the Asp
+      group tri
+      initial
+      { side | residue ser his asp }
+      clique tri 3 0.5 0.5 20 1 1 
+</pre>
+
+      In the above example, cliques of at least 3 pairs of atomic
+  matches are searched. The rms coordinate difference should be less
+  than 0.5 Å and difference of <i>bond</i> length should be less than 0.5
+  Å too. The top 20 cliques will be listed.
+
+
+<hr><a name="closer">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       CLOSER  </h2>
+      Given two groups of atoms, CLOSER classifies the ON atoms
+  according to the shortest distance to the atoms in each group.
+<p>
+  Function: Calculation, Selection, Editing
+<p>
+  Syntax: <br>
+      CLOSER  <i>grp_id1</i>  <i>grp_id2</i>  <i>dmax</i> 
+<p>
+  Note: <br>
+  1)  The <i>grp_id1</i>, and <i>grp_id2</i> specify two groups. The two
+      groups should not overlap with each other. <br>
+  2)  The <i>dmax</i> is the maximum distance criterion. Only the atoms
+      that are within <i>dmax</i> distance from the first group will be 
+      considered in the calculation. <br>
+  3)  The occupancy of the ON atoms will be change in the
+      following way. If the atom is closer to the first group than to
+      the second group, its W column is set to the shortest distance.
+      Otherwise, it is set to 999.0. <br>
+  4)  No crystallographic symmetry information is considered in this
+      calculation. <br>
+<p>
+  See also:
+  <a href="edp_c.html#distance">DISTANCE</a> and
+  <a href="edp_c.html#sdist">SDISTANCE</a>
+<p>
+   Examples: <br>
+  1) For the protein molecule which has interdomain hinge bending
+  motion, we need to assign the solvent molecules to different
+  domains in order to superimpose the solvent molecules from
+  different models. In the following, assume that the two domains
+  are zone 1 - 75 and zone 76 - 162. The solvent molecules closer to
+  the zone 1 - 75 will be selected.
+<pre>
+      { zone 1 - 75   ;  group n_dm }
+      { zone 76 - 162 ;  group c_dm }
+      initial
+      residue sol
+      closer n_dm c_dm 3.5
+      exclude w &gt; 3.5
+</pre>
+
+<hr><a name="correlation">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  CORRELATION     </h2>
+      Calculate the correlation between a given column of the ON
+  atoms and a given column of a group. 
+<p>
+  Function: Calculation, Editing
+<p>
+  Syntax: <br>
+      CORRELATION  <i>grp_id</i> (X,Y,Z,W,B) (X,Y,Z,W,B)
+           [(X,Y,Z,W,B)]
+<p>
+  Note: <br>
+  1)  The correlation between two sets of data, eg. W and B, is
+      defined as  <br>
+<blockquote>
+           sum((w-av(w))*(b-av(b)) /  <br>
+           sqrt(sum((w-av(w))²)*sum((b-av(b))²)),  <br>
+</blockquote>
+      where <i>sum()</i> stands for a summation, <i>av()</i> stands for an
+      average, and <i>sqrt()</i> stands for a square root.  <br>
+  2)  The second and the third parameters specify the data columns
+      of the ON atoms and the group, between which a correlation
+      will be calculated. <br>
+  3)  As an optional result of this calculation, the last specified field,
+      X, Y or Z, in the text string of the ON atom will be
+      overwritten with the discrepancy W - (c1*B + c2), where c1
+      and c2 are determined by minimizing  <br>
+<blockquote>
+           sum((W - (c1*B + c2))²). <br>
+</blockquote>
+<p>
+  See also:
+  <a href="edp_c.html#diff">DIFF</a> and 
+  <a href="edp_c.html#ratio">RATIO</a>
+<p>
+   Examples: <br>
+  1) Calculate the correlation between the distance of each protein
+  atoms to a hinge bending axis and the B factor. Assume that the
+  hinge bending axis is stored as a matrix in a file called <i>hinge.txt</i>
+  (see the examples of <a href="edp_c.html#axis">AXIS</a>).
+<pre>
+      initial 
+      {ca ;  more }
+      group tmp
+      axis hinge.txt
+           ! W column is replaced with the distance
+           ! from each atom to the axis.
+      correlation tmp w b 
+</pre>
+
+<hr><a name="diff">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> DIFF    </h2>
+      Calculate the difference between the 
+  <a href="edp_g.html#display">displayed</a> (x, y, z, w, b)
+  (multiplied by a scale factor) of the ON atoms and that of a given
+  group. The difference is defined as <br>
+<pre>
+           value(group_atom)*<i>scale1</i> - value(ON_atom)*<i>scale2</i>. 
+</pre>
+  The result is stored in the text string of the ON atoms. If an
+  optional RMS is chosen, <i>distance</i> between the atom pair will be
+  calculated and stored in the W column of the ON atom. 
+<p>
+  Syntax: <br>
+      DIFF <i>group_id</i> [(SCALE [<i>scale1</i>,<i>scale2</i>], RMS, 
+      MORPH [<i>lamda</i>])]
+<p>
+  Note:  <br>
+  1)  The number of the ON atoms should be equal to the number of
+      atoms in the specified group.  <br>
+  2)  The default <i>scale1</i> and <i>scale2</i> are both 1.0. <br>
+  3)  Two consecutive DIFF operations, with default SCALE option,
+      make the values of the ON records unchanged. <br>
+  4)  If MORPH option is selected, <i>scale1</i> is set to be <i>lamda</i> and
+      <i>scale2</i> is set to be <i>lamda</i>-1.0. This is useful for 
+      intraperlation between two structures. <i>lamda</i> is usually set between
+      0.0 and 1.0, corresponding to no and full acceptance of the reference 
+      structure (i.e. in the structure from the named group), respectively.  
+      The default <i>lamda</i> is 1.0. 
+<p> 
+  See also:
+  <a href="edp_c.html#analyze">ANALYZE</a> and
+  <a href="edp_c.html#ratio">RATIO</a>
+<p>
+   Examples: <br>
+  1) Calculate the coordinate shift between two sets of coordinates
+  of the same molecule, say chains A and B.
+<pre>
+      { chain a ;  group moda  }
+      { chain b ;  group modb  }
+      initial
+      load moda
+      diff modb rms
+      analyze
+</pre>
+
+  2) Assume that two molecules A and B contact to each other in
+  the crystal structure. List the buried solvent accessible area (<i>SAA</i>)
+  of each atoms of molecule A.
+<pre>
+      { chain a ;  group moda  }
+      { chain b ;  group modb  }
+      initial 
+      load mola
+      access 
+           ! calculate the SAA of an isolated molecule A.
+      write mola_acc.pdb
+      close
+      read  mola_acc.pdb c
+      { chain c ;  group tmp }
+      access molb
+           ! calculate the SAA of molecule A 
+           ! in the presence of molecule B
+      diff tmp
+           ! the W field will be the value of the SAA
+           ! of molecule A buried by molecule B.
+</pre>
+  3) Assume that chains A and B are the same molecule with different
+  conformations. Make an intermediat structure out of 40% chain A and 
+  60% chain B.  
+<pre>
+      init; chain b ; group b
+      init; chain a ; diff b morph 0.6 ; write A4B6.pdb 
+</pre>
+
+<hr><a name="distance">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>     DISTANCE        </h2>
+      Calculate the distances between the ON atoms and atoms of a
+  given group.
+<p>
+  Function: Calculation, Selection
+<p>
+  Syntax: <br>
+      DISTANCE <i>group_id</i> <i>dmin</i> <i>dmax</i> 
+           [<i>skip_#</i>   <i>max_output_#</i>] [(LOAD, COPY, MARK)] 
+<p> 
+  Note: <br>
+  1)  The <i>group_id</i> specifies a group of records; the distance
+      between this group and the ON atoms will be calculated. <br>
+  2)  The <i>dmin</i> is the minimum distance criteria (0.0 &lt dmin), and
+      the <i>dmax</i> is the maximum distance criteria (dmin &lt dmax). If 
+      only one distance criteria is given, it is used as <i>dmax</i>, and 
+      <i>dmin</i> is set to 0.0. <br>
+  3)  The <i>skip_#</i> is the smallest residue number between two
+      residues in the input-residue-sequence that will be included in
+      the calculation ( 0 &lt= <i>skip_#</i> ). For example, <i>skip_#</i> = 4
+      indicates that only the atom pair which is 4 or more residues
+      apart will be searched. Default is 1. <br>
+  4)  The <i>max_output_#</i> is the maximum number of output lines
+      for the calculation. It is designed to prevent an unexpected long
+      calculation. Default is the maximum number of atoms that
+      the program allows.  <br>
+  5)  If LOAD option is used, the atoms in the group satisfying
+      the distance criteria will be stored in the SCR group.   <br>
+  6)  If COPY option is used, all XYZ B and W fields of the ON atom will 
+      be replaced
+      by that of the last matched atom. MARK option is similar to COPY, but 
+      only the W field is copied. Otherwise, the W 
+      field of each ON atom will be changed to the number
+      of its neighbors counted in this calculation. <br>
+  7)  If the selection switch is currently set to OFF (ie. an
+      EXCLUDE command is used), the atoms in the ON group
+      that satisfy the distance criterion will be turned OFF after the first
+      time the criterion is met. <br>
+<p>
+  See also:
+  <a href="edp_c.html#ab">AB</a>,
+  <a href="edp_c.html#sdist">SDISTANCE</a> and
+  <a href="edp_s.html#nayb">NAYB</a>
+<p>
+   Examples: <br>
+  1) Calculate 4.0 Å distance pairs between two zones, say zone 1 -
+  60 and zone 80 - 160.
+<pre>
+      { zone 80 - 160 ;  group tmp }
+      initial 
+      zone 1 - 60
+      distance tmp 0.0 4.0 0 2000
+</pre>
+
+  2) Select atoms which involve in the contact between zone 1 - 60
+  and zone 80 - 160.
+<pre>
+       { zone 1 - 60 ;  group tmp }
+      initial
+      zone 80 - 160
+      distance tmp 0.0 4.0 0 2000 load
+      exclude w &lt; 1.0
+           ! keep contacting atoms in zone 80 - 160
+      load scr
+           ! select contacting atoms in zone 1 - 60
+</pre>
+
+  3) Assume there are two sets of water molecules (a1 - a100, b1 -
+  b100), and they partially overlap. The following command will
+  select unique water molecules only.
+<pre>
+      initial
+      zone a1 - a100 b1 - b100
+      group wtr
+      exclude distance wtr 0.0 0.5 1 200
+           ! the duplicated water molecules will be turned OFF,
+           ! only the first one in each cluster will be kept as ON.
+</pre>
+
+<hr><a name="dock">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>     DOCK       </h2>
+ Calculate the negative curvature of a symmtrical, large surface of a protein
+ molecule or complex. 
+<p>
+  Function: Calculation 
+<p>
+  Syntax: <br>
+      DOCK <i>zc.r</i> <i>ze.r</i> <i>dz.r</i> <i>shell.r</i> 
+<p>  
+  Note: <br>
+  1)  The protein molecule should be pre-aligned such that the symmetry axis is along
+  the z-axis and the negatively curved surface faces the +z direction. Then a
+  probe is positioned with its center on the z-axis (starting at <i>zc.r</i>). The DOCK command
+  calculates number of atoms (from the preselected ON group) that are located within the shell
+  of a certain thinkness (defined by <i>shell.r</i>) from the probe surface (which
+  is defined as the distance from the probe center to the closest atom. By repeating
+  this calculation at a step size of <i>dz.r</i> until the z-position of the probe
+  center is larger than <i>ze.r</i>, one can scan a range of probe radii and hopefully
+  identify the probe radius that
+  corresponds to the maximum contact (<i>i.e.</i> of the largest number of atoms in the
+  defined shell), which is defined here as the curvature radius.   
+<p>
+  Output  <a href="edp_ctr.html#parameter">Status</a>: 
+  -3, error. 
+<p>
+  <a href="edp_m.html#setenv_vb">Verbose</a> range: 6-list the radii from the
+  last calculation in the Occ/W field. 
+<p>
+  See also:
+  <a href="edp_c.html#momentinertia">MOMENTINERTIA</a>
+<p>
+   Examples: <br>
+  1) Calcuate the curvature of the II4D BAR dimer. 
+<pre>
+      init; zone a26-b222; momentinertia 
+      rtn file rtn_.txt; doit
+      rtn polar 0 90 90; doit 
+      ! make sure that the orientation is correct. 
+      dock 50 250 5 5  
+</pre>
+
+<hr><a name="doit">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>     DOIT       </h2>
+ Calculate the distances, angle, torsion angles between atoms of up
+      to five groups. Ideal for identification of hydrogen-bonds. 
+<p>
+  Function: Calculation, Selection
+<p>
+  Syntax: <br>
+      DOIT [<i>gr2.s</i> S/R <i>s2.i d2min.r d2max.r</i> <br>
+  [<i>gr3.s</i> S/R <i>s3.i d3min.r d3max.r</i> A/D <i>a3min.r a3max.r</i><br>
+  [<i>gr4.s</i> S/R <i>s4.i d4min.r d4max.r</i> A/D <i>a4min.r a4max.r</i> T/H <i>t4min.r t4max.r</i><br>
+  [<i>gr5.s</i> S/R <i>s5.i d5min.r d5max.r</i> A/D <i>a5min.r a5max.r</i> T/H <i>t5min.r t5max.r</i>]]]]
+
+<p>  
+  Note: <br>
+  1)  The <i>gr(i).s</i> are predefined group names.<br>
+  2)  The S/R switch determines that the following integer is used as registration number or the number 
+      of residues to skip. <br>
+  3)  The <i>d(i)min.r</i> and <i>d(i)max.r</i> are distance criteria. <br>
+  2)  The A/D switch determines whether the following criteria are used for the bond-angle (e.g. 1-2-3)
+      or the pseudo bond (e.g. 1-3).<br>
+  4)  The <i>a(i)min.r</i> and <i>a(i)max.r</i> are angle (or psuedo-bond length) criteria. <br>
+  5)  The T/H switch determines whether the following criteria are used for torsion angles  (e.g. 1-2-3-4)
+      or the elevation angles-theta (e.g. theta(1,2,3,4)= acsin(sin(1-2-3-4)*sin(1-2-3)).<br>
+  6)  The <i>t(i)min.r</i> and <i>t(i)max.r</i> are the criteria for the torsion (or theta) angles.<br>
+  7)  Atoms that satisfy the selection creteria will be store in the named-group, scr. <br>
+ <p>
+  Output  <a href="edp_ctr.html#parameter">Status</a>: 
+  -3, too many matches;  >=0, number of match(es). 
+<p>
+  <a href="edp_m.html#setenv_vb">Verbose</a> range:0,4
+<p>
+  See also:
+  <a href="edp_c.html#analyze">ANALYZE</a>,
+  <a href="edp_c.html#ab">AB</a>,
+  <a href="edp_c.html#abc">ABC</a>,
+  <a href="edp_c.html#abcd">ABCD</a>,
+  <a href="edp_c.html#distance">DISTANCE</a> and
+  <a href="edp_c.html#bridge">BRIDGE</a>
+<p>
+   Examples: <br>
+  1) Analyze CA atoms
+<pre>
+      init; ca
+      doit
+</pre>
+
+  2) Check the average length of CA-CB bond.
+<pre>
+      init; atom cb; group cb
+      init; atom ca
+      doit cb r 0 0 2.0
+ </pre>
+
+  3) List N-O contacts within 3.5 A. 
+<pre>
+      init; atom N*; group n
+      init; atom O*
+      doit n s 2 0 3.5
+</pre>
+
+  4) Check N-CA-C angles. 
+<pre>
+      init; atom C; group c
+      init; atom CA; group ca
+      init; atom N
+      doit ca r 0 0 1.8 c r 0 0 1.8 a 90 150
+</pre>
+
+  5) Check peptide omega torsion angles. 
+<pre>
+      init; atom C; group c
+      init; atom N; group n
+      init; atom CA; group ca
+      doit c r 0 0 1.8 n r 1 0 1.8 a 90 150 ca r 0 0 1.8 a 90 150 t 0 360 
+</pre>
+
+  6) Check CH...O hydrogen bonds in an atomic resolution crystal structure 
+    (meaning that the structure contains hydrogen atoms). 
+    (For reference see Derewenda et al. (1995) <i>JMB</i>, <b>252</b>, 248-62). 
+<pre>
+      setenv verbose 5
+      init; atom h* ; gr hy 
+      init; atom o* ; gr ox
+      init; atom c* ; gr c
+      doit Hy r 0 0 1. Ox s 2 0 2.6 a 120 180 C r 0 0 2 a 90 180 t -180 180 C r 0 0 2 a 90 150 h -45 45
+</pre>
+  7) search for candidates of sites of engineered disulfide bridges between
+  chains a and b. 
+  The search criterion is the following. The two residues should be 20 
+  residues apart in the amino acid sequence. The Cb-Cb distance should 
+  be between 2.5 and 6.0 Å. One of the Ca-Cb-Cb angle should be 
+  between 80.0 and 180.0 degrees. 
+  (The Ca-Cb-Cb-Ca torsional angle is unrestricted).
+<pre>
+      setenv verbose 5
+      init; atom cb | chain b ; gr bcb 
+      init; atom ca | chain b ; gr bca 
+      init; atom cb | chain a ; gr acb 
+      init; atom ca | chain a ; gr aca 
+      doit acb r 0 1 2 bcb s 20 2.5 6 a 80 180 bca r 0 1 2 a 80 180 t -180 180 
+ </pre>
+
+<hr><a name="eigen">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        EIGEN   </h2>
+      Given the six indenpendent elements of a 3x3 symmetrical matrix, 
+  the EIGEN command calculates the three eigen values and three eigen vectors. 
+  It is useful for analyzing the anisotropic thermal factors.
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      EIGEN <i>u11, u22, u33, u23, u31, u12</i> [<i>scale</i>] 
+      [<i>vec_id1, vec_id2, vec_id3</i>] [<i>residue_name, atom_name</i>]  <br>
+ <p>
+  Note: <br>
+  1) <i>u(i,j)</i> defines the matrix.<br>
+  1) <i>scale</i>  is multiplied to all <i>u(i,j)</i> elements before the
+  calculation (default is 1.0).<br>
+  3) the optional <i>vec_id</i>s are used to store the vector values for 
+  later calculations if needed.<br>
+  4) If an atom is specified by the <i>residue_id</i> and <i>atom_id</i>, the
+  occupancy of this atom will be changed to the anisotropic factor 
+  (<i>i.e.</i> the min eigen
+  value devided by the max eigen value) obtained from the matrix. In this case,
+  the starting point of an eigen vector is set to this atom (instead of origin).
+  <br>
+<p>
+  See also: 
+  <a href="edp_c.html#vector">VECTOR</a>,
+<p>
+   Examples: <br>
+  1) calculate eigen values and vectors from the following matrix and store 
+  the result in vectors named v1, v2 and v3, and the record of 
+  water atom (OW) 401. The matrix elements are scaled by 0.001.   
+<pre>
+      eigen 7420   8978   5649   4047  -2038   1489  0.001 v1 v2 v3  401 OW
+</pre>
+
+<hr><a name="euler">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>        EULER   </h2>
+      Assuming the xyz are Eulerian angles (z,y',z"), the EULER
+  command calculates the symmetry equivalent angles, and expresses
+  them in either Eulerian or polar system. It is useful for
+  understanding the rotation function solutions.
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      EULER TO_EULER <br>
+      EULER TO_POLAR <br>
+      EULER SYMMETRY <i>symm_#</i> <br>
+      EULER MOVE_TO_O <i>res_id</i>, <i>atom_name</i> <br>
+      EULER ASYMM [<i>e1, e2, e3</i>] <br>
+<p>
+  Note: <br>
+  1)  TO_EULER option converts the (z, y', z") angle into the
+      standard range, ie. <code> 
+      (-180.0 &lt z &lt 180.0, 0.0 &lt y' &lt 180.0, -
+      180.0 &lt z" &lt 180.0) </code>. <br>
+  2)  TO_POLAR option converts (z, y', z") angle into polar angle.
+  3)  If SYMMETRY option is used, the <i>symm_#</i> symmetry
+      operator will be applied to the Eulerian angle before the
+      standardization. Symmetry information is required for this
+      operation. <br>
+  4)  MOVE_TO_O option applies the inverse rotation of the
+      specified record to every ON records. <br>
+  5)  With ASYMM, the eulerian angles stored in the ON records
+      will be converted to their symmetry mates which have the
+      smallest rotation angles from the rotation specified by the
+      eulerian angles (<i>e1, e2, e3</i>). <br>
+<p>
+  See also: 
+  <a href="edp_c.html#analyze">ANALYZE</a>,
+  <a href="edp_c.html#polar">POLAR</a> and
+  <a href="edp_d.html#symmetry">SYMMETRY</a>
+<p>
+   Examples: <br>
+  1) Convert the eulerian angles in the ON records to the standard
+  range. 
+<pre>
+      euler to_euler
+</pre>
+
+  2) Convert the eulerian angles in the ON records to POLAR
+  angles.
+<pre>
+      euler to_polar
+</pre>
+
+  3) Convert the eulerian angles to one asymmetric unit.
+<pre>
+      ... (input cell parameters)
+      ... (input symmetry information)
+      initial
+      zone all
+      euler asymm 0 0 0
+</pre>
+
+  4) Convert the eulerian angles in the ON records to their fourth
+  symmetry mates.
+<pre>
+      euler symmetry 4
+</pre>
+
+  5) Assume one has a set of rotation function peaks. If one of the
+  peak (e.g. stored in residue 1, atom CA) was applied, where would
+  the other peaks be?
+<pre>
+      euler move_to_o 1 ca
+      list
+</pre>
+
+<hr><a name="harker">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       HARKER  </h2>
+      Calculate the positions of Harker peaks, assuming the position
+  of the atom(s) in real space is given by the records of the first
+  (two) ON atom(s) in gridding or fractional coordinates. It is useful
+  for checking heavy atom sites in MIR.
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      HARKER [<i>grid_a</i>, <i>grid_b</i>, <i>grid_c</i>] 
+           [<i>symm_#1</i> [<i>symm_#2</i>]] [CROSS]
+<p>
+  Note: <br>
+  1)  The <i>grid_x</i> is the grid number along the corresponding cell
+      edge. The default is (1.0, 1.0, 1.0), ie. the coordinates are
+      assumed to be fractional. <br>
+  2)  Symmetry information is required for this calculation. The
+      <i>symm_#1</i> and <i>symm_#2</i> specify the Harker peak which are
+      related by the two symmetry operators. The default <i>symm_</i>#
+      goes through all of the symmetry operators. <br>
+  3)  If the CROSS option is specified, the position of cross peaks
+      between the 1st and the 2nd atoms are calculated.  <br>
+<p>
+  See also:
+  <a href="edp_d.html#symmetry">SYMMETRY</a>
+<p>
+   Examples: <br>
+  1) Assuming the coordinates in the selected record (zone 1) are
+  fractional, calculate all the positions of its Harker peaks in
+  fractional coordinates.
+<pre>
+      cell 61.2 61.2 96.8 90.0 90.0 120. 1
+      @symmetry p3221  ! for example
+      initial
+      zone 1 
+      harker 1 1 1
+</pre>
+
+  2) The same assumption as above, calculate the position of the
+  Harker peak between symmetry operators number 2 and number 5
+<pre>
+      harker 1 1 1 2 5
+</pre>
+
+  3) Assuming the coordinates in the two selected records (zone 1 2)
+  are in (100, 100, 100) gridding coordinates, calculate all the
+  positions of their cross peaks with the same gridding.
+<pre>
+      initial
+      zone 1 2
+      harker 100 100 100 , , cross
+</pre>
+
+
+<hr><a name="jiggle">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       JIGGLE  </h2>
+      Introduce random <i>errors</i> to X, Y, Z, W or B values of the ON
+  atoms, changing both the coordinates and the displayed text string.
+<p>
+  Function: Calculation, Editing
+<p>
+  Syntax: <br>
+      JIGGLE (X, Y, Z, W, B) <i>limit</i> [<i>shift</i>]
+<p>
+ Note: <br>
+  1)  X, Y, Z, W or B is the field to be jiggled. The <i>limit</i> is the
+      jiggling amplitude. The <i>shift</i> is the amount of extra shift
+      added to the value; the default shift is 0.0. As the result of this
+      calculation, one has <br>
+           new_value = old_value + <i>random</i> * <i>limit</i> + <i>shift</i> <br>
+      where the <i>random</i> is a random number between -1.0 and 1.0. <br>
+<p>
+   Examples: <br>
+  1) Introduce 1.5 Å random rms difference in the 3D coordinates of
+  the ON atoms.
+<pre>
+      jiggle x 1.5
+      jiggle y 1.5
+      jiggle z 1.5
+</pre>
+
+  2) Increase the B factor by 10.0.
+<pre>
+      jiggle b 0.0 10.0
+</pre>
+
+<hr><a name="match3d">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        MATCH3D   </h2>
+      MATCH3D performs three dimensional structure homology searches.
+This computer program is based on a modified version of Grindley's
+algorithm. The secondary structure of a
+protein molecule is represented as a set of vectors, each vector
+corresponding to one secondary structure element. The vector is 
+calculated by finding the longest principle axis of the secondary
+structural element.
+<p>
+MATCH3D compares two structures at a time.
+In other words, two sets of secondary structure vectors are compared to
+search for structural homology. Each set of vectors may represent a
+protein molecule, a domain or a motif. Deletion and insertion do not
+affect the search. Secondary structure permutation is allowed on the
+user's request.
+<p>
+Usually, the secondary structures can be assigned by reading the output
+of the <i>dssp</i> program. A macro named <i> dssp_w.edp</i> can be used
+for this purpose.
+<p>
+  Function: Calculation
+<p>
+  Syntax:  <br>
+      MATCH3D <i>grp_id min_clique_num max_rms</i> <i>file_name</i>
+[NONSEQU]
+<p>
+ Note: <br>
+     1) MATCH3D vectorizes the structural fragments in the ON
+buffer and in the <i>grp_id</i> group. The vector is along the
+longest principle axis of the fragment. It is centered 
+at the mass center of the fragment and have a length of the summation 
+of the gyration radii along the other two principle axes.
+A vector is recogonized as a set of sequential records in the buffer
+which have the same W (occ) values. Different W values may represent 
+different secondary structures. Only the vectors that have the same, 
+non-zero W values will be matched with each other.
+
+<br> 2) <i>grp_id</i> identify the target structure to be matched by 
+ON atoms. 
+
+<br> 3) For the two structures to be homologous, there must exist
+at least <i>min_clique_num</i> of similar vector pairs between the them.
+
+<br> 4) For two pairs of vectors to be similar, the rms coordinate
+deviation of their terminal points must be less than <i>rms_max</i>.
+
+<br> 5) The rotation-translation matrix of the best solution is stored 
+in a file named by <i>file_name</i>. The default file name is 
+<code>rtn_.txt</code>.
+
+<br> 6) The <code>NONSEQU</code> option allows permutation among secondary
+structures. Otherwise sequential order is enforced in the alignment.
+
+<br> 7) With different level of <a href="edp_m.html#setenv_vb">VERBOSE</a>
+(0-6), match3d output different detailed results. For example, VERBOSE 2 
+lists the top two solutions if exist. VERBOSE 3 lists VERBOSE 2 output plus
+the detailed alignment of these two solutions. VERBOSE 4 lists all 
+soltuions in addition to VERBOSE 3 output. And VERBOSE 5 gives the detailed 
+alignment of all solutions.
+<p>
+  Reference:<br>
+     Grindley, H. M., et al. (1993). Identification of tertiary
+     structure resemblance in proteins
+     using a maximal common subgraph isomorphosim algorithm. <i>J.
+     Mol. Biol.</i> <b>229</b>, 707-721. <br>
+     Kabsch, W. and Sander, C. (1983). Dictionary of Protein Secondary
+     Structure: Pattern
+     Recognition of Hydrogen_bonded and Geometrical Features.
+     <i>Biopolymers</i>, Vol. <b>22</b>, 2577-2637.
+<p>
+  Output  <a href="edp_ctr.html#parameter">Status</a>: 
+   -3, there is no match found.&nbsp;
+<p>
+  See also:
+  <a href="edp_c.html#overlay">OVERLAY</a> and
+  <a href="edp_s.html#align3d">ALIGN3D</a>.
+
+<p>
+    Examples: <br>
+  1) Find the rotation-translation which overlay <i>1crl</i> to <i>1thg</i>
+<pre>
+	!$ edpdb 1crl.pdb a 1thg.pdb b
+	! 3D structural homology search
+
+        ! define secondary structures
+        initialize
+        ca
+        setw 0.0
+        @find_helices
+        setw 1.0
+        @find_strands
+        setw 2.0
+
+        ! overlay B to A based on secondary structure alignment
+        initialize
+        { ca | chain a ;  group a }
+        { ca | chain b ;  group b }
+        load b
+        setenv verbose 2
+        match3d a 4 4.0 rtn_.txt
+
+        ! apply the result to molecule b
+        chain b
+        rtn file rtn_.txt
+</pre>
+
+
+<hr><a name="momentinertia">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        MOMENTINERTIA   </h2>
+      Calculate the moments of inertia (in dalton Å²) of the ON
+  atoms about the x, y and z axes, the principle axes of the inertia
+  tensor, the radii of gyration (in Å unit) and the matrix which can
+  take the principle axes to coincide with the x,y and z axes.
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      MOMENTINERTIA  [<i>file_name</i>] [<i>vector_id1</i>]
+      [<i>vector_id2</i>], [<i>vector_id3</i>]
+<p>
+  Note: <br>
+  1)  The value of the W field in each record will be used as the
+      mass for the corresponding atom in this calculation. <br>
+  2)  The current moments of inertia are calculated relative to the
+      origin, while the principle axes of inertia tensor is calculated
+      relative to the center of mass. <br>
+  3)  The <i>file_name</i> specifies the output file to store the matrix. The
+      default file name is <i>rtn_.txt</i>. <br>
+  4)  The <i>vector_idn</i> specifies a vector to store the unitary vector 
+      that starts from the center of mass and directs along each of the 
+      three principle axes of the molecule. The <i>vector_idn</i>
+      is an text-string of upto four characters.
+<p>
+  See also:
+  <a href="edp_c.html#rtn">RTN</a> and
+  <a href="edp_c.html#vector">VECTOR</a>
+<p>
+   Examples: <br>
+  1) Calculate an approximate radii of gyration of the protein
+  molecule along each principle axis.
+<pre>
+      initial
+      { ca ;  more }
+      setw 1.0
+           ! all atoms are evenly weighted
+      momentinertia
+</pre>
+
+  2) Calculate the moments of inertia of the protein molecule.
+<pre>
+      initial 
+      atom c*
+      setw 15.0   ! define mass for carbon groups
+      initial
+      atom n*
+      setw 17.0   ! for nitrogen
+      initial
+      atom o*
+      setw 19.0   ! for oxygen
+      initial
+      atom s*
+      setw 36.0   ! for sulfur
+      initial
+      { ca ;  more }
+           ! select the protein molecule
+      momentinertia      
+           ! calculate the principle axes of the inertia tensor
+</pre>
+  3) Assume that we have a long straight helix of 100 residues in an
+  arbitrary orientation and position. The following command will
+  bring the center of mass of that helix to the origin and align the
+  helix axis along the Z axis.
+<pre>
+      initial
+      zone 1 - 100
+      setw 1.0
+      momentinertia rot_inertia.txt
+      rtn file rot_inertia.txt
+      momentinertia
+           ! this 2nd momentinertia command will show that 
+           ! the principle axes of the inertia tensor coincide
+           ! with the xyz axes.
+</pre>
+
+<hr><a name="movecenter">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   MOVECENTER      </h2>
+      Calculate a transformation matrix that brings the geometric
+  center of the ON atoms close to a specified fractional coordinate. 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      MOVECENTER  [<i>file_name</i>] [<i>fx1  fy1  fz1</i> 
+      [<i>fx2  fy2  fz2</i>]]
+<p>
+  Note:  <br>
+  1)  The <i>file_name</i> defines the file to store the matrix. The default
+      file name is <i>rtn_.txt</i>. <br>
+  2)  The <i>fx1, fy1, fz1</i> are the fractional coordinates of the 1st point
+      to which the geometric center of the ON atoms is expected to
+      be close. If there are more than one symmetry operator which
+      give the same distance, the 2nd point (<i>fx2, fy2, fz2</i>) provides
+      the 2nd reference. The initial default of (<i>fx1, fy1, fz1</i>) is 
+      <code>(0.5,0.5, 0.5)</code>. 
+      In general, the default of (<i>fx1, fy1, fz1</i>) is the center
+      position determined in the previous run of MOVECENTER.
+      The default of (<i>fx2, fy2, fz2</i>) is <code>(0.0, 0.0, 0.0)</code>.  
+      <br>
+  3)  Cell parameters and symmetry operators are required. <br>
+<p>  
+   Examples: <br>
+  1) Assume there are two molecules per asymmetric unit. The
+  following commands will bring the molecule A close to the center
+  of the unit cell and bring the molecule B close to molecule A.
+<pre>
+      initial 
+      chain A
+      movecenter rtn_.txt
+      rtn file rtn_.txt
+      initial
+      chain B
+      movecenter rtn_.txt
+      rtn file rtn_.txt
+</pre>
+
+<hr><a name="mw">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   MW  </h2>
+      Calculate the molecular weight of a selected region of the structure.
+  The basic unit of the structure is a residue. The standard molecular wieght 
+  of each residue type is defined in the 'pdbstd.txt' file.
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      MW [molecar_weight_in_Da, delta]
+<p>
+   Examples: <br>
+  1) Calcualte the molecular weight of chain A.
+<pre>
+      initialize; chain A; mw
+</pre>
+   2) Find a piece of peptide fragment of molecule weight 10,000 +/- 2 Da
+<pre>
+      initialize; ca; mw 10000 2
+</pre>
+
+
+<hr><a name="newxyz">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       NEWXYZ  </h2>
+      Calculate the coordinates of a new point.
+<p>
+  Function: Calculation, Editing
+<p>
+  Syntax: <br>
+      NEWXYZ [(A, B, C)]
+<p>  
+  Note:  <br>
+  1)  If no option is used, the new coordinates will be written to the
+      currently opened output PDB file using the text string of the
+      atom_a. The W field in the new record will
+      be set to 0.0, and the B field will be set to 99.99. <br>
+  2)  The option A, B or C specifies whether the text string of
+      atom_a, atom_b or atom_c will be replaced with the new
+      coordinates. <br>
+<p>
+  See also:   <a href="edp_d.html#dfnewx">DFNEWXYZ</a>
+<p>
+   Examples: <br>
+   1) Benzene <br>
+      Let's start from the following pseudo PDB file, to build a
+  benzene ring.
+<pre>
+  ATOM      1  A0  UNK     1    0.000   0.000   0.000  1.00  1.00
+  ATOM      2  A1  UNK     1    1.000   0.000   0.000  1.00  1.00
+  ATOM      3  A2  UNK     1    0.000   1.000   0.000  1.00  1.00
+  ATOM      4  A3  UNK     1    0.000   0.000   1.000  1.00  1.00
+</pre>
+  The 1st atom in the ring will be called C1, and located at (0.0, 0.0,
+  0.0).
+<pre>
+      initial
+      zone all
+      write tmp.pdb
+              ! create a temporary file to store intermediate coordinates
+      setr bnz
+              ! the residue name of the new records will be called <i>bnz</i>
+      seti 2 1
+              ! the residue ID of the new records will be set to 2
+      seta c1
+              ! the atom name of the first new records will be set to C1
+      dfnewxyz a0 a1 a2 0 0 0 t t t 0.0 0.0 0.0
+              ! describe the coordinates of the first record
+      newxyz
+              ! write the new record to the opened temporary 
+              ! PDB file
+      close
+              ! close the temporary PDB file, so that it can be read 
+      read tmp.pdb , initial
+              ! read in the newly created/closed PDB file
+              ! no chain name is reassigned
+              ! overwrite the old coordinates
+</pre>
+  The 2nd atom in the ring will be called C2, and located along the
+  x axis.
+<pre>
+      initial
+      zone all
+      write tmp.pdb
+      seta c2
+      dfnewxyz c1 a1 a2 0 0 0 t t t 1.395 0.0 0.0
+      newxyz
+      close
+      read tmp.pdb , initial
+</pre>
+  The 3rd atom in the ring will be called C3, and located on the x-y
+  plane. 
+<pre>
+      initial
+      zone all
+      write tmp.pdb
+      seta c3
+      dfnewxyz c2 c1 a2 0 0 0 t t t 1.395 120.0 0.0
+      newxyz
+      close
+      read tmp.pdb , initial
+</pre>
+  The 4th atom in the ring will be called C4, and C4-C3 is 1.395 Å, 
+  C4-C3-C2 is 120.0 degrees, and C4-C3-C2-C1 is 0.0 degree.
+<pre>
+      initial
+      zone 2
+      write tmp.pdb
+      seta c4
+      dfnewxyz c3 c2 c1 0 0 0 t t t  1.395 120.0 0.0
+      newxyz
+      close
+      read tmp.pdb , initial
+</pre>
+  The 5th atom in the ring will be called C5.
+<pre>
+      initial
+      zone 2
+      write tmp.pdb
+      seta c5
+      dfnewxyz c4 c3 c2 0 0 0 t t t  1.395 120.0 0.0
+      newxyz
+      close
+      read tmp.pdb , initial
+</pre>
+  And finally, the 6th atom in the ring will be called C6.
+<pre>
+      initial
+      zone 2
+      write tmp.pdb
+      seta c6
+      dfnewxyz c5 c4 c3 0 0 0 t t t 1.395 120.0 0.0
+      newxyz
+      close
+      read tmp.pdb , initial
+      zone all
+      list
+</pre>
+
+  2) Macro <br>
+      This is a macro version of the <i>Benzene</i> example. Again let's
+  start from the following PDB file, to build a benzene ring.
+<pre>
+  ATOM      1  A0  UNK     1    0.000   0.000   0.000  1.00  1.00
+  ATOM      2  A1  UNK     1    1.000   0.000   0.000  1.00  1.00
+  ATOM      3  A2  UNK     1    0.000   1.000   0.000  1.00  1.00
+</pre>
+ 
+     The macro to be iteratively used is the following.
+<pre>
+      ! new_xyz.edp
+      initial
+      zone all
+      write tmp.pdb
+      seta  $(p1)
+      dfnewxyz $(p2)  $(p3)  $(p4)  ,,, ,,,  $(p5)  $(p6)  $(p7)
+      newxyz
+      close
+      read tmp.pdb , initial
+</pre>
+
+     The following procedure creates the same model as the other
+  example does, using the macro new_xyz.edp.
+<pre>
+      @new_xyz c1 a0 a1 a2           0.0     0.0     0.0
+      @new_xyz c2 c1 a1 a2         1.395     0.0     0.0
+      @new_xyz c3 c2 c1 a2         1.395   120.0     0.0
+      @new_xyz c4 c3 c2 c1         1.395   120.0     0.0
+      @new_xyz c5 c4 c3 c2         1.395   120.0     0.0
+      @new_xyz c6 c5 c4 c3         1.395   120.0     0.0
+      { atom c1 c2 c3 c4 c5 c6 | zone 1 }
+      setr bnz
+      list
+</pre>
+
+
+<hr><a name="overlay">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      OVERLAY </h2>
+      Calculate the matrix which overlays the ON atoms to a given
+  atom group, based on least-square minimization between the two
+  sets of coordinates. (Mclachlan,1979. JMB 128, 49-79.)
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      OVERLAY  <i>group_id</i> [<i>file_name</i>] [WEIGHT]
+<p>
+  Note:  <br>
+  1)  The <i>group_id</i> specifies the target group to which the ON
+      atoms will be superimposed. The number of atoms in the target
+      group should be the same as the number of the ON atoms. <br>
+  2)  The <i>file_name</i> defines a file to store the superposition matrix.
+      The default file name is <i>rtn_.txt</i>. <br>
+  3)  If the WEIGHT option is used, the atoms will be weighted
+      according to the values in the W (occupancy) field of the ON atoms.
+ <p>
+  Output  <a href="edp_ctr.html#parameter">Status</a>: 
+ -2, one or both groups contain zero atom.&nbsp;&nbsp; <br>
+<p>
+  See also:
+  <a href="edp_c.html#match3d">MATCH3D</a>,
+  <a href="edp_c.html#rtn">RTN</a> and
+  <a href="edp_e.html#setw">SETW</a>
+<p>
+  Reference: A.D Mclachlan (1979). JMB 128, 49-79.
+<p>
+   Examples: <br>
+  1) Overlay the Ca atoms of residue 1 - 20 of molecule A to the
+  corresponding atoms in molecule B.
+<pre>
+      { ca | zone a1 - a20 ;  group mola }
+      { ca | zone b1 - b20 ;  group molb }
+      initial
+      load mola
+      overlay molb rtn_.txt
+      rtn file rtn_.txt
+</pre>
+
+  2) Overlay molecule A to molecule B based on the superposition
+  of the residues 3 5 and 7 in chain A to the residues 303, 305 and
+  307 in chain B. The main chain atoms will be given three times
+  weight as the side chain atoms.
+<pre>
+      { zone b303 b305 b307 ;  group tgt }
+      initial
+      { side | zone a3 a5 a7 }
+      setw 1.0
+      initial
+      { main | zone a3 a5 a7 }
+      setw 3.0
+      more
+      overlay tgt rtn_.txt
+           ! calculate the matrix
+      chain a
+      rtn file rtn_.txt
+           ! apply the matrix
+</pre>
+
+  3) Determine the axis of a long helix, say residues 60 - 80
+<pre>
+      init; zone 60-80 ; more 0 -1 | main ; group  a
+      more 1 1 | main 
+      overlay a rtn_.txt
+      axis rtn_.txt
+</pre>
+
+<hr><a name="pclique">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       PCLIQUE  </h2>
+      Find matches between subsets of the ON atoms and subsets of
+  atoms in a given group, assuming the XYZ fields contain polar angles. 
+  This command can be used to match cross-rotation function solutions 
+  with self-rotation function solutions. 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      PCLIQUE <i>group_id</i>  <i>min_clique</i> <i>rms_cutoff</i> 
+           <i>eps</i> <i>max_#_cliques</i> [<i>mch_char</i>]
+<p>
+  Note: <br>
+  1)  The <i>min_clique</i> is the minimum number of atomic matches
+      for a clique to be listed. The <i>rms_cutoff</i> sets restriction of the
+      rms angle difference (in degrees) for a clique to be listed. 
+      The <i>eps</i> sets criterion for a pair of angle-distances 
+      to be considered as similar.
+      The <i>max_#_cliques</i> sets limit to the output list. Only will the
+      first few cliques be listed. <br>
+  2)  For a pair of records to match each other, the first <i>mch_char</i>  
+      (default is 1) character(s) of their 'atom' name must be the same. <br>
+ <p>
+  Output  <a href="edp_ctr.html#parameter">Status</a>: 
+<p>
+  Reference: H.M. Grindley et.al. <i>J. Mol. Biol.</i> (1993), 229, 707-721.
+<p>
+  See also:
+  <a href="edp_c.html#clique">CLIQUE</a>,
+  <a href="edp_c.html#pdist">	PDIST</a>, 
+  <a href="edp_c.html#poverlay"> POVERLAY</a>, 
+  <a href="edp_c.html#psdist"> PSDIST</a>,and
+  <a href="edp_c.html#sclique"> SCLIQUE</a>
+<p>
+   Examples: <br>
+  1) 
+<pre>
+
+</pre>
+
+<hr><a name="sclique">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       SCLIQUE  </h2>
+      Find relationship between a group of polar angles which match the
+  self-rotation function solutions. 
+  It is assumed that the XYZ fields contain polar angles. 
+  This command can be used to analyze cross-rotation function solutions 
+  in light of self-rotation function solutions. 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      SCLIQUE <i>group_id</i>,  <i>min_clique</i>, <i>eps</i>, 
+            <i>max_#_cliques</i>
+<p>
+  Note: <br>
+  1)  The <i>min_clique</i> is the minimum number of atomic matches
+      for a clique to be listed.  
+      The <i>eps</i> sets criterion for a pair of angle-distances 
+      to be considered as similar.
+      The <i>max_#_cliques</i> sets limit to the output list. Only will the
+      first few cliques be listed. <br>
+<p>
+  Output  <a href="edp_ctr.html#parameter">Status</a>: 
+  -3, too few or too many input records; >=0, successful. 
+<p>
+  Reference: H.M. Grindley et.al. <i>J. Mol. Biol.</i> (1993), 229, 707-721.
+<p>
+  See also:
+  <a href="edp_c.html#clique">CLIQUE</a>,
+  <a href="edp_c.html#pclique"> PCLIQUE</a>,
+  <a href="edp_c.html#pdist">	PDIST</a>, and
+  <a href="edp_c.html#poverlay"> POVERLAY</a>.
+<p>
+   Examples: <br>
+  1) 
+<pre>
+
+</pre>
+
+<hr><a name="pdist">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       PDIST  </h2>
+      Calculate anglar-distances between two groups of recordes,
+  assuming that the XYZ fields contain polar angles. 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      PDIST <i>group_id</i>  <i>dmin</i> <i>dmax</i> 
+           [<i>skip_#</i>   <i>max_output_#</i>] [(LOAD, COPY, MARK)] 
+<p> 
+  Note: <br>
+  1)  The <i>group_id</i> specifies a group of records; the 'distance'
+      between this group and the ON atoms will be calculated. <br>
+  2)  The <i>dmin</i> is the minimum distance criteria (0.0 &lt dmin), and
+      the <i>dmax</i> is the maximum distance criteria (dmin &lt dmax). If 
+      only one 'distance' criteria is given, it is used as <i>dmax</i>, and 
+      <i>dmin</i> is set to 0.0. <br>
+  3)  The <i>skip_#</i> is the smallest residue number between two
+      residues in the input-residue-sequence that will be included in
+      the calculation ( 0 &lt= <i>skip_#</i> ). For example, <i>skip_#</i> = 4
+      indicates that only the atom pair which is 4 or more residues
+      apart will be searched. Default is 1. <br>
+  4)  The <i>max_output_#</i> is the maximum number of output lines
+      for the calculation. It is designed to prevent an unexpected long
+      calculation. Default is the maximum number of atoms that
+      the program allows.  <br>
+  5)  If LOAD option is used, the atoms in the group satisfying
+      the distance criteria will be stored in the SCR group.   <br>
+  6)  If COPY option is used, all XYZ B and W fields of the ON atom will 
+      be replaced
+      by that of the last matched atom. MARK option is similar to COPY, but 
+      only the W field is copied. Otherwise, the W 
+      field of each ON atom will be changed to the number
+      of its neighbors counted in this calculation. <br>
+  7)  If the selection switch is currently set to OFF (ie. an
+      EXCLUDE command is used), the atoms in the ON group
+      that satisfy the distance criterion will be turned OFF after the first
+      time the criterion is met. <br>
+<p>
+  See also:
+  <a href="edp_c.html#distance">DISTANCE</a>,
+  <a href="edp_c.html#psdist"> PSDIST</a>, 
+  <a href="edp_c.html#poverlay"> POVERLAY</a>, and 
+  <a href="edp_c.html#pclique"> PCLIQUE</a>.
+<p>
+   Examples: <br>
+  1) 
+<pre>
+
+</pre>
+
+<hr><a name="pdoit">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       PDOIT  </h2>
+      Calculate statistics of the ON recordes,
+  assuming that the XYZ fields contain polar angles. 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      PDOIT 
+<p> 
+  Note: <br>
+  1)  
+<p>
+  See also:
+  <a href="edp_c.html#doit">DOIT</a>,
+  <a href="edp_c.html#psdist"> PSDIST</a>, 
+  <a href="edp_c.html#poverlay"> POVERLAY</a>, and 
+  <a href="edp_c.html#pclique"> PCLIQUE</a>.
+<p>
+   Examples: <br>
+  1) 
+<pre>
+
+</pre>
+
+<hr><a name="psdist">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       PSDIST  </h2>
+      Calculate anglar-distances between two symmetry-related
+  groups of recordes,
+  assuming that the XYZ fields contain polar angles. 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      PSDIST <i>group_id</i>  <i>dmin</i> <i>dmax</i> 
+<p> 
+  Note: <br>
+  1)  
+<p>   
+  Output  <a href="edp_ctr.html#parameter">Status</a>: 
+  -3, no symmetry; >=0, number of the last output list.
+<p>
+  See also:
+  <a href="edp_c.html#sdist">SDISTANCE</a>,
+  <a href="edp_c.html#pdist">PDIST</a>,
+  <a href="edp_c.html#poverlay"> POVERLAY</a>, and 
+  <a href="edp_c.html#pclique"> PCLIQUE</a>.
+<p>
+   Examples: <br>
+  1) 
+<pre>
+
+</pre>
+
+<hr><a name="poverlay">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       POVERLAY  </h2>
+     Calculate rms anglar-distance between two groups of polar angles,
+  (assuming that the XYZ fields contain the polar angles),  
+       and the matrix which overlays the ON atoms to a given
+  atom group, based on least-square minimization between the two
+  sets of coordinates. 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      POVERLAY  <i>group_id</i> [<i>file_name</i>] [WEIGHT]
+<p>
+  Note:  <br>
+  1)  The <i>group_id</i> specifies the target group to which the ON
+      atoms will be superimposed. The number of atoms in the target
+      group should be the same as the number of the ON atoms. <br>
+  2)  The <i>file_name</i> defines a file to store the superposition matrix.
+      The default file name is <i>rtn_.txt</i>. <br>
+  3)  If the WEIGHT option is used, the atoms will be weighted
+      according to the values in the W (occupancy) field of the ON atoms.
+ <p>
+  Output  <a href="edp_ctr.html#parameter">Status</a>: 
+-3, input error (e.g. # of recordes in the two groups do not match);
+<p>
+  See also:
+  <a href="edp_c.html#overlay">OVERLAY</a>,
+  <a href="edp_c.html#pdist">PDIST</a>, 
+  <a href="edp_c.html#pclique"> PCLIQUE</a>,
+  <a href="edp_c.html#match3d">MATCH3D</a>, 
+  <a href="edp_c.html#rtn">RTN</a> and
+  <a href="edp_e.html#setw">SETW</a>
+<p>
+  Reference: A.D Mclachlan (1979). J. 128, 49-79.
+<p>
+   Examples: <br>
+  1) 
+<pre>
+
+</pre>
+
+<hr><a name="planar">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       PLANAR  </h2>
+      Calculate the least square plane of the ON atoms. The plane is
+  represented by its normal vector. The vector starts from the
+  geometric center of the atoms, which is on the plane by definition.
+<p>
+  Function: Calculation
+<p>
+  Syntax:  <br>
+      PLANAR [<i>vector_id</i> [FIX]]
+<p>
+  Note: <br>
+  1)  At least three non co-linear atoms are required. <br>
+  2)  The normal vector will be stored in <i>vector_id</i> if specified, 
+      the name of which is an text-string of upto four characters.
+      For example, it may be one of the <code>V0, V1, ... V9</code>. <br>
+  3)  If the option FIX is chosen together with a <i>vector_id</i>, 
+      the 'ideal' plane will be that previously defined (by <i>vector_id</i>).     
+<p>
+  See also:
+  <a href="edp_c.html#vector">VECTOR</a>
+<p>
+   Examples: <br>
+  1) Check the planarity of a Phe side chain, say residue 4 
+<pre>
+      initial
+      { side | zone 4 }
+      planar v0
+</pre>
+
+  2) Calculate the angle between the rings of two Phe side chains,
+  say residues 4 and 67.
+<pre>
+      initial
+      { atom cg cd1 cd2 ce1 ce2 cz | zone 4 }
+      planar v1
+           ! define v1 as the normal of the ring of residue 4
+      initial
+      { atom cg cd1 cd2 ce1 ce2 cz | zone 67 }
+      planar v2
+           ! define v2 as the normal of the ring of residue 67
+      vector vv v1 v2
+           ! calculate the angle
+</pre>
+
+<hr><a name="polar">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        POLAR   </h2>
+      Assuming the xyz are polar angles (phi, omega, kappa), this
+  command calculates the symmetry equivalent angles, and expresses
+  them in either an Eulerian or a polar system. It is useful for
+  understanding the rotation function solutions. The convention for
+  the polar angle system is that phi is the angle between the x axis
+  and the projection of the rotation axis on the x-y plane; omega is
+  the angle between the rotation axis and the z axis; and kappa is the
+  rotation angle about the rotation axis.
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      POLAR TO_POLAR <br>
+      POLAR TO_EULER <br>
+      POLAR SYMMETRY <i>symm_#</i> <br>
+      POLAR MOVE_TO_O <i>res_id</i>, <i>atom_name</i> <br>
+      POLAR ASYMM            [<i>p1, p2, p3</i>] <br>
+      POLAR SRF_RED          [<i>p1, p2, p3</i>] <br>
+      POLAR UNIQUE           <i>delta_angle</i> <br>
+<p>
+  Note: <br>
+  1)  TO_POLAR option convert the (phi, omega, kappa) angle into
+      the standard range, ie. (0.0 &lt phi &lt 180.0, 0.0 &lt omega &lt
+      180.0, -180.0 &lt kappa &lt 180.0). <br>
+  2)  TO_EULER option converts (z, y', z") angle into eulerian
+      angle. <br>
+  3)  If SYMMETRY option is used, the <i>symm_#</i> symmetry
+      operator will be applied to the polar angle before the
+      standardization. Symmetry information is required for this
+      operation. <br>
+  4)  MOVE_TO_O option applies the inverse rotation of the
+      specified record to every ON records. <br>
+  5)  With the ASYMM option , the polar angles stored in the ON
+      records will be converted to their symmetry mates which have
+      the smallest rotation angles from the rotation specified by the
+      polar angles (<i>p1, p2, p3</i>).  <br>
+  6)  With the SRF_RED option, the polar angles stored in the ON
+      records will be considered as self-rotation function solutions
+      and converted to their symmetry mates which have the smallest
+      rotation angles from the rotation specified by the polar angles 
+      (<i>p1, p2, p3</i>).  <br>
+  7)  With the UNIQUE option, a record that different from a
+      previous one by an angle smaller than the <i>delta_angle</i> will be
+      turned off. <br>
+<p>
+  See also:
+  <a href="edp_c.html#axis">AXIS</a>,
+  <a href="edp_c.html#analyze">ANALYZE</a>,
+  <a href="edp_c.html#euler">EULER</a> and
+  <a href="edp_d.html#symmetry">SYMMETRY</a>
+<p>
+   Examples: <br>
+  1) Convert the polar angles in the ON records to the standard
+  range. 
+<pre>
+      polar to_polar
+</pre>
+
+  2) Convert the polar angles in the ON records to eulerian angles.
+<pre>
+      polar to_euler
+</pre>
+
+  3) Convert the polar angles to one asymmetric unit.
+<pre>
+      ... (input cell parameters)
+      ... (input symmetry information)
+      initial
+      zone all
+      polar asymm 0 0 0
+</pre>
+
+  4) Convert the polar angles in the ON records to their fourth
+  symmetry mates.
+<pre>
+      polar symmetry 4
+</pre>
+
+  5) Assume one has a set of rotation function peaks. If one of the
+  peak (e.g. stored in residue 1, atom CA) was applied, where would
+  the other peaks be?
+<pre>
+      polar move_to_o 1 ca
+      list
+</pre>
+
+<hr><a name="ratio">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        RATIO   </h2>
+      Calculate the ratio between the displayed (x, y, z, w, b)
+  (multiplied by a scale factor) of the ON atoms and that of a given
+  group. The ratio is defined as value(group_atom) divided by
+  value(ON_atom)*scale. The result is stored in the text string of the
+  ON atoms as well as the W an B fields. If the value of the ON
+  atom is about 0.0 (less than 0.005), the corresponding result is set
+  to a default value. If there is any other error, the W field of the
+  corresponding ON atom is set to the default value. BE CAREFUL!
+<p>
+  function: Calculation
+<p>
+  Syntax: <br>
+      RATIO  <i>group_id</i>  [<i>scale</i>] [<i>def_value</i>]
+<p>
+  Note:  <br>
+  1)  The number of the ON atoms should be equal to the number of
+      atoms in the specified group.  <br>
+  2)  The default <i>scale</i> is 1.0. The default <i>def_value</i> is 999.99. <br>
+<p>
+  See also:
+  <a href="edp_c.html#analyze">ANALYZE</a> and
+  <a href="edp_c.html#diff">DIFF</a>
+<p>
+   Examples: <br>
+  1) Assume that we have two models of the same peptide chain.
+  One is a folded model, say chain A. The other is an extended
+  model, say chain B. The following example calculates the ratio of
+  the solvent accessible area (<i>SAA</i>) of the folded model relative to
+  the extended model for each amino acid residue. 
+<pre>
+      { chain a ;  group mola }
+      { chain b ;  group molb }
+      initial 
+      load mola
+      access 
+      sumw b
+           ! the B field of the CA has been change to 
+           ! SAA of the residue of the folded model
+      initial
+      load molb
+      access
+      sumw b
+           ! the B field of the CA has been change to 
+           ! SAA of the residue of the extended model
+      initial
+      { ca | load mola ;  group a }
+      { ca | load molb ;  group b }
+      load b
+      set text ' 1.0' 24 31  ! set the x field to 1.0 
+      set text ' 1.0' 31 38  ! set the y field to 1.0
+      set text ' 1.0' 39 47  ! set the z field to 1.0
+      setw  1.0          ! set the w field to 1.0
+      ratio a 1.0 999.99
+      list 
+           ! the B field is the ratio, ie. the fractional SAA.
+</pre>
+
+<hr><a name="rmsw">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> RMSW    </h2>
+      Calculate the rms of the W value of the ON atoms over each
+  residue, and overwrite the X, Y, Z or B of the <i>CA</i> atom with this
+  calculated rms(W). It can be used for calculating the rms shift of
+  coordinates of each residue. 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      RMSW  [(X, Y, Z, B)]
+<p>
+  Note: <br>
+  1)  The definition of rms of W is that rms(W) = sqrt(av(W²)). <br>
+  2)  The X, Y, Z or B is used to specify the field in the <i>CA</i> atom
+      where the result for each residue will be written. <br>
+<p>
+  See also:
+  <a href="edp_c.html#analyze">ANALYZE</a>,
+  <a href="edp_c.html#avb">AVB</a>,
+  <a href="edp_d.html#dfca">DFCA</a>,
+  <a href="edp_c.html#diff">DIFF</a> and
+  <a href="edp_c.html#sumw">SUMW</a>
+<p>
+   Examples: <br>
+  1) Calculate the coordinate difference between two models (say A
+  and B) of the same protein molecule.
+<pre>
+      { chain a ;  group a }
+      { chain b ;  group b }
+      initial
+      load a
+      diff b rms
+           ! the W field of each atom is changed to 
+           ! the coordinate shift. 
+      rmsw b
+           ! the B field of the CA atom is changed to 
+           ! the rms shift of the residue.
+      initial; ca | load a
+      list
+</pre>
+
+<hr><a name="rtn">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  RTN     </h2>
+      Perform coordinate transform to the ON atoms. RTN changes
+  both the coordinate and the displayed text string.
+<p>
+  Function: Calculation, Editing
+<p>
+  Syntax: <br>
+     RTN  <i>main_option</i> (<i>parameters</i>) 
+           [(SAVE, MULT, INVE) [<i>file_name(s)</i>]] <br>
+<p>
+  Note: <br>
+  1)  One has three options to manipulate the currently used matrix
+      and to store it in a matrix (ASCII) file specified with
+      <i>file_name</i>. The default file name is <i>rtn_.txt</i>. <br>
+<blockquote>
+      SAVE --     save it as a <i>rtn_.txt</i> file; overwrite the old file if
+                  exists. <br>
+      MULT --     left-multiply the matrix to an existing matrix in the
+                  matrix file, store the product matrix in another file. <br>
+      INVE --     calculate the inverse matrix of the currently used
+                  matrix, save it in the matrix file. <br>
+</blockquote>
+  2)  To use these three options, all parameters required by the
+      main_option need to be specified.
+ <p>
+  Output  <a href="edp_ctr.html#parameter">Status</a>= number of ON
+atoms.&nbsp; <br>
+</p>
+<p>
+  Available <i>main_options</i> are<ul>
+<li>  <a href="edp_c.html#rtn_abcd">	 	ABCD	</a>, 
+<li>  <a href="edp_c.html#rtn_axis">          AXIS    </a>,
+<li>  <a href="edp_c.html#rtn_center">        CENTER  </a>,
+<li>  <a href="edp_c.html#rtn_deorth">        DEORTH  </a>,
+<li>  <a href="edp_c.html#rtn_ezxz">          EZXZ    </a>,
+<li>  <a href="edp_c.html#rtn_ezyz">          EZYZ    </a>,
+<li>  <a href="edp_c.html#rtn_file">          FILE    </a>,
+<li>  <a href="edp_c.html#rtn_match">         MATCH   </a>,
+<li>  <a href="edp_c.html#rtn_matrix">        MATRIX  </a>,
+<li>  <a href="edp_c.html#rtn_orthog">        ORTHOG  </a>,
+<li>  <a href="edp_c.html#rtn_overlay">       OVERLAY </a>,
+<li>  <a href="edp_c.html#rtn_polar">         POLAR   </a>, 
+<li>  <a href="edp_c.html#rtn_symmetry">      SYMMETRY</a> and
+<li>  <a href="edp_c.html#rtn_v_align">       V_ALIGN </a>.
+</ul>
+
+<hr><a name="rtn_abcd">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  ABCD </h3>
+      Reset a torsion angle, which is defined with four atoms, by
+  predictively moving the 4th atom. Useful for resetting side chain
+  rotamers.
+<p>
+  Syntax: <br>
+      RTN ABCD <i>res_a</i> [<i>atom_a</i>] <i>res_b</i> [<i>atom_b</i>] 
+           <i>res_c</i> [<i>atom_c</i>]
+           <i>res_d</i> [<i>atom_d</i>] <i>torsion_angle</i>
+<p>
+  Note:  <br>
+    The default atom name for each specified residue is the first
+  atom of the residue, and should be called using a comma.
+<p>
+  See also: 
+  <a href="edp_c.html#rtn_axis">AXIS</a> option and 
+  <a href="edp_c.html#abcd">ABCD</a> command
+<p>
+  Examples: <br>
+  1) Set the chi-I torsion angle of residue 4 to -176.0 degrees,
+  regardless what the current values is.
+<pre>
+      initial
+      { side | zone 4 }
+      rtn abcd 4 n 4 ca 4 cb 4 cg -176.0
+           ! since the side chain atoms including the CG 
+           ! have been rotated, if the same command is repeated,
+           ! it will produce zero rotation-translation.
+      rtn abcd 4 n 4 ca 4 cb 4 cg -176.0
+</pre>
+  
+  2) Set both the chi-II and chi-III torsion angles of Methionine
+  residue 1 to -60.0 degrees.
+<pre>
+      initial 
+      { side | zone 1 }
+           ! select atoms CB CG SD and CE
+      rtn abcd 1 ca 1 cb 1 cg 1 sd -60.0
+      exclude atom cb cg sd
+           ! only the CE atom need to move
+      rtn abcd 1 cb 1 cg 1 sd 1 ce -60.0
+</pre>
+
+
+<hr><a name="rtn_axis">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> AXIS </h3>
+      Rotate about a two-atom bond, plus a translation parallel to the
+  rotation axis.
+<p>
+  Syntax: <br>
+      RTN AXIS <i>vector_id</i> 
+           <i>rotation_angle</i> [<i>translation</i>]
+<p>
+  Note: <br>
+  1)  The <i>vector_id</i> defines the axis of the rotation.
+      The "right-hand convention" (ie. looking
+      down and counterclockwise) is
+      used to determine the direction of the rotation.   <br>
+  2)  The default translation along the rotation axis is 
+      <code>0.0</code>. <br>
+<p>
+  See also: 
+  <a href="edp_c.html#rtn_abcd">ABCD</a> option and
+  <a href="edp_c.html#vec_by_atom">VECTOR BY_ATOM</a> command
+<p>
+  Examples: <br>
+  1) Rotate side chain chi-I angle (N-CA-CB-CG) of residue 4, by (-
+  120.0) degrees.
+<pre>
+       initial
+       { side | zone 4 }
+       vector by_atom cacb 4 ca 4 cb
+       rtn axis cacb -120.0, 0.0
+</pre>
+
+  2) Rotate the whole protein molecule by 90.0 degrees about an
+  axis which passes through the Ca atom of residue 55 and the Ca
+  atom of residue 127, and translated by 5.0 Å. 
+<pre>
+	initial
+	{ ca ;  more  }	! select the protein molecule
+	vector by_atom v1 55 ca 127 ca
+	rtn axis v1 90.0 5.0
+</pre>
+
+
+<hr><a name="rtn_center">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+  
+<h3> CENTER </h3>
+      Translate the ON atoms so that the geometric center of the ON
+  atoms is at the origin (0, 0, 0).
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      RTN CENTER
+<p>
+  Note: <br>
+    The geometric center is calculated only based on the <br>
+  currently selected atoms.
+<p>
+  See also: 
+  <a href="edp_c.html#momentinertia">MOMENTINERTIA</a>
+<p>
+  Examples: <br>
+  1) Set the geometric center of the ON atoms to the origin.
+<pre>
+      rtn center
+</pre>
+
+  2) Rotate the molecule by a rotation of (10.0, 20.0 30.0) in polar
+  angles at the geometric center of the currently selected model.
+<pre>
+      rtn center inve
+           ! move the geometric center to the origin
+           ! and save the inverse translation matrix 
+      rtn polar 10.0 20.0 30.0 
+           ! perform the rotation
+      rtn file rtn_.txt
+           ! move back to the original coordinate frame.
+</pre>
+
+<hr><a name="rtn_deorth">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> DEORTH </h3>
+      De-orthogonalize the coordinates, changing them from a
+  Cartesian system to a crystal gridding system or a fractional
+  coordinate system.
+<p>
+  Syntax: <br>
+      RTN  DEORTH  <i>grid_a </i> <i>grid_b </i> <i>grid_c</i>
+<p>
+  Note: <br>
+  1)  The convention of the alignment of the (xyz) Cartesian system
+      relative to the (abc) crystallographic axes is read in from the
+      header of the (1st) input PDB file or is defined with a CELL
+      command. <br>
+  2)  The <i>grid_a</i>, <i>grid_b</i> and <i>grid_c</i> are the grids of 
+      the unit cell
+      along the crystallographic <i>a, b</i> and <i>c</i> axes. <br>
+<p>
+  See also:  
+  <a href="edp_c.html#rtn_orthog">ORTHOG</a> option and 
+  <a href="edp_d.html#cell">CELL</a> command 
+<p>
+  Examples: <br>
+  1) Convert the coordinates of the ON atoms from Cartesian
+  coordinates to crystallographic fractional coordinates.
+<pre>
+      rtn deorth 1.0  1.0  1.0
+</pre>
+  2) Assume that the current coordinate is in Cartesian system. We
+  are going to apply a translation (10.0, 20.0, 30.0) to the ON atoms
+  in a gridding system of (grid_a, grid_b, grid_c) = (60, 60, 100).
+<pre>
+      rtn deorth 60 60 100
+           ! convert the ON atoms to gridding 
+      rtn ezxz   0.0 0.0 0.0 10.0 20.0 30.0
+           ! apply a zero rotation and 
+           ! a (10.0, 20.0, 30.0) translation
+      rtn orthog 60 60 100
+           ! convert the ON atoms back to the Cartesian system
+</pre>
+
+<hr><a name="rtn_ezxz">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> EZXZ </h3>
+      Perform a rotation defined with a (zx'z") eulerian angle, plus
+  some translation specified in the Cartesian coordinate. 
+<p>
+  Syntax: <br>
+      RTN EZXZ <i>e1 e2 e3</i> [<i>t1 t2 t3</i>]
+<p>
+  Note: <br>
+  1)  The operation order is: a) rotating the object (not the
+      coordinate frame) by <i>e3</i> (degrees) about the Z axis; b) rotating
+      the object by <i>e2</i> (degrees) about the X axis; c) rotating the
+      object by <i>e1</i> (degrees) about Z axis; d) translating the object by
+      <i>(t1, t2, t3)</i> if specified. <br>
+  2)  The default <i>(t1, t2, t3)</i> is <code>(0.0, 0.0, 0.0)</code>. <br>
+<p>
+  See also: 
+  <a href="edp_c.html#rtn_ezyz">EZYZ</a> and   
+  <a href="edp_c.html#rtn_polar">POLAR</a> options as well as 
+  <a href="edp_c.html#axis">AXIS</a> command
+<p>
+  Examples: <br>
+  1) To rotate the ON atoms about X axis by 30.0 degrees.
+<pre>
+      rtn ezxz 0.0 30.0 0.0
+</pre>
+  2) To rotate the ON atoms first about the X axis by 1.0 degree and
+  then about the Y axis by 2.0 degrees and then about the Z axis by
+  3.0 degrees.
+<pre>
+      rtn ezxz 0.0 1.0 0.0
+           ! first 1.0 degree about X
+      rtn ezyz 3.0 2.0 0.0   
+           ! then  2.0 degrees about y and 3.0 degrees about z
+</pre>
+
+<hr><a name="rtn_ezyz">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> EZYZ </h3>
+      Perform a rotation defined with a (zy'z") eulerian angle, plus
+  some translation specified in the Cartesian coordinate. 
+<p>
+  Syntax: <br>
+      RTN EZYZ <i>e1 e2 e3</i> [<i>t1 t2 t3</i>]
+<p>
+  Note: <br>
+  1)  The operation order is: a) rotating the object (not the
+      coordinate frame) by <i>e3</i> (degrees) about the Z axis; b) rotating
+      the object by <i>e2</i> (degrees) about the Y axis; c) rotating the
+      object by <i>e1</i> (degrees) about Z axis; d) translating the object by
+      <i>(t1, t2, t3)</i> if specified. <br>
+  2)  The default <i>(t1, t2, t3)</i> is <code>(0.0, 0.0, 0.0)</code>. <br>
+<p>
+  See also: 
+  <a href="edp_c.html#rtn_ezxz">EZXZ</a> and   
+  <a href="edp_c.html#rtn_polar">POLAR</a> options as well as 
+  <a href="edp_c.html#axis">AXIS</a> command
+<p>
+
+  Examples: <br>
+  1) To rotate the ON atoms about Y axis by 30.0 degrees.
+<pre>
+      rtn ezyz 0.0 30.0 0.0
+</pre>
+  2) To rotate the ON atoms first about the X axis by 1.0 degree and
+  then about the Y axis by 2.0 degrees and then about the Z axis by
+  3.0 degrees.
+<pre>
+      rtn ezxz 0.0 1.0 0.0
+           ! first 1.0 degree about X
+      rtn ezyz 3.0 2.0 0.0   
+           ! then  2.0 degrees about y and 3.0 degrees about z
+</pre>
+
+<hr><a name="rtn_file">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> FILE </h3>
+      Read a matrix from an existing matrix file, and apply it to the
+  ON atoms.
+<p>
+  Syntax: <br>
+      RTN  FILE <i>file_name</i>
+<p>
+  Note: <br>
+  1)  The data in a matrix file should have free format, ie. are
+      separated from each other with space or <return>. The order of the
+      data is the following: <i>r11, r12, r13, r21, ...r32, r33, t1, t2, t3</i>.
+      The matrix is used as <br>
+<pre>
+           x'= r11*x + r12*y + r13*z +t1
+           y'= r21*x + r22*y + r23*z +t2
+           z'= r31*x + r32*y + r33*z +t3
+</pre>
+      where (x, y, z) stands for old coordinate, and (x', y', z') stands
+      for the new coordinate.  <br>
+  2)  The default file name, specified with a comma (,), is <i>rtn_.txt</i>. <br>
+<p>
+  See also: 
+  <a href="edp_c.html#momentinertia">MOMENTINERTIA</a>,
+  <a href="edp_c.html#movecenter">MOVECENTER</a> and
+  <a href="edp_c.html#overlay">OVERLAY</a>
+<p>
+  Examples: <br>
+  1) To apply the transformation matrix in a file <i>rtn_.txt</i> to the
+  Ca atoms.
+<pre>
+      initial
+      Ca
+      rtn file rtn_.txt
+</pre>
+  2) To apply the inverse matrix of the matrix in the <i>rtn_.txt</i> file to
+  the Ca atoms.
+<pre>
+      initial
+      rtn file rtn_.txt  inve inverse_matrix.txt
+           ! create a file of the inverse matrix
+      Ca
+      rtn file inverse_matrix.txt
+</pre>
+  3) Matrix multiplication. Assume that one has two coordinate
+  transformations, A and B, stored in files <i>a.txt</i> and <i>b.txt</i>. The
+  following commands create another file to contain the combination
+  transformation AB.
+<pre>
+      initial
+      rtn file b.txt save b.txt
+      rtn file a.txt mult b.txt ab.txt 
+</pre>
+
+<hr><a name="rtn_match">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> MATCH </h3>
+      Match two atoms by performing a given POLAR rotation, eg.
+  to apply a non-crystallographic symmetry. The two atoms may
+  represent two heavy atom sites binding to two protein molecules
+  and the rotation may be a non-crystallographic rotation obtained
+  from a self rotation function search.
+<p>
+  Syntax: <br>
+      RTN  MATCH  <i>res_id1</i> [atom_1] <i>res_id2</i> [<i>atom_2</i>] 
+           <i>phi</i> <i>omega</i> <i>kappa</i>
+<p>
+  Note: <br>
+  1)  The <i>res_id1</i> and <i>atom_1</i> specify the residue ID and 
+      atom name
+      of the 1st atom; and the <i>res_id2</i>, <i>atom_2</i> for the 2nd. The
+      default atom name for each specified residue is the first atom
+      of the residue. <br>
+  2)  The polar angle <i>(phi, omega, kappa)</i> specifies the rotation. <br>
+  3)  The vector connecting the two atoms should not be parallel to
+      the rotation axis. <br>
+<p>
+  See also:   <a href="edp_c.html#rtn_polar">POLAR</a> option
+<p>
+  Examples: <br>
+  1) To match the Ca of residue A1 to the Ca of residue B1 by a 72
+  degree rotation about an axis parallel to the X axis.
+<pre>
+      rtn match A1 Ca B1 Ca 0.0 90.0 72.0
+</pre>
+
+<hr><a name="rtn_matrix">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> MATRIX </h3>
+      Read a matrix from the input line, and apply it to the ON
+  atoms.
+<p>
+  Syntax: <br> 
+      RTN  MATRIX <i>r11, r12, r13, r21, ...r32, r33, t1, t2, t3</i>
+<p>
+  Note: <br>
+  1)  The matrix is used as <br>
+<pre>
+           x'= r11*x + r12*y + r13*z +t1
+           y'= r21*x + r22*y + r23*z +t2
+           z'= r31*x + r32*y + r33*z +t3
+</pre>
+      where (x, y, z) stands for old coordinate, and (x', y', z') stands
+      for the new coordinate.  <br>
+<p>
+  See also: the <a href="edp_c.html#rtn_file">FILE</a> option
+<p>
+  Examples: <br>
+  1) Rotate the coordinates by 180 degrees about Z.
+<pre>
+      initial
+      zone all
+      rtn matrix -1 0 0, 0 -1 0, 0 0 1, 0 0 0
+</pre>
+  2) Fix a chirality problem of a given residue (eg. residue 164) by
+  changing the position of Ca to its mirror position. 
+<pre>
+      initial
+      ca 164
+      rtn over $(p1) n c cb 0 0 0 , ,,, ,,, inv tmp.txt
+           ! the mirror is defined by the N, CB and C atoms
+           ! first move the mirror to the y-z plane
+      rtn matrix -1 0 0 0 1 0 0 0 1 0 0 0
+           ! set x:=-x
+      rtn file tmp.txt
+           ! move the mirror plane back
+</pre>
+
+<hr><a name="rtn_orthog">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> ORTHOG </h3>
+      Orthogonalize the coordinates of the ON atoms, changing them
+  from a crystal gridding system, including the fractional coordinate
+  system, to a Cartesian system.
+<p>
+  Syntax: <br>
+      RTN  ORTHOG  <i>grid_a</i> <i>grid_b</i> <i>grid_c</i>
+<p>
+  Note: <br>
+  1)  The convention of the alignment of the (xyz) Cartesian system
+      relative to the (abc) crystallographic axes is read in from the
+      header of the (1st) input PDB file or is defined with a CELL
+      command. <br>
+  2)  The <i>grid_a</i>, <i>grid_b</i> and <i>grid_c</i> are the grids 
+      of the unit cell
+      along the crystallographic <i>a, b</i> and <i>c</i> axes. <br>
+<p>
+  See also:  
+  <a href="edp_c.html#rtn_deorth">DEORTH</a> option and 
+  <a href="edp_d.html#cell">CELL</a> command
+<p>
+  Examples: <br>
+  1) Convert the coordinates of the ON atoms from the
+  crystallographic fractional coordinates to Cartesian coordinates.
+<pre>
+      rtn deorth 1. 1. 1.
+</pre>
+  2) Assume that the current coordinate is in a Cartesian system of
+  an alignment of <i>x//a*, y//b, z//(a* X b)</i> (convention #1), and that
+  we want to convert the coordinate to a Cartesian system of an
+  alignment of <i>x//a, y//b*, z//(a X b*)</i> (convention# 6).
+<pre>
+      cell  61.2 61.2 96.8 90.0 90.0 120.0 1
+      rtn  deorth 1.0 1.0 1.0
+           ! convert to fractional coordinates, 
+           ! assuming convention #1
+      cell  61.2 61.2 96.8 90.0 90.0 120.0 6
+      rtn  orthog 1.0 1.0 1.0
+           ! convert back to Cartesian coordinates,
+           ! assuming the new convention, #6
+</pre>
+
+<hr><a name="rtn_overlay">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> OVERLAY </h3>
+      Perform a three-atom to three-atom superposition, useful for
+  making a model mutation.
+<p>
+  Syntax: <br>
+      RTN  OVERLAY 
+        <i>res_id1</i> [<i>atom_11</i> <i>atom_12</i> <i>atom_13</i>] 
+       [<i>reg_11</i> <i>reg_12</i> <i>reg_13</i>]
+       [<i>res_id2</i> [<i>atom_21</i> <i>atom_22</i> <i>atom_23</i>] 
+       [<i>reg_21</i> <i>reg_22</i> <i>reg_23</i>]]
+<p>
+  Note: <br>
+  1)  The rotation-translation matrix is calculated from two groups of
+      coordinates. Each group contains three atoms. The first atom of
+      the first group will be translated to the position of the first
+      atom of the second group. The second atom of the first group
+      will be aligned so that the two vectors from the first atom to
+      the second atom of the two groups are co-linear. The third
+      atom of the first group is aligned so that the six atoms of the
+      two groups are co-planar. <br>
+  2)  The <i>res_id</i>n is the residue ID of the corresponding group It is
+      the registration zero for the group. The atom_nn is the atom
+      names of the 1st, 2nd and 3rd atoms in the corresponding
+      groups. The default <i>atom_11</i>, <i>atom_12</i> and <i>atom_13</i> are <i>CA N
+      C</i>. The default atom_21, atom_22 and atom_23 are the same
+      as <i>atom_11</i>, <i>atom_12</i> and <i>atom_13</i>, if <i>res_id2</i> has been
+      specified. The reg_nn is the registration number relative to the
+      <i>res_id</i>n for the corresponding atom_nn, so that, eg. <i>atom_11</i>,
+      <i>atom_12</i> and <i>atom_13</i> do not have to be in the same residue.
+      The default reg_nn is 0. <br>
+  3)  In case that <i>res_id2</i> is not specified, the default coordinate of
+      the second group is ((0.0, 0.0, 0.0), (0.0, 0.0, 1.0), (0.0, 1.0, 0.0)), so that the transformation will bring the first atom in the
+      first group to the origin, the second atom on Z axis, and third
+      atom on y-z plane. <br>
+<p>
+  See also: the
+  <a href="edp_c.html#rtn_v_align">V_ALIGN</a> option and 
+  <a href="edp_c.html#overlay">OVERLAY</a> command
+<p>
+  Examples: <br>
+  1) Rotate-translate the side chain of residue A100 by overlaying its
+  backbone atoms to that of residue B100.
+<pre>
+      initial
+      { side | zone a100 } 
+      rtn overlay a100  ,,,  ,,,  b100  ,,,  ,,,
+</pre>
+  2) Assume we want to make a model of Met to Ile substitution at
+  position 6. A library PDB file that contains a standard building
+  block of Ile is required, in which the Ile model that we want to
+  use is called I1, for example. The following commands will create
+  a new PDB file called m6i_model.pdb. It will contain the wild
+  type coordinates except at position 6, where the Met will be
+  changed to an Ile.
+<pre>
+      initial
+      zone first - 5
+      write m6i_model.pdb
+      initial
+      zone i1
+      rtn overlay i1  ,,,  ,,,  6 ,,, ,,,
+           ! overlay the Ile block (ie. I1) to the residue 6
+      seti 6 1
+           ! rename the Ile block as residue <i>6</i>
+      append
+      initial
+      zone 7 - last
+      append      
+      close
+</pre>
+
+<hr><a name="rtn_polar">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> POLAR </h3>
+      Perform a rotation defined with a polar angle, plus some
+  translation specified in the Cartesian coordinate. 
+<p>
+  Syntax: <br>
+      RTN  POLAR  <i>phi  omega  kappa</i> [<i>t1 t2 t3</i>]
+<p>
+  Note: <br>
+  1)  The <i>phi</i> is the angle between the x axis and the projection of
+      the rotation axis on the x-y plane; <i>omega</i> is the angle between
+      the rotation axis and the z axis; and <i>kappa</i> is the rotation angle
+      about the rotation axis.  <br>
+  2)  The default translation vector, <i>(t1, t2, t3)</i>, 
+      is <code>(0.0, 0.0, 0.0)</code>. <br>
+<p>
+  See also: 
+  <a href="edp_c.html#rtn_ezxz">EZXZ</a> and   
+  <a href="edp_c.html#rtn_ezyz">EZYZ</a> options as well as 
+  <a href="edp_c.html#axis">AXIS</a> command
+<p>
+
+  Examples: <br>
+  1) To rotate the ON atoms about Y axis by 30.0 degrees.
+<pre>
+      rtn polar 90.0 90.0 30.0
+</pre>
+  2) To rotate the ON atoms with a polar rotation (10.0, 20.0, 30.0)
+  at the geometric center of the molecule, followed by a translation
+  of (40.0 50.0, 60.0).
+<pre>
+      zone all
+      rtn center inve
+           ! bring the molecule to a coordinate system 
+           ! in which the geometric center is at the origin and 
+           ! the xyz axes are parallel to the original ones;
+           ! save the inverse matrix
+      rtn polar 10.0 20.0 30.0 40.0 50.0 60.0
+           ! perform the rotation-translation
+      rtn file rtn_.txt
+           ! bring the molecule back the original 
+           ! coordinate system
+</pre>
+
+<hr><a name="rtn_symmetry">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> SYMMETRY </h3>
+      Apply a symmetry operator, plus an optional crystallographic
+  translation, to the ON atoms. The ON atoms can be treated either
+  as a rigid body or as individuals.
+<p>
+  Syntax: <br>
+      RTN  SYMMETRY  [<i>symm_#</i>] [<i>fx fy fz</i>]
+<p>
+  Note: <br>
+  1)  The default symm_# is 0. The default fractional coordinate, (fx,
+      fy, fz) is (0.0, 0.0, 0.0). <br>
+  2)  If the symm_# equals 0, atoms will be transformed individually
+      into a box of one unit cell centered at (fx, fy, fz). <br>
+  3)  If the symm_# is greater than zero, the corresponding
+      symmetry operator in the symmetry operator list will be
+      applied followed by a translation specified with the fractional
+      coordinate (fx, fy, fz). <br>
+  4)  If the symm_# is negative, the inverse matrix of the
+      corresponding (positive) symmetry operator will be applied,
+      *followed* by a translation specified with the fractional
+      coordinate (fx, fy, fz). <br>
+<p>
+  See also: 
+  <a href="edp_c.html#sdist">SDISTANCE</a>,
+  <a href="edp_c.html#movecenter">MOVECENTER</a> and
+  <a href="edp_d.html#symmetry">SYMMETRY</a>
+<p>
+  Examples: <br>
+  1) Apply the second symmetry operator (see SYMMETRY
+  command), plus a translation along crystallographic C axis by one
+  unit cell, to the ON atoms.
+<pre>
+      rtn symmetry 2 0 0 1
+</pre>
+  2) Transfer the ON atoms by half unit cell along each
+  crystallographic axis. let's assume the first symmetry operator in
+  the symmetry operator list is the unitary operator (ie. <i>X, Y, Z</i>)
+<pre>
+      rtn symmetry 1 0.5 0.5 0.5
+</pre>
+  3) Transfer the ON atoms into a box of a unit cell centered at the
+  (0.5, 0.5, 0.5) in fraction coordinate.
+<pre>
+      rtn symmetry 0 0.5 0.5 0.5
+</pre>
+  4) Assume that there is one protein molecule per asymmetric unit.
+  The residue 45 has a crystal contact with residue 116 through
+  some crystallographic symmetry operator (to be determined). In
+  the following, a coordinate file of the protein molecule will be
+  created, in which residue 116 will contact the residue 45 of the
+  original model.
+<pre>
+      ...  
+           ! input the cell parameters and the symmetry operators
+      initial
+      { zone 45 ;  group r_45 }
+      zone 116
+      sdistance r_45 0.0 4.0
+           ! In the output of this command, 
+           ! we find the message:
+           ! symm.# 3: y-x, -x, z+1/3 plus [ 1, 1, 0] 
+      zone all
+      rtn symmetry 3 1 1 0
+           ! apply the third symmetry operator
+           ! plus (1,1,0) translation.
+      write new_model.pdb
+           ! output the rotated-translated model to a PDB file.
+</pre>
+
+<hr><a name="rtn_v_align">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#rtn"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> V_ALIGN </h3>
+      Given two vectors, perform a rotation-translation such that 
+the first vector will start at the origin and end on the positive
+z axis and the second vector will lie on a plane parallel 
+to the y-z one.<p>
+  Syntax: <br>
+      RTN  V_ALIGN  <i>vector_id1</i> <i>vector_id2</i> 
+<p>
+  See also: the
+  <a href="edp_c.html#rtn_overlay">OVERLAY</a> option and 
+  <a href="edp_c.html#vector">VECTOR</a> command
+<p>
+  Examples: <br>
+  1) align the protein molecule such that its shortest axis 
+  becomes parallel to z axis.
+<pre>
+	initial
+	{ ca ;  more }
+	momentinertia    ,  long med sht
+	rtn v_align  sht med
+</pre>
+
+<hr><a name="sdist">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> SDISTANCE    </h2>
+      Calculate crystal packing contacts between the ON atoms and
+  atoms in a given group. This command replaces the old MMIG command and 
+  functions more like the DISTANCE command.
+<p>
+  Function: Calculation, Selection
+<p>
+  Syntax: <br>
+      SDISTANCE  <i>group_id</i>  <i>dmin</i> <i>dmax</i> 
+        [(LOAD, MOVE, PUNCH_ALL)]
+           
+<p>
+  Note:  <br>
+  1)  The <i>group_id</i> specifies a group. This group of atoms are
+      fixed, while the ON atoms moves according to the
+      crystallographic symmetry, during the crystal packing contacts
+      are searched. <br>
+  2)  <i>dmin</i> and <i>dmax</i> are the distance criterion. 
+      Any pair of atoms, from the two
+      groups, within the range <i>dmin</i>-<i>dmax</i> will be listed. 
+      If only one distance criteria is given, it is used as <i>dmax</i>, and 
+      <i>dmin</i> is set to 0.0. <br>
+  3)  If the LOAD option is used, the atoms in the specified group
+      that satisfy the distance criterion will be stored in the group
+      named SCR. <br>
+  4)  If the MOVE option is used, the displayed x, y, z of the ON
+      atoms will be replaced by the new coordinate at the position
+      where the shortest distance is found. This option is useful to
+      bring a water molecule close to the protein molecule. With this
+      option, the W value of each ON atom will be replaced by the
+      shortest distance. <br>
+  5)  Option PUNCH_ALL (or MOVE_ALL in v97a and older version) 
+      is similar to option MOVE, except new
+      PDB records will be output to an opened PDB file for every
+      positions of each ON atom that satisfy the distance criterion. <br>
+  6)  The symmetry operator listed as the calculation result should
+      be applied to the ON atoms to achieve the contacts. <br>
+  7)  If any ON atom is also included in the specified group, the
+      calculation will not be performed for the unitary symmetry
+      operator. <br>
+<p>
+  See also:
+  <a href="edp_c.html#distance">DISTANCE</a>,
+  <a href="edp_s.html#load">LOAD</a>,
+  <a href="edp_s.html#snayb">SNAYB</a>,
+  <a href="edp_c.html#movecenter">MOVECENTER</a>,
+  <a href="edp_c.html#rtn">RTN</a> and 
+  <a href="edp_d.html#symmetry">SYMMETRY</a>
+<p>
+   Examples: <br>
+  1) Calculate the crystal contacts between the molecule A and
+  molecule B.
+<pre>
+      { chain A ;  group mola }
+      { chain B ;  group molb }
+      initial
+      load mola
+      sdistance mola 0.0 4.0      ! check A-A contacts 
+      sdistance molb 0.0 4.0      ! check A-B contacts
+      initial
+      load molb
+      sdistance molb 0.0 4.0      ! check B-B contacts
+</pre>
+  2) Move all the solvent molecules close to the protein molecule.
+<pre>
+      { ca ;  more ;  group prt }
+      initial 
+      residue sol
+      sdistance prt 0.0 4.0 move
+      write moved_sol.pdb
+</pre>
+
+
+<hr><a name="shape">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>        SHAPE   </h2>
+      Generate random probes around a cavity or a cleft. The
+  position of a probe will be chosen such that there is no overlap
+  between the Van de Waals sphere of the probe and that of the ON
+  atoms. The collection of these probes provides approximate
+  information about the shape, volume and surface area of the cavity
+  or cleft.  
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      SHAPE  <i>search_radius</i> <i>res_id</i> [<i>atom_name</i>] 
+           <i>max_RT</i>
+           [<i>probe_radius</i>] [<i>file_name</i>] [<i>random_seed</i>]
+<p>
+  Note: <br>
+  1)  Given a search background and a search center, SHAPE
+      command will randomly generate probes within a sphere, check
+      whether there is any bad contact between the probe and the
+      background, and write out the legal probes. <br>
+  2)  The ON atoms will be used as the search background. An atom
+      specified with the <i>res_id</i> and <i>atom_name</i> will serve as the
+      search center. The default atom is first atom of the specified
+      residue. <i>Max_RT</i> number of random probes will be generated
+      within a sphere of the <i>search_radius</i>. <br>
+  3)  A legal probe is a probe which does not have any bad contact
+      with the background atoms based on the Van der Waals radius
+      of the ON atom and the <i>probe_radius</i>. The default
+      <i>probe_radius</i> is 1.4 Å. The search will start around the center
+      atom in a sphere of a radius about twice the summation of the
+      probe radius and the maximum Van der Waals radius of the
+      ON atoms. In each step, a new probe will be generated around
+      the previously determined legal probe. <br>
+  4)  The legal probes will be written to the currently opened output
+      PDB file. The text string of the output records will be copied
+      from that of the center atom. However, the coordinates will be
+      replaced with that of the probe position, and the B factor of the
+      record is replaced by the B factor of the nearest ON atom. Its
+      W field is set to zero. <br>
+  5)  The random_seed is an integer; if the result is expected to be
+      repeatable, the <i>random_seed</i> should be given explicitly. The
+      default value is a random number. <br>
+  6)  A database file (specified with the <i>file_name</i>) in the current
+      directory or in the default directory is required to define the
+      VDW radii of the ON atoms. (See ACCESS command
+      documentation for more details). <br>
+  7)  Since the calculation is based on random number generator,
+      and for small cavity the result is very likely to be sensitive to
+      the starting position of the search, verification of the result by
+      repeated calculations and/or graphic display is strongly
+      recommended. <br>
+<p>
+  See also:
+  <a href="edp_c.html#access">ACCESS</a>,
+  <a href="edp_m.html#file">FILE</a>, 
+  <a href="edp_c.html#touch">TOUCH</a> and
+  <a href="edp_c.html#volume">VOLUME</a>
+<p>
+   Examples: <br>
+  1) Generate random probes which mimic the shape of a cavity in
+  the carboxy terminal domain of T4 lysozyme (pdb4lzm.pdb). In
+  the following example, the search center is read from a separated
+  PDB file, center.pdb, which contain one record.
+<pre>
+  ATOM      1  PRB SOL C   1   28.800  10.300  0.600  1.00  1.00
+</pre>
+  The following macro may be repeated a few times to verify the
+  result.
+<pre>
+      reset
+      read center.pdb
+      write prb.pdb
+           ! open a PDB file to output the legal probes
+      { zone 1-162 | nayb 10.0 c1 prb  }
+           ! select the background atoms form the protein molecule
+      shape 6.0 c1 prb 3000 
+           ! 6.0 search radius, 3000 tries
+      close
+      read prb.pdb , initial
+      zone all
+      volume      
+           ! calculate the volume of the cluster of the probes.
+           ! If the number of probes generated is large, this volume 
+           ! should be very close to the true result of the model.
+</pre>
+
+<hr><a name="sort">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> SORT    </h2>
+      Reset the order of the output records.
+<p>
+  function: Calculation, Selection
+<p>
+  Syntax: <br>
+      SORT  [<i>option</i>]
+<p>
+  Note:  <br>
+  1)  The <i>option</i> is one of the following <br>
+<blockquote>
+      a)  B       -- sort by  B value in an ascending order 
+ <br> b) -B       -- sort by -B value in a descending order 
+ <br> c)  W       -- sort by  W value in an ascending order 
+ <br> d) -W       -- sort by -W value in a descending order. 
+		(See also:   <a href="edp_e.html#setw">SETW</a>)
+ <br> e) DFRES    -- sort by DFRES definitions (default from
+                  <i>edp_data/pdbstd.txt</i>), check the side chain chirality
+                  and labelling, and set the status of the okay atoms
+                  to ON. (See also:   <a href="edp_d.html#dfres">DFRES</a>)
+ <br> f) SWAP     -- swap the ON atoms with the atoms in a given
+                  group as well as their output order.
+		(See also:   <a href="edp_s.html#swap">SWAP</a>)
+ <br> g) LOAD -- sort by groups in a given loading order. 
+		(See also:   <a href="edp_s.html#group">GROUP</a>)
+ <br> h) <i>blank</i> -- set to the original order.
+</blockquote>
+  2)  The sort command with options (W,-W,B and -B) will work on ON atoms 
+      only. The DFRES option will change the status of the atoms if
+      proper. <br>
+<p>
+   Examples: <br>
+  1) Sort the records by the B factor in an ascending order.
+<pre>
+      sort B
+</pre>
+  2) Sort the records by the W value in a descending order.
+<pre>
+      sort -W
+</pre>
+
+  3) Reset the records to the original order.
+<pre>
+      sort
+</pre>
+  
+  4) Fix the labelling problem
+<pre>
+      initial
+      sort dfres
+</pre>
+  5) Switch the output order of chain A and chain C, assuming the
+  input order is chains A, B and C.
+<pre>
+      { chain c ;  group molc }
+      initial
+      chain a
+      sort swap molc
+           ! The new order is that chain A is after chain B
+           ! and chain C is before chain B. 
+      chain a b c
+      write cba.pdb
+</pre>
+  6) Set the output order to chains C, and B and A. 
+<pre>
+      { chain a ;  group mola }
+      { chain b ;  group molb }
+      { chain c ;  group molc }
+      sort load c b a
+           ! The new order is that chain A follows chain B
+           ! and chain B follows chain C.
+           ! Note that this sort command does not select any records.
+           ! Also if there is any records other than chains a, b 
+           ! and c, they will locate after the records of chain a.
+      initial
+      zone all
+      write cba.pdb
+</pre>
+
+<hr><a name="sumw">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> SUMW    </h2>
+      Calculate the summation of the W value of the ON atoms over
+  each residue, and overwrite the X, Y, Z or B of the <i>CA</i> atom
+  with this summation.
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      SUMW  [(X, Y, Z, B)]
+<p>
+  Note: <br>
+  The X, Y, Z or B is used to specify the field in the <i>CA</i> atom
+      where the result for each residue will be written. <br>
+<p>
+  See also:
+  <a href="edp_c.html#avb">AVB</a>,
+  <a href="edp_d.html#dfca">DFCA</a> and
+  <a href="edp_c.html#rmsw">RMSW</a>
+<p>
+   Examples: <br>
+  1) Calculate the solvent accessible area of each residue.
+<pre>
+      initial
+      ca
+      blank   ! clear the CA text string
+      more    ! select the protein molecule 
+      access
+      sumw x  
+           ! store the summation of each residue to the x field
+      exclude main
+      sumw z 
+           ! store the summation over side chain atoms to the z field
+      initial
+      main
+           ! store the summation over main chain atoms to the y field
+      initial
+      ca
+      list
+</pre>
+
+<hr><a name="touch">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> TOUCH  </h2>
+      Calculate positions of pseudo atoms that touch ON atoms. 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      TOUCH <i>box_margin</i>, <i>probe_margin</i>, [<i>file_name</i>]
+<p>
+  Note: <br>
+  TOUCH first calculates the size of the ON set in three dimensions. It adds <i>box_margin</i> (default=9.0) in each direction. In this new box, TOUCH makes a grid of space <i>probe_margin</i> (default=1.0). At each gridding point, TOUCH verifies whether the point satisfies that it must be alway from any ON atom more than the distance of <i>box_margin</i>+vdw_radius but within the distance of <i>box_margin</i>+<i>probe_marge</i>+vdw_radius to at least one ON atom. If the answer is yes, TOUCH writes the coordinates of this point to an opened PDB file, and the pseudo atoms have an atom type P90 and a residue type PRB.<br>
+  The vdw radii of ON atoms are read from the <i>file_name</i> . Default is acc.txt. 
+<p>
+  See also:
+  <a href="edp_c.html#shape">SHAPE</a> and
+  <a href="edp_c.html#volume">VOLUME</a>
+<p>
+   Examples: <br>
+  1) Calculate the volume of an open cavity.
+<pre>
+     ! calculate a shell to block those openings. the output prb_.pdb file contains 
+     ! atoms P90 of a residue type PRB, which has a pseudo vdw radius 9.0 A
+     ! defined in the acc.txt file. 
+     init; write prb_.pdb 
+     ca
+     touch 9.0 1.0 
+     close
+
+     ! choose three starting positions to probe the cavity shape
+     read prb_.pdb 
+     init; write cav_.pdb
+     zone all
+     shape 20 a144 cz  2000 , , 1024
+     shape 20 a225 cd2 2000 
+     shape 20 a316 cz  2000 
+     close 
+
+     ! calculate the volume of the probes which is an estimation of the cavity volume. 
+     read cav_.pdb x initialize
+     ch x; group x
+     exclude 
+     dist x 0 0.2
+     volume
+</pre>
+
+<hr><a name="vector">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       VECTOR </h2>
+<p>
+  Function: Calculation, Information 
+<p>
+  Syntax: <br>
+      VECTOR <i>main_option parameter(s)</i>
+<p>
+  Available <i>main_options</i> are<ul>
+<li>  <a href="edp_c.html#vec_by_atom">	BY_ATOM</a>, 
+<li>  <a href="edp_c.html#vec_by_xyz">	BY_XYZ </a>, 
+<li>  <a href="edp_c.html#vec_delete">	DELETE	</a>, 
+<li>  <a href="edp_c.html#vec_list">		LIST	</a>, 
+<li>  <a href="edp_c.html#vec_pv">		PV	</a>, 
+<li>  <a href="edp_c.html#vec_vp">		VP	</a> and 
+<li>  <a href="edp_c.html#vec_vv">		VV	</a>.
+</ul>
+<p>
+  See also:
+  <a href="edp_g.html#max_vector">maximum number of vectors</a>
+
+<hr><a name="vec_by_atom">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#vector"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> BY_ATOM </h3>
+     Define a new vector using two atoms. 
+<p>
+  Syntax: <br>
+      VECTOR BY_ATOM   <i>vector_id</i>, <i>res_id1</i>, [<i>atom_id1</i>], 
+		       <i>res_id2</i>, [<i>atom_id2</i>] 
+<p>
+  Note:<br>
+      1) <i>res_id1</i> and <i>atom_id1</i> specify the first atom, ie.
+         the starting point of the vector; and 
+         <i>res_id2</i> and <i>atom_id2</i> specify the second atom, ie.
+         the end point of the vector.
+      2) the default atom is the first atom in the specified residue.
+<p>
+  Examples:<br>
+   1) create a vector passing through CA atom  of residue 10., and 
+CA atom of residue 30.
+<pre>
+	vector by_atom  v1 10 ca 30 ca
+</pre>
+   2) rotation the side chain of residue 4 about the CA-CB bond 
+by -120.0 degrees.
+<pre>
+       initial
+       { side | zone 4 } 
+       vector by_atom v1 4 ca 4 cb 
+       rtn axis v1  -120.0  0.0 
+</pre>	
+
+
+<hr><a name="vec_by_xyz">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#vector"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>   BY_XYZ </h3>
+     Create a new vector using numbers.
+<p>
+  Syntax: <br>
+      VECTOR BY_XYZ <i>vector_id</i> <i>p1, p2, p3, r1, r2, r3, </i> 
+        [<i>length</i>]
+<p>
+  Note:<br>
+      1) <i>p1, p2, p3</i> are the x, y, z coordinates of the 
+starting point of the vector. <br>
+      2) if <i>r1²+r2²+r3²</i> <code>= 1.0</code> and <i>length</i>
+is not zero, <i>r1, r2, r3</i> are taken as the directional cosine
+of the vector. Otherwise, they are taken as the x, y, z coordinates 
+of the end point of the vector.
+<p>
+  Examples:<br>
+   1) create a vector along z axis, of length 2.
+<pre>
+	vector by_xyz v1 0 0 0, 0 0 1,  2
+  or 
+	vector by_xyz v1 0 0 0, 0 0 2
+</pre>
+
+<hr><a name="vec_delete">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#vector"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>   DELETE </h3>
+    Delete an existing vector.
+<p>
+  Syntax: <br>
+      VECTOR  DELETE <i>vector_id</i>
+<p>
+  Examples:<br>
+   1)  delete vector <code>v1</code>.
+<pre>
+	vector delete v1
+</pre>
+
+<hr><a name="vec_list">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#vector"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>   LIST      </h3>
+   List the current vector(s).
+<p>
+  Syntax: <br>
+      VECTOR LIST [<i>vector_id</i>]
+<p>
+  Examples:<br>
+   1)  list all the current vectors.
+<pre>
+	vector list
+</pre>
+
+<hr><a name="vec_pv">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#vector"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>   PV      </h3>
+      Calculate the distance from the starting point of a given Vector
+  to a specified atom (Point); also calculate the angle between the
+  given vector and the connection vector which starts from the
+  starting point of the given Vector and ends at the specified atom
+  (ie. the Point).
+<p>
+  Syntax: <br>
+      VECTOR PV <i>vector_id</i> [<i>res_id</i> [<i>atom_name</i>]]
+<p>
+  Note: <br>
+  1)  The <i>vector_id</i> specifies the input vector.
+  2)  The default atom is the first atom in the residue if specified. If
+      the <i>res_id</i> is not specified, the first ON atom will be used. <br>
+<p>
+   Examples: <br>
+  1) Calculate the distance and angle between the Phe ring of
+  residue 4 and the Ce1 atom of Phe 67.
+<pre>
+      initial
+      { atom cg cd1 cd2 ce1 ce2 ca | zone 4 }
+      planar v1
+           ! define v1 as the normal of the ring of residue 4
+      vector pv v1 67 ce1
+           ! calculate the distance/angle between v1 and 
+           ! the ce1 atom of residue 67  
+</pre>
+
+<hr><a name="vec_vp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#vector"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>   VP      </h3>
+      Calculates a new point on the axis defined by a given vector.
+  Replaces both xyz and text string of a given atom with the new
+  coordinates.
+<p>
+  Syntax: <br>
+      VECTOR VP <i>vector_id </i> 
+	[<i>res_id</i> [<i>atom_name</i>]] [<i>length</i>] 
+<p>
+  Note: <br>
+  1)  The <i>vector_id</i> specifies the input vector.<br>
+  2)  The default atom is the first atom in the residue if specified. If
+      the <i>res_id</i> is not specified (ie. shorten as ','), 
+      the first ON atom will be used. <br>
+  3)  The coordinates of the new position will be on the straight line
+      which is co-linear to the vector.  <br>
+  4)  The <i>length</i> of the vector determines distance between the 
+      starting point of
+      the vector and the new position. If the <i>length</i> is negative, the
+      new position will be at the opposite direction of the vector.
+      The default is the vector length of <i>vector_id</i>
+<p>
+  See also:
+  <a href="edp_c.html#axis">AXIS</a>,
+  <a href="edp_c.html#vec_pv">PV</a> and
+  <a href="edp_c.html#vec_vv">VV</a>
+<p>
+   Examples: <br>
+  1) Assume we have the rotation matrix in the file <i>rtn_.txt.</i> The
+  following commands make a pair of pseudo atoms to display the
+  rotation axis.
+<pre>
+	axis rtn_.txt v1
+	vector vp v1 jnk1 O -100.0
+	vector vp v1 jnk2  O 100.0
+		! select any atom which can be overwritten.
+	initial
+	{ atom O | zone jnk1 jnk2 }
+	write axis.pdb
+		! make a PDB file to store the two pseudo atoms.
+</pre>
+
+  2) Generate a record to store the geometric center of the protein
+  molecule.
+<pre>
+	initial
+	{ ca ;  more }
+	setw 1.0
+	momentinertia  ,  v0
+	initial
+	vector vp v0 1 ca 0.0
+           ! the coordinate of the Ca atom of residue 1 is replaced.
+</pre>
+
+<hr><a name="vec_vv">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#vector"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>   VV      </h3>
+      Calculate the projected (shortest) distance and the angle
+  between two vectors. It is useful for, for example, determining of
+  the distance and angles between two helices.
+<p>
+  Syntax: <br>
+      VECTOR VV <i>vector_id1</i> <i>vector_id2</i> [<i>vector_id3</i>]
+<p>
+  Note: <br>
+  1)  The <i>vector_idn</i> is an text-string of upto four characters.
+      For example, it may be one of the <code>V0, V1, ... V9</code>.<br>
+  2)  <i>Vector_id1</i> and <i>vector_id2</i> specify two existing 
+      vectors. <br>
+  3)  If the parameter <i>vector_id3</i> is given, the corresponding vector 
+      will store the normalized cross product of the two input vectors
+      (ie. cross from vector(1) to vector(2)). The starting point will
+      be the intersection of vector(1) and the shortest distance line
+      between the two vectors. <br>
+<p>
+  See also:
+  <a href="edp_c.html#axis">AXIS</a>,
+  <a href="edp_c.html#vec_pv">PV</a> and
+  <a href="edp_c.html#vec_vp">VP</a>
+<p>
+   Examples: <br>
+  1) Calculate the angle and shortest distance between helix 93 - 104
+  and helix 115 - 122.
+<pre>
+      ! determine the axis of helix 93 - 104
+      initial
+      { main | zone 93 - 103 ;  group tmp  }
+      { main | zone  94 - 104 } 
+      overlay tmp rtn_.txt
+      initial
+      axis rtn_.txt v1
+      ! determine the axis of helix 115 - 122
+      initial
+      { main | zone 115 - 121 ;  group tmp  }
+      { main | zone 116 - 122 }
+      overlay tmp rtn_.txt
+      initial
+      axis rtn_.txt v2
+      ! calculate the angle and distance
+      vector vv v1 v2
+</pre>
+
+<hr><a name="vm">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       VM  </h2>
+      Calculate Vm (Matthews coef.)
+(Ref. Matthews, B.W. (1968) "Solvent content of protein crystals" 
+<i>J. Mol. Biol.</i> 
+  <b>33</b>: 491-497). [<a href="./programs/vm.html">online</a>] 
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      VM [<I>mw</I>] [<i>num_of_symmetry_operators</i>]
+<p>
+  Note: <br>
+  1) <I>mw</I> is the molecular weight (in kDa) in one asymmetric unit.<br>
+  2) if  <I>mw</I> is not given, the program will use the molecular weight 
+of the selected fragment(s).<br>
+  3) the default value of <i>num_of_symmetry_operators</i> is taken from the
+  first PDB file or previous explicit input. 
+<p>
+  See also:
+  <a href="edp_c.html#mw">MW</a>,   
+<p>
+   Examples: <br>
+  1) 
+<pre>
+      cell 60 60 80 90 90 120 1 !define cell parameters
+      @p3121                    !define symmetry operators
+      vm 16                     !molecular weight is 16 kDa.
+</pre>
+
+<hr><a name="volume">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>       VOLUME  </h2>
+      Calculate the volume of the ON atoms enclosed within the
+  solvent accessible surface. (Ref. Lee & Richards, <i>J. Mol. Biol.</i> 
+  1971, Vol
+  <b>55</b>, pp 379-400). Note that this volume is not the "molecular
+  volume" enclosed within the "molecular surface" defined by
+  Connolly (Ref. Connolly, J. Am. Chem. Soc., Vol 107 No. 5,
+  1985).
+<p>
+  Function: Calculation
+<p>
+  Syntax: <br>
+      VOLUME  [<i>probe_radius</i>] [<i>zstep</i>] [<i>file_name</i>]
+<p>
+  Note: <br>
+  1)  The default <i>probe_radius</i> is 0.0 angstrom. <br>
+  2)  The <i>zstep</i> is the integration step size along z direction. The
+      default is 0.2 angstrom. <br>
+  3)  A database file in the current directory or in the default
+      directory is required to define the Van der Waals radii of the
+      ON atom. <br>
+  4)  The accuracy of the result can be verified by rotating the object
+      and repeating the calculation. <br>
+<p>
+  See also:
+  <a href="edp_c.html#shape">SHAPE</a>,
+  <a href="edp_c.html#touch">TOUCH</a>,
+  <a href="edp_c.html#access">ACCESS</a> and
+  <a href="edp_m.html#file">FILE</a>
+<p>
+   Examples: <br>
+  1) Calculate the van der Waals volume of the side chain of Leu
+  (say residue 99) beyond the CA atom.
+<pre>
+      initial
+      zone 99
+      volume
+           ! denote the result as v(99)
+      initial
+      { main | zone 99 } 
+      volume
+           ! denote the result as v(99m)
+</pre>
+  The difference of v(99) - v(99m) will be the volume beyond the
+  CA atoms.
+<p>  
+  2) Estimate the "molecular volume" of the protein molecule.
+<pre>
+      initial
+      ca
+      more
+      access , 1.4
+           ! get the solvent accessible surface (S) of the protein
+           ! molecule with a 1.4 Å probe.
+      volume 1.4
+           ! get the volume (V) with 
+           ! radius = (Van_de_Waals_radius + 1.4Å)
+           
+      The estimated volume is (V - S*1.4).
+</pre>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->
+.</font>
+</body>
+</html>

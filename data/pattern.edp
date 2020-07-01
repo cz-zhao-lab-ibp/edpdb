@@ -1,0 +1,15 @@
+!<beginning of pattern.edp> 
+!! copy right by X. C. Zhang (modified on 010928)
+! syntax:
+!   @pattern search_pattern
+! example:
+!   @pattern g%s%gg ! for active site serine in an alpha/beta hydrolysase
+
+setenv -s echo 0
+if ( -s aaa == done ) goto start
+@aaa2a
+parameter aaa = done
+
+start:
+initialize ; ca | pattern $(p1) 70 ; list
+setenv -r echo

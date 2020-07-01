@@ -1,0 +1,43 @@
+! <beginning of match101.edp>
+!! copyright by X. Cai Zhang (010928)
+
+! This macro calculate the matrix from one protein molecule to another.
+! It require v01b or higher version EdPDB to run this macro. 
+! A PDB file, tmp_.pdb, is written to output the rotated-translated molecule.
+! Note: the PDB file should not contain a 'j' chain.
+! also see: match3d.edp, match1ds.edp, match1d.edp, matchzn.edp
+
+! Syntax: 
+! @match101 target toBeMoved
+
+! Example: to overlay chain b to chain a, type 
+! @match101 a b                 !-or-
+! @match101 a90 b90             !-or-
+! @match101 a90-a95 b90-b95
+
+zone $(p1) $(p2) ; if ( -i status ^= -2 ) goto matchzn
+
+!input chain names only
+initialize ; main | chain $(p1) ; analyze ; if ( -i status == -3 ) goto done
+initialize ; main | chain $(p2) ; analyze ; if ( -i status == -3 ) goto done
+initialize ; main | chain $(p1) ; exclude ca ; analyze ; if ( -i status == -3 ) goto match1d
+initialize ; main | chain $(p2) ; exclude ca ; analyze ; if ( -i status == -3 ) goto match1d
+
+match3d:
+@match3d
+if ( -i istatus == -1 ) goto match1d
+goto done
+
+match1d:
+! Ca atoms only
+@match1d 
+goto done
+
+matchzn:
+! specify zones
+@matchzn 
+if ( -i istatus == -1 ) goto match3d
+
+done:  
+!<end of match101.edp>
+

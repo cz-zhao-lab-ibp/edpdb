@@ -1,0 +1,16 @@
+! syntax: 
+!cell 
+!@p212121
+!@clique  1 40
+! where 1 is the center atom, 40 is the distance cutoff.
+
+reset; zone $(p1) ; group cg ; write tmp_.pdb
+
+swap; setenv verbose 0
+sdist cg 0 $(p2) punch_all ; close
+
+init; read tmp_.pdb z ; chain z ; group sph 
+rewind scr ; setenv verbose 12
+
+clique sph 14 2.5 2.5 50 
+

@@ -1,0 +1,25 @@
+setenv -s echo 0
+
+! edpini.edp   by X. Cai Zhang, 000602
+! customize the initial configration.
+! syntax: 
+! @edpini.edp 
+!  or 
+! edpdb pdb_file -i 
+
+!!alias verbose @verbose
+!!alias bequiet @bequiet
+!!alias sg @sg
+!!@unix.edp
+alias sela text $ 14  $=
+alias selr text $ 18  $=
+alias selc text $ 22  $=
+alias sels text $ 70  $=
+setenv window_size 50
+
+zone all
+zone
+residue
+doit
+init
+setenv -r echo

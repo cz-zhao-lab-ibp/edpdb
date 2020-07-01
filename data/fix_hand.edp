@@ -1,0 +1,14 @@
+initialize
+dfabcd ca n c cb 0 0 0 0 f f f t -180 0
+atom cb
+abcd a
+initialize
+group bug from scr
+loop:
+parameter fix bug id exit
+initialize
+ca $(fix)
+rtn overlay $(fix) N C CB 0 0 0 , ,,, ,,, inve rtn_tmp
+rtn matrix  -1 0 0 0 1 0 0 0 1 0 0 0
+rtn file rtn_tmp
+goto loop

@@ -1,0 +1,49 @@
+<html>
+<header>
+<title>equilibration</title>
+<script language="JavaScript">
+function calculate () { 
+var kd  = document.form1.kd.value;
+var ca = document.form1.ca.value;
+var cb = document.form1.cb.value;
+
+var	lamda=cb/ca;
+var	gama=kd/ca;
+
+var	alpha=0.5*ca*( (1+lamda+gama) - 
+	Math.sqrt( Math.pow( (1+lamda+gama) ,2)-4*lamda ));	
+ 
+document.form1.out2.value= alpha;
+document.form1.out3.value= alpha/ca*100;
+document.form1.out4.value= alpha/cb*100;
+}
+</script>
+</header>
+
+<BODY background="../../graphics/trebuche2.gif">
+<a name="top">
+<form>
+<p>&nbsp;</p>
+</form>
+</a>
+<table>
+<tr><td>
+<H2> Calculate Equilibration Concentration</h2>
+</td>
+<td> </td></tr></table>
+
+<form name="form1">
+<table><tr>
+<td><i>Kd</i> </td><td> <input type="text" size="8" name="kd"></td>
+<td><i>[A]</i> </td><td> <input type="text" size="8" name="ca"></td>
+<td><i>[B]</i> </td><td> <input type="text" size="8" name="cb"></td></tr>
+</table> 
+<p>&nbsp;  
+<input type="button" name="sc" value="[AB]" onClick="calculate()">
+<input type="text" size="4" name="out2" value="">, &nbsp;&nbsp;&nbsp;
+<input type="text" size="4" name="out3" value=""> %[A], &nbsp;&nbsp;
+<input type="text" size="4" name="out4" value=""> %[B], &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="reset" value="Reset" name="B1"> <br>
+</p>
+</body>
+</html>

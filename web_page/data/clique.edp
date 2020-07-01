@@ -1,0 +1,25 @@
+! this macro is used to find local symmetry using known heavy atom sites. 
+
+! syntax: 
+!cell 
+!@p212121
+!@clique  1 40
+! where 1 is the center atom, 40 is the distance cutoff.
+
+reset
+rewind scr
+write tmp_.pdb
+zone all
+{zone $(p1) ; group cg}
+exclude load cg
+mmig cg +$(p2) punch_all 
+close
+initialize 
+load cg
+
+read tmp_.pdb z
+chain z
+group sph
+
+clique sph 5 3. 3. 20 
+

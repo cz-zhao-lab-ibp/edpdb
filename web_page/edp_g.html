@@ -1,0 +1,385 @@
+<html>
+<head>  <title>EdPDB: Glossary</title> </head>
+
+<body background="trebuche2.gif">
+<hr><a name="top"></a><a name="glossary">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1>      	Glossary		</h1>
+Available commands:
+<ul>
+	<li> <a href="edp_g.html#pn">	$(Pn)	</a>,
+	<li> <a href="edp_g.html#command_interpretation">	command interpretation	</a>,
+	<li> <a href="edp_g.html#display"> display/internal	</a>,
+	<li> <a href="edp_ctr.html#pipe"> pipe	</a>,
+        <li> <a href="edp_g.html#special_characters"> 	Special characters </a>,
+        <li> <a href="edp_g.html#status"> 	status </a>,
+	<li> <a href="edp_g.html#array_dimensions">	array dimensions </a>.
+</ul>
+
+<hr><a name="pn">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   $(Pn)   </h2>
+      $(Pn) is not a command. One can use $(P1), ... $(P8) as virtual
+  parameters when writing a macro (.edp) file. While calling a
+  macro file, one may supply the parameters after the file name. The
+  first parameter will substitute $(P1), and so on. In this way $(p1),
+  $(p2) ... $(p8) can be defined. An alternative way to define $(Pn)
+  is to use the PARAMETER command. A $(Pn) definition will hold
+  until being re-defined. 
+<p>
+      One predefined parameter, <i>file1</i>, is initially defined to be
+  the name of the (1st) PDB file input to EdPDB. Other parameters can be
+  defined with the <a href="edp_ctr.html#parameter">PARAMETER</a> command.
+<p>
+      On the terminal, one can see how the $(parameter) is substituted with
+  the real parameter within a macro. A comma following a space
+  can be used to retain the old definition of a parameter while other
+  parameters are being changed. A text string enclosed within a pair
+  of single quotation marks (' ') is considered as a single parameter.
+<p>
+  See also: 
+  <a href="edp_ctr.html#parameter">PARAMETER</a> and
+  <a href="edp_ctr.html#macro_file">@macro_file</a>
+<p>
+   Examples: <br>
+  1) The following commands form a macro file. It can be used to
+  calculate the chi-I angle of any amino acid residue which has a
+  CG atom.
+<pre>
+      ! chi_cg.edp
+      initial
+      dfabcd n ca cb cg 0 0 0 0 t t t t -180. 180.
+      residue $(p1)
+      abcd
+</pre>
+  For example, it can be used to calculate the chi-I angles of all Leu
+  residues or all Phe residues. Note that $(p1) is substituted with
+  <i>leu</i> and <i>phe</i>, respectively.
+<pre>
+      @chi_cg leu
+      @chi_cg phe
+</pre>
+
+
+<hr><a name="command_interpretation">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  command interpretation  </h2>
+  1)  An input command is first converted into lower case
+      text string, unless the environmental parameter 
+	<a href="edp_m.html#setenv_tl">tolower</a> has
+      been set to off explicitly by the user.
+<p>
+  2)  The <a href="#pn">$(Pn)</a> is
+      substituted with the real parameter if proper. The substitution is
+      repeated until there is no $(Pn) in the input statement or the
+      number of substitution exceeds nine (9). It is recommended to
+      not use cross reference among the $(P1) ... $(P8).
+<p>
+  3)  For each input line, the command input is terminated by the
+      first occurred <a href="edp_m.html#comment">
+         the exclamation mark (!)</a> or end_of_line. 
+      It is then searched for the first command if 
+      <a href="edp_ctr.html#pipe">pipe</a> separator(s) 
+      (ie. |  or ;  ) exists.
+<p>
+  4)  The leading keyword is checked against the user-defined
+      keyword list, followed by 
+	  <a href="edp_d.html#alias">keyword-alias</a> 
+	substitution if proper.
+      This step is repeated until the first keyword is not in the list of
+      user-defined keywords. 
+<p>
+  5)  It is checked whether a 
+	<a href="edp_ctr.html#macro_file">macro file</a> is to be called. If yes, 
+	  <a href="edp_g.html#pn">$(Pn)</a> 
+      parameters may be defined using the input that follows the macro
+      file name. Then the macro file is opened, and the command
+      interpretation finishes. If the answer is no, it continues.
+<p>
+  6)  The keyword is checked against the built-in dictionary, and a 
+      command is issued if proper.
+<p>
+  7)  After the command finishes or some error is encountered, the
+      program is ready for input from the rest of input line in case of  
+      pipe-line commands or from the next input line. 
+<p>
+
+<hr><a name="display">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Display/Internal  </h2>
+  1)  Displayed text/data may be different from the internal text/data. For
+  example, internal residue name is read from the input file and can not be
+  changed; the displayed residue name, however, can be chaned by the 
+  "set residue" command. 
+  The displayed text/data can be written to an output file. 
+<p>
+  2)  The displayed X,Y,Z text (e.g. after "DIFF" command) 
+  may be converted to internal data for
+  subsequent calculation (e.g. "OVERLAY") by using the "UPDATE" command without
+  argument. 
+<p>
+
+<hr><a name="subcommand">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  {subcommand}   </h2>
+  This function is replaced by the 
+  <a href="edp_ctr.html#pipe"> pipe </a> mechanism now. 
+<p>
+  See also: 
+  <a href="edp_s.html#group">GROUP</a>
+<p>
+   Examples: <br>
+  1) Select Ca atoms of Gly residue.
+<pre>
+      { ca | residue gly }
+</pre>
+
+  2) Define the backbone atoms as a group named bb.
+<pre>
+      { main ;  group bb }
+</pre>
+  3) Select all amino acid residues.
+<pre>
+      { ca ;  more }
+</pre>
+
+  4) Select ca atoms from the group tmp.
+<pre>
+      { load tmp | ca }
+</pre>
+  5) Select Cb atoms from residues a1 through a99.
+<pre>
+      { atom cb | zone a1 - a99 }
+</pre>
+  6) Select the sulfur atoms of Methionine which are of B &lt 20.0.
+<pre>
+      { atom S* | residue Met | B &lt; 20.0 }
+</pre>
+
+<hr><a name="special_characters">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Special characters </h2>
+
+  @ <br>           executing a macro file.
+<p>
+  : <br>           define a single character symbol for a residue (see
+                   <a href="edp_d.html#dfres">DFRES</a>
+		   ); define a 
+		   <a href="edp_ctr.html#label_statement">label statement</a>.
+<p>
+  ' <br>          <a href="edp_m.html#setenv_delimiter">delimiter</a> of an input token.
+<p>
+  &lt and &gt  <br>    less than and greater than in   
+		  <a href="edp_s.html#xcoor">X,Y,Z</a>,
+		  <a href="edp_s.html#wfactor">W</a> and
+		  <a href="edp_s.html#bfactor">B</a> commands.
+<p>
+  ; <br>        a semicolon at the end of a command separates it from the next one in a 
+  multiple-command line. It can be, in most cases, interpreted as logical OR. 
+<p>
+  | <br>        used as a part of the <a href="edp_ctr.html#pipe">pipe</a> 
+		mechanism.
+<p>
+  { } <br>        used as a part of the <a href="edp_ctr.html#pipe">pipe</a> 
+		mechanism.
+<p>
+  =   <br>        define <a href="edp_ctr.html#parameter">PARAMETER</a>.
+<p>
+  :=  <br>        assignment (define <a href="edp_d.html#alias">ALIAS</a>).
+<p>
+  * and %  <br>   wildcard in the selection command 
+			<a href="edp_s.html#atom">ATOM</a>.
+<p>
+  ! <br>    start   <a href="edp_m.html#comment">comment</a>.
+<p>
+  $(...)  <br>    virtual <a href="edp_ctr.html#parameter">parameter</a>.
+<p>
+  -   <br>        a hyphen, short cuts for ` TO ' in the zone
+              information; used as a decrement sign in a
+              <a href="edp_ctr.html#parameter">PARAMETER</a> command.
+<p>
+  +  <br>     used as an incremental sign in a
+              PARAMETER command; used in a relative or a
+              complex residue_ID. 
+<p>
+  _  <br>     an underscore. It is used to replace a space, eg. within
+              an atom name or in a complex zone definition. In a
+                <a href="edp_i.html#read">READ</a>
+		statement, in the position of a chain name, an
+              underscore deactivates the corresponding chain name
+              substitution.
+<p>
+  ^ <br>      logical NOT in <a href="edp_s.html#pattern">pattern</a> searches.
+<p>
+  [  ] <br>     delimiters in <a href="edp_s.html#pattern">pattern</a> searches.
+<p>
+  ??? <br> help (show the syntax of a given command).
+
+<hr><a name="status">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>status</h2>
+Status
+  is set to zero (or positive) if the previous command is successful, 
+  to -1 if the command is invalid, 
+  and to -2 if the parameter(s) is invalid. 
+  <i>Status </i>can be displayed (using 
+  <a href="edp_ctr#parameter">parameter</a>), tested (using 
+  <a href="edp_ctr#if">if</a>), but not changed by the user.
+   
+<hr><a name="array_dimensions">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>Array dimensions</h2>
+The following parameters are stored in the edp_dim.f90 file. One can make
+changes and recompile the program.
+ 
+<p>
+<a name="max_atom"> maximum number of atoms </a>
+<pre>
+	max_atom= 40 000	
+</pre>
+
+<a name="max_res"> maximum number of residues</a>
+<pre>
+	max_res= 8 000		
+</pre>
+
+<a name="max_symm"> maximum number of symmetry operators</a>
+<pre>
+	max_symm=48
+</pre>
+
+<a name="max_gr"> maximum number of groups</a>
+<pre>
+	max_gr=40
+</pre>
+
+<a name="max_vector"> maximum number of vectors</a>
+<pre>
+	max_vector=20
+</pre>
+
+<a name="max_num_zones"> maximum number of zones selected 
+in one command line</a>
+<pre>
+	max_num_zones=32
+</pre>
+
+<a name="max_num_chars"> maximum number of characters input in one line</a>
+<pre>
+	max_num_chars=132
+</pre>
+
+<a name="max_map"> maximum dimension of the map section used by the 
+<code>VOLUMN</code> command </a>
+<pre>
+	max_map=256
+</pre>
+
+<a name="max_l"> maximum dimension of the matrix used by the 
+<code>CLIQUE</code> and other commands </a>
+<pre>
+	max_l=900
+</pre>
+
+<a name="max_m"> maximum number of atoms defined as main chain atoms</a>
+<pre>
+	max_m=20	
+</pre>
+
+<a name="max_param"> maximum number of parameters</a>
+<pre>
+	max_param=20
+	max_reserved_param=8
+</pre>
+
+<a name="max_udks"> maximum number of user-defined keywords</a>
+<pre>
+	max_udks=10
+</pre>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->
+</font>
+</body>
+</html>

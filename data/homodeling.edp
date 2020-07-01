@@ -1,0 +1,91 @@
+!<beginning of homodeling.edp>
+! homodeling.edp   by X. Cai Zhang (modified on 010607).
+! build an homologous model based on sequence homology.
+! the sequence format is (100a1).
+
+! syntax: 
+! @homodeling <file.seq> <chain_mark>
+! example: 
+!  edpdb trypsin.pdb a
+!  @homodeling plasmin.seq a
+
+!setenv verbose 10 ; setenv echo 2
+setenv -s maxerr 1024 exit
+
+initialize
+sort dfres
+swap
+group ill
+
+initialize
+write tmp_.pdb
+seq2pdb $(p1) '(100a1)'
+close
+read tmp_.pdb x
+
+initialize
+{chain $(p2) | ca ; group a }
+
+initialize
+{chain x | ca | match1d a suba -1.5 ; group subx ; group suby ; group subz}
+{ load suba ; group subb }
+!pause
+
+initialize
+read $(edp_data)/aalib.pdb L
+
+mkfile tmp0.edp eof0
+loop1:
+initialize
+parameter n2 subx id exit
+parameter r2 suby residue exit
+{ zone L$(r2) ; group laa }
+{ zone $(n2) ; copy laa } 
+goto loop1
+eof0
+@tmp0.edp
+!pause
+
+mkfile tmp1.edp eof1
+initialize
+{zone $(n1) ; exclude load ill ; group curr }
+{zone $(n2) ; copy curr}
+eof1
+
+mkfile tmp2.edp eof2
+initialize
+dfmain  n c o
+! Ca atom is considered as a side chain atom so that Gly can be properly handled.
+{side | zone $(n2) ; rtn over $(n2) ca n c ,,, $(n1) ca n c  ,,, }
+
+dfmain  n ca c o
+{main | zone $(n1) ; exclude load ill ; group curr }
+{main | zone $(n2) ; copy curr } 
+eof2
+
+{ load subz ; group subx ; group suby }
+
+mkfile tmp3.edp eof3
+initialize
+parameter n1 suba id exit
+parameter r1 subb residue exit
+parameter n2 subx id exit
+parameter r2 suby residue exit
+
+if (r1 == $(r2) ) @tmp1
+if (r1 ^= $(r2) ) @tmp2
+rewind
+eof3
+
+@tmp3.edp
+
+{ x <> 98 100 | y <> 98 100 |  z <> 98 100 | b <> 98 100 ; group undf}
+chain x ; exclude load undf ; group x
+{ load x | atom cb ; setw 1.0 } 
+! output: chain x -- the new peptide modeled according to chain $(p2)
+!         group x -- part of the chain x that has been modeled. 
+!list
+
+system rm tmp?.edp 
+!<end of homodeling.edp>
+

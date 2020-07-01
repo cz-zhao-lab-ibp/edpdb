@@ -1,0 +1,18 @@
+!<a2aaa.edp>
+! copyright   by X. Cai Zhang, 000630.
+! this macro makes a three letter a.a. sequence from a single letter sequence.
+! syntax: 
+! @a2aaa file_name
+
+! example: 
+! @a2aaa aa  ! input file: aa.seq, output file aa.aaa
+
+initialize
+write tmp_.pdb
+seq2pdb $(p1).seq '(100a1)'
+close
+
+read tmp_.pdb _ initialize
+ca
+sequence $(p1).aaa '(13(a3,1x))' r
+!<end of a2aaa.edp>

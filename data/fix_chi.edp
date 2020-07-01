@@ -1,0 +1,4 @@
+parameter fix bug id exit
+@set_chi $(fix) 
+rewind 
+

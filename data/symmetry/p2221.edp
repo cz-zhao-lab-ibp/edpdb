@@ -1,0 +1,6 @@
+symmetry initialize
+symm x, +y, +z                       ! 1  (ord= 1)                                
+symm -x, -y, +z+1/2                  ! 2* (ord= 2)                                
+symm -x, +y, -z+1/2                  ! 3* (ord= 2)                                
+symm x, -y, -z                       ! 4  (ord= 2)                                
+

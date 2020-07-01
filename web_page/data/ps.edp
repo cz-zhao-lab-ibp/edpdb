@@ -1,0 +1,39 @@
+!<beginning of ps.edp>  copy right by X. C. Zhang (modified on 010628)
+! function: searching for potential functional sites in a protein
+! syntax:
+!   @ps
+
+setenv -s echo 1
+if ( -s aaa == done ) goto start
+@aaa2a
+parameter aaa = done
+
+start:
+! potential N-glycosylation site
+initialize ; ca | pattern N%[ST] ; list
+
+! potential ATP/GTP binding site (from 3d pssm)
+initialize ; ca | pattern  [AG]%%%%GK[ST] ; list
+
+! potential zink binding region-2 signature (from 3d pssm)
+initialize ; ca | pattern H[STAG]%%%[LIVME]%%[LIVMFYW]P[FYW] ; list
+
+! potential cAMP- and cGMA-dependent protein kinase phosphorylation site (from PredictProtein)
+initialize ; ca | pattern [RK][RG]%[ST] ; list
+
+! potential protein kinase C phosphorylation site (from PredictProtein)
+initialize ; ca | pattern [ST]%[RK] ; list
+
+! potential casein kinase II phosphorylation site (from PredictProtein)
+initialize ; ca | pattern [ST]%%[DE] ; list
+
+! potential N-myristoylation site (from PredictProtein)
+initialize ; ca | pattern G[^EDRKHPFYW]%%[STAGCN][^P] ; list
+
+! potential nucleophile elbow for a/b hydrolase
+initialize ; ca | pattern G%S%GG ; list
+
+
+
+
+

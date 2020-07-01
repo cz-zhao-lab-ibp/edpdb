@@ -1,0 +1,65 @@
+! <beginning of matchzn.edp>
+!! copyright by X. Cai Zhang (010927)
+
+! This macro calculate the matrix from one protein molecule to another.
+! It require v01b or higher version EdPDB to run this macro. 
+! A PDB file, tmp_.pdb, is written to output the rotated-translated molecule.
+! Note: the PDB file should not contain a 'j' chain.
+! also see: match3d.edp, match1ds.edp, match1d.edp
+
+! Syntax: 
+! @matchzn target_residue moving_residue
+
+! example: to overlay chain b to chain a, type 
+! @matchzn a90 b590            !-or-
+! @matchzn a90-a95 b590-b595
+
+{ zone $(p1) ; more -1 1 ; group a0 | ca ; group a }
+{ zone $(p2) ; more -1 1 ; group b0 | ca ; group b }
+parameter ch_a a0  chain exit
+parameter ch_b b0  chain exit
+
+!parameter
+initialize ; load b ; overlay a rtn_.txt 
+setenv -s verbose 0
+
+! overlay B to A based on segment alignment
+chain $(ch_b) ; rtn file rtn_.txt ; initialize
+
+! refine the overlay based on 
+!  maximizing the number of matched atoms 
+!  and minimizing the overall coordinate difference
+
+@align3d $(ch_a) $(ch_b) 5.0
+if ( -i istatus == -1 ) goto abort
+@align3d , , 4 
+if ( -i istatus == -1 ) goto abort
+@align3d , , 3
+if ( -i istatus == -1 ) goto abort
+setenv verbose 6
+@align3d , , 3.0
+if ( -i istatus == -1 ) goto abort
+
+system del tmp_.pdb ; write tmp_.pdb ; close; reset 
+
+read tmp_.pdb j ; chain j ; group jnk ; initialize 
+
+chain $(ch_b) ; overlay jnk $(ch_b)2$(ch_a)_.txt ; initialize
+setenv -r verbose
+
+! NOTE THAT THE ORINGINAL FILE(S) HAVE NOT BEEN CHANGED YET.
+!
+! matchzn mainly does two things. first it calculates 
+!  the rotation-translation matrix from one molecule ($(ch_b))
+!  to the other ($(ch_a)), named as $(ch_b)2$(ch_a)_.txt; second, it creates a PDB file, 
+!  tmp_.pdb of the rotated-translated molecule ($(ch_b)). 
+!  the input PDB file(s) are reset to the oringinal ones
+!  at the end of the procedure.
+! Suggested action:
+!  initialize ; chain $(ch_b) ; rtn file $(ch_b)2$(ch_a)_.txt
+!<end of matchzn.edp>
+return
+
+abort:
+!<abort: match3d.edp>
+

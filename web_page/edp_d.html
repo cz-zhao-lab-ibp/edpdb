@@ -1,0 +1,801 @@
+<html>
+<head>  <title>EdPDB: Definition </title> </head>
+
+<body background="trebuche2.gif">
+<hr><a name="top"><a name="definition">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a></a>
+
+<h1>     	Definition		</h1>
+Available commands:<ul>
+<li>	    <a href="edp_d.html#alias">		ALIAS</a>,
+<li>	    <a href="edp_d.html#cell">		CELL</a>,
+<li>	    <a href="edp_d.html#define">	DEFINE</a> and
+<li>	    <a href="edp_d.html#symmetry">	SYMMETRY</a>.</ul>
+<p>
+      One philosophy of EdPDB is that the user should be allowed
+  to teach the program what to do, and EdPDB provides the
+  algorithms about "how to do it". For example, the command
+  DEFINE ABCD can be used to define a calculation of backbone or side
+  chain torsion angles or any types of pseudo torsion angles, eg. a
+  torsion angles formed with four sequential Ca atoms.
+      As a general purpose program, EdPDB allows the user to
+  overwrite the default definitions of the program, which might be
+  too specific in some cases. For example, a user may use the
+  command <code>DEFINE MAIN N CA C O CB</code> to overwrite the default
+  definition of <code>DEFINE MAIN N CA C O</code>.
+<p>
+
+<hr><a name="alias">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>        ALIAS   </h2>
+      Create a User-Defined command leading Keyword (UDK in
+  short). A UDK has higher priority than the build-in command
+  leading keywords. 
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  ALIAS <br>
+  2)  ALIAS       <i>xxxx</i> <br>
+  3)  ALIAS       <i>xxxx</i> <i>yyyy</i> <br>
+  or  ALIAS       <i>xxxx</i> :=    <i>yyyy</i> <br>
+  4)  ALIAS       <i>xxxx</i> '' <br>
+  or  ALIAS       <i>xxxx</i> := <br>
+<p>
+  Note:    <br>
+  1)  The <i>xxxx</i> stands for a UDK which is a character-string of up
+      to 8 characters; and the <i>yyyy</i> stands for a text-string of up to
+      60 characters, which will replace the UDK during command
+      interpretation. <br>
+  2)  The first form lists the current available UDKs. The second
+      form shows the current definition of the UDK specified. The
+      third form defines a new UDK, or overwrites the old one (if
+      one exists) with the new definition. And the fourth form deletes
+      the specified UDK by assigning an empty string to it. <br>
+  3)  Up to ten keywords can be defined simultaneously. Over ten
+      definitions will overwrite the earlier defined alias
+      permutatively. <br>
+  4)  To prevent a looped definition, during command interpretation,
+      each UDK substitution increases the number of accumulated
+      errors by one. Error message will be given if the number of
+      error exceeds 
+	    <a href="edp_m.html#setenv_maxerr"><i>maxerr</i></a>. <br>
+  5)  Since a UDK has higher priority, it may prohibit the function
+      of some built-in commands. For example, a user-defined
+      keyword <code>cake</code> will deactivate built-in EdPDB commands C
+      and CA until the definition of <code>cake</code> is deleted. One way to
+      avoid this problem is to add a prefix, eg. an underscore `_' or a
+      dollar sign <code>$</code>, to the UDK.  <br>
+<p>
+  See also: 
+  <a href="edp_ctr.html#parameter">PARAMETER</a> and
+  <a href="edp_g.html#max_udks">maximum number of user-defined keywords</a>
+
+<p>
+  Examples: <br>
+  1) An example macro to define keywords for calling some unix
+  commands.
+<pre>
+      ! unix.edp
+      alias ls      'system ls -lrt '
+      alias mv      'system mv '
+      alias rm      'system rm '
+      alias cp      'system cp '
+  or
+      ! unix.edp
+      ls :=         system ls -lrt
+      mv :=         system mv
+      rm :=         system rm
+      cp :=         system cp
+      type :=       system more
+</pre>
+
+  2) List the PDB files in the current directory. 
+<pre>
+      alias dire system wait directory
+      dire *.pdb
+</pre>
+
+<hr><a name="cell">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> CELL    </h2>
+      Define the cell parameters and the convention used to align the
+  (xyz) Cartesian coordinate systems relative to the crystallographic
+  axes, <i>a, b</i> and <i>c</i>. 
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  CELL <br>
+  2)  CELL  [<i>a b c alpha beta gamma</i>] [<i>convention#</i>] <br>
+<p>
+  Note: <br>
+  1)  The first form displays the current cell parameter information.  <br>
+  2)  The second form defines the cell parameters. It also initializes
+      the current symmetry information. The default value is the
+      corresponding old value, if it exists. <br>
+  3)  If no cell parameters have been defined when they are required
+      by the program, the cell parameters from the 1st input PDB file
+      will be used, if they exist. <br>
+<p>
+  See also:
+  <a href="edp_c.html#rtn">RTN</a> and
+  <a href="edp_d.html#symmetry">SYMMETRY</a>
+<p>
+  Convention# <br>
+      The convention number is an integer between 1 and 8.
+<p>
+<blockquote>
+  1: x//a*, y//b, z//(a* X b) <br>
+  2: x//(b X c*), y//b, z//c* <br>
+  3: x//(b* X c), y//b*, z//c <br>
+  4: x//a*, y//(c X a*), z//c <br>
+  5: x//a, y//(c* X a), z//c* -- used by CNS<br>
+  6: x//a, y//b*, z//(a X b*) -- used by FRODO <br>
+  7: x//(a-b), y//(a+b-2c), z//(a+b+c) -- only for <a
+  href="./programs/rcell.html">"R+" lattice</a><br>
+  8: x//(a-c), y//(2b-a-c), z//(a+b+c) -- only for "R-" lattice <br>
+</blockquote>
+<p>
+   Examples:  <br>
+  1) Display the current cell parameters and the alignment
+  convention.
+<pre>
+      cell
+</pre>
+  2) To define the cell parameters (eg. of T4 lysozyme P3(2)21
+  crystal form) and the alignment convention 
+  <i>x//a*, y//b, z//(a* X b)</i>.
+<pre>
+      cell 61.2 61.2 96.8 90.0 90.0 120.0 1
+</pre>
+
+<hr><a name="define">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      DEFINE     </h2>
+      Define rules for geometric and some other calculations. 
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+      DEFINE  <i>target_name</i> <i>parameters</i> <br>
+<p>
+ 
+  Available target_names include the following: <ul>
+<li>  <a href="#dfca">		CA</a>, 
+<li>  <a href="#dfmain"> 	MAIN</a>, 
+<li>  <a href="#dfab"> 		AB</a>, 
+<li>  <a href="#dfabc"> 	ABC</a>, 
+<li>  <a href="#dfabcd"> 	ABCD</a>, 
+<li>  <a href="#dfbrg"> 	BRIDGE</a>, 
+<li>  <a href="#dfnewx"> 	NEWXYZ</a> and
+<li>  <a href="#dfres"> 	RESIDUE</a>. </ul>
+<p>
+  See also:
+
+<hr><a name="dfab">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#define"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> DFAB    </h3>
+      Define a template for distance pair search.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  DEFINE AB <br>
+  2)  DEFINE AB  <i>atom_a</i> <i>atom_b</i> [<i>reg_a</i> <i>reg_b</i>]
+           [<i>status_a</i> <i>status_b</i>] [<i>Dmin</i> <i>Dmax</i>] <br>
+<p>
+  Note: <br>
+  1)  The first form shows the current AB definition. <br>
+  2)  The <i>atom_x</i> is the atom name (eg. Ca, OG). <br>
+  3)  The <i>reg_x</i> is the relative registration number, which is an
+      integer. The default is 0. <br>
+  4)  The <i>status_x</i> is either a T (stands for true) or an F (stands for
+      false). It determines whether the calculation is based on an ON
+      atom for the corresponding position or not. The default is T,
+      which means an ON atom is required for the calculation. <br>
+  5)  Only will the distance smaller than the <i>Dmax</i> and larger than
+      the <i>Dmin</i> be listed. The default <i>Dmin</i> and <i>Dmax</i> 
+      are 0.0 and
+      99.0. <br>
+<p>
+  See also:
+  <a href="edp_c.html#ab">AB</a>,
+  <a href="edp_d.html#dfabc">DEFINE ABC</a>,
+  <a href="edp_d.html#dfabcd">DEFINE ABCD</a> and
+  <a href="edp_c.html#distance">DISTANCE</a>.
+<p>
+   Examples: <br>
+  1) Define every N, CA atoms in the same residue as a distance
+  pair.
+<pre>
+      define ab n ca
+</pre>
+  2) Define the Ca atomS in the (i)th and (i+1)th residues as a
+  distance pair.
+<pre>
+      define ab ca ca 0 1
+</pre>
+  3) Calculate the distance from the O atom in the (i)th residue to
+  the N atom in the (i+4)th residue, and list the result if the O atom
+  is selected as an ON atom and the distance is between 2.0 and 3.5
+  A.
+<pre>
+      define ab o n 0 4 t f 2.0 3.5
+      atom o n
+      ab
+</pre>
+
+<hr><a name="dfabc">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#define"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>        DFABC   </h3>
+      Define a template for an angle group search.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  DEFINE ABC <br>
+  2)  DEFINE ABC <i>atom_a</i> <i>atom_b</i> <i>atom_c</i> 
+           [<i>reg_a</i> <i>reg_b</i> <i>reg_c</i>] 
+           [<i>status_a</i> <i>status_b</i> <i>status_c</i>] 
+           [<i>Amin</i> <i>Amax</i>] <br>
+<p>
+  Note: <br>
+  1)  The first form shows the current ABC definition. <br>
+  2)  The <i>atom_x</i> is the atom name (eg. Ca, OG). <br>
+  3)  The <i>reg_x</i> is the relative registration number, which is an
+      integer. The default is 0. <br>
+  4)  The <i>status_x</i> is either a T (stands for true) or an F (stands for
+      false). It determines whether the calculation is based on an ON
+      atom for the corresponding position or not. The default is T,
+      which means an ON atom is required for the calculation. <br>
+  5)  Only will the angle smaller than the <i>Amax</i> and larger than the
+      <i>Amin</i> be selected. The default <i>Amin</i> and <i>Amax</i> 
+      are 0.0 and
+      180.0 degrees. <br>
+<p>
+  See also:
+  <a href="edp_c.html#abc">ABC</a>,
+  <a href="edp_d.html#dfab">DEFINE AB</a> and
+  <a href="edp_d.html#dfabcd">DEFINE ABCD</a>.
+<p>
+   Examples: <br>
+  1) Define every N, CA and CB atoms in the same residue as an
+  angle group.
+<pre>
+      define abc n ca cb 0 0 0 t t t 0.0 180.0
+</pre>
+  2) Define the CA atoms in the (i-1)th, (i)th and (i+1) residues as
+  an angle group. 
+<pre>
+      define abc ca ca ca -1 0 1
+</pre>
+  3) Calculate the angles formed with Ca-C-O atoms in the same
+  residue and larger than 135.0 degrees
+<pre>
+      define abc Ca C O  ,,,  ,,,  135.0 180.
+      atom Ca C O
+      abc
+</pre>
+
+<hr><a name="dfabcd">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#define"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>       DFABCD  </h3>
+      Define a template for a <i>torsion_angle</i>search.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  DEFINE ABCD <br>
+  2)  DEFINE ABCD  <i>atom_a</i> <i>atom_b</i> <i>atom_c</i> <i>atom_d </i> 
+           [<i>reg_a</i> <i>reg_b</i> <i>reg_c</i> <i>reg_d</i>]
+           [<i>status_a</i> <i>status_b</i> <i>status_c</i> <i>status_d</i>]
+           [<i>Tmin</i> <i>Tmax</i>] <br>
+<p>
+  Note: <br>
+  1)  The first form shows the current ABCD definition. <br>
+  2)  The <i>atom_x</i> is the atom name (eg. Ca, OG). <br>
+  3)  The <i>reg_x</i> is the relative registration number, which is an
+      integer. The default is 0. <br>
+  4)  The <i>status_x</i> is either a T (stands for true) or an F (stands for
+      false). It determines whether the calculation is based on an ON
+      atom for the corresponding position or not. The default is T,
+      which means an ON atom is required for the calculation. <br>
+  5)  Only the angles that are smaller than the <i>Tmax</i> and larger than
+      the <i>Amin</i> will be selected. 
+      The default <i>Tmin</i> and <i>Amax</i> are -
+      180.0 and 180.0 degrees. <br>
+<p>
+  See also:
+  <a href="edp_c.html#abcd">ABCD</a>,
+  <a href="edp_d.html#dfab">DEFINE AB</a>,
+  <a href="edp_d.html#dfabc">DEFINE ABC</a> and 
+  <a href="edp_c.html#rtn">RTN</a>. 
+<p>
+   Examples: <br>
+  1) Define every N, CA, CB and CG atoms in the same residue as
+  a <i>torsion_angle</i>group (ie. chi-I) which ranges between 0.0 and
+  360.0 degrees. 
+<pre>
+      define abcd n ca cb cg 0 0 0 0 t t t t 0.0 360.0
+</pre>
+  2) Define the CA atoms in the (i)th, (i+1)th, (i+2)th and (i+3)th
+  residues as a <i>torsion_angle</i>group. 
+<pre>
+      define abcd ca ca ca ca 0 1 2 3
+</pre>
+  3) Calculate the peptide phi torsion angles which range between (-
+  90.0) and 0.0 degrees.
+<pre>
+      define abcd  c n ca c 0 1 1 1  ,,,,  -90.0 0.0
+      atom c n ca c
+      abcd
+</pre>
+
+<hr><a name="dfbrg">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#define"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>  DEFINE BRIDGE </h3>
+      Define a template for a BRIDGE group search.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+      DEFINE BRIDGE  <i>atom_w</i> <i>atom_x</i> <i>atom_y</i> <i>atom_z</i> 
+           [Rw reg_w Rz reg_z]
+           [status_w status_x status_y status_z]
+           [Dmin Dmax Amin Amax Tmin Tmax] 
+           [(WXYZ, ZWXY, THETA)] [skip]
+<p>
+  Note: <br>
+  1)  The <i>atom_w</i> etc. are atom names (eg. Ca, OG). A 
+      <a href="edp_m.html#setenv_wildcard">wildcard</a> at the end of 
+      an atom name is acceptable. <br>
+  2)  Rw and Rz are either <i>X</i> or <i>Y</i>, indicating whether the
+      <i>atom_w</i> or <i>atom_z</i> is registered relative to <i>atom_x</i> or
+      <i>atom_y</i>. The default is <i>X</i>.  <br>
+  3)  The <i>reg_w</i> and <i>reg_z</i> are (integer) registration numbers of
+      <i>atom_w</i> and <i>atom_z</i>. The default is <code>0</code>. <br>
+  4)  The <i>status_w</i> etc. are either T (stands for true) or F (stands
+      for false). It determines whether the calculation is based on an
+      ON atom for the corresponding position or not. The default is
+      T, which means an ON atom at that position is required for the
+      calculation. <br>
+  5)  <i>Dmin</i>, <i>Dmax</i>, <i>Amin</i>, <i>Amax</i>, <i>Tmin</i>, 
+      <i>Tmax</i> are the
+      selection criteria of the X-Y distance, the W-X-Y angle and the
+      W-X-Y-Z (or Z-W-X-Y, THETA) torsion angle. The default values are
+      1.0, 4.0 Å, 90.0, 120.0 degrees, and 0.0, 360.0 degrees
+      respectively. <br>
+  6)  The torsion angle is defined as W-X-Y-Z if WXYZ option is
+      used or by default; it can also be defined as Z-W-X-Y using
+      the ZWXY option. Elevation angle (Taylor & Kennard, 1982), THETA,
+      is another option. <br>
+  7)  The integer <i>skip</i> is the minimum <i>atom_x - atom_y</i> distance
+      in terms of the residue number in the input PDB file. The
+      default is zero. <br>
+<p>
+  See also:
+  <a href="edp_c.html#bridge">BRIDGE</a>,
+  <a href="edp_d.html#dfab">DEFINE AB</a>,
+  <a href="edp_d.html#dfabc">DEFINE ABC</a> and
+  <a href="edp_d.html#dfabcd">DEFINE ABCD</a>
+<p>
+   Examples: <br>
+  1) Define a bridge of disulfide bond, and list out all the bridges.
+  By default, it will looking for interatomic distance (X-Y) between
+  1.0 and 4.0 Å.
+<pre>
+      define bridge cb sg sg cb x 0 y 0 
+      residue cys
+      bridge
+</pre>
+ 
+  3) Define a bridge of hydrogen bond formed between N and O
+  atoms in the zone 1 - 60.
+<pre>
+      define bridge c n o ca x -1 x 0  ,,,,  2.3  3.5  100  140 150 210
+           ! The 'x -1' indicates that the C atom (atom_w) belongs
+           ! to the previous residue of the N atom. 
+           ! The 'x 0' indicates that the CA atom (atom_z) belongs
+           ! to the residue of the N atom.
+      main 1 - 60
+      bridge
+           ! list all the hydrogen bonds, which have N-O bond 
+           ! length between 2.3 and 3.5 Å, C(-1)-N-O angle 
+           ! between 120.0(+/-)20.0 degrees, and 
+           ! C(-1)-N-O-Ca torsion angle (default option WXYZ) 
+           ! between 180.0(+/-)30.0 degrees.
+</pre>
+
+<hr><a name="dfca">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#define"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3> DFCA    </h3>
+      Redefine <i>CA</i> atom type.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  DEFINE CA <br>
+  2)  DEFINE CA  <i>atom_name</i> <br>
+<p>
+  Note: <br>
+    The first form display the current Ca definition.
+<p>
+  See also:
+  <a href="edp_c.html#avb">AVB</a>,
+  <a href="edp_s.html#ca">CA</a>,
+  <a href="edp_d.html#dfmain">DEFINE MAIN</a>,
+  <a href="edp_c.html#rmsw">RMSW</a> and
+  <a href="edp_c.html#sumw">SUMW</a>
+<p>
+   Examples: <br>
+  1) Define the O5' atom as <i>CA</i> for a DNA molecule.
+<pre>
+      define ca O5'
+</pre>
+
+  2) Define the N atom as <i>CA</i>, and store the result of the AVB
+  command to the x field of the N atom records. 
+<pre>
+      define ca n
+      avb x
+</pre>
+
+
+<hr><a name="dfnewx">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#define"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>     DFNEWXYZ        </h3>
+      Define the rule to create the coordinates of new points.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  DEFINE NEWXYZ <br>
+  2)  DEFINE NEWXYZ  <i>atom_a</i> <i>atom_b</i> <i>atom_c</i> 
+           [<i>reg_a</i> <i>reg_b</i> <i>reg_c</i>] 
+           [<i>status_a</i> <i>status_b</i> <i>status_c</i>]
+           [<i>distance</i>] [<i>angle</i>] [<i>torsion_angle</i>]<br>
+<p>
+  Note: <br>
+  1)  The first form shows the current definition. <br>
+  2)  The <i>atom_x</i> is the reference atom name; the <i>reg_x</i> is the
+      relative registration number (eg. the default value <code>0 0 0</code>
+      indicates that the three atoms are in the same residue); the
+      <i>status_x</i> indicates whether the reference atom needs to be
+      selected as an ON atom in order to perform the calculation.
+      The default is <code>t t t</code> (<code>t</code> stands for 
+      logical true). <br>
+  3)  The <i>distance</i> is the distance between the <i>new_atom</i> and 
+      <i>atom_a</i>;
+      the angle is defined as <i>new_atom - atom_a - atom_b</i>; and
+      <i>torsion_angle</i>is defined as <i>new_atom - atom_a - atom_b -
+      atom_c</i>. The default <i>distance</i>, <i>angle</i> and 
+      <i>torsion_angle</i> are
+      zeros. <br>
+<p>
+  See also: 
+  <a href="edp_c.html#newxyz">NEWXYZ</a>
+<p>
+   Examples:  <br>
+  1) Define the rule of creating a Tyr from a Phe, ie. the rule of
+  create the OH atom in the Tyr.
+<pre>
+           define newxyz Cz Ce1 Cd1 0 0 0 t t t 1.38 120.0 180.0
+</pre>
+
+  2) Define the coordinate of possible water molecules that bind to
+  the carbonyl oxygens of a solvent exposed helix. 
+<pre>
+      define newxyz o c ca 0 0 0 t t t 2.93 122.1 23.0
+      initial 
+      write   sol.pdb 
+           ! open an empty PDB file 
+           ! to store the new coordinates
+      ... (select solvent exposed helices)
+      setenv tolower off
+      seta HOH
+           ! change the atom name in the text string 
+           ! to HOH, which will be used for 
+           ! the new record                
+      newxyz
+</pre>
+
+<hr><a name="dfmain">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#define"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>       DFMAIN  </h3>
+      Redefine main chain atom types.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax:  <br>
+  1)  DEFINE MAIN <br>
+  2)  DEFINE MAIN  <i>atom_1</i> [<i>atom_2</i> ... <i>atom_20</i>] <br>
+<p>
+  Note: <br>
+    The first form shows the current main chain definition.
+<p>
+  See also:
+  <a href="edp_d.html#dfca">DEFINE CA</a>,
+  <a href="edp_s.html#main">MAIN</a>,
+  <a href="edp_s.html#side">SIDE</a> and
+  <a href="edp_g.html#max_m">maximum number of atoms defined as main chain atoms</a>.
+
+<p>
+   Examples: <br>
+  1) Define backbone atoms including Cb atoms as the main chain
+  atoms.
+<pre>
+      define main n ca c o cb
+</pre>
+
+  2) Select N, Ca and C atoms 
+<pre>
+      define main n ca c
+      main
+</pre>
+
+
+<hr><a name="dfres">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#define"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h3>        DFRES   </h3>
+      Define atom order in a given residue and a single character
+  name for that residue. This information is used by the SORT and
+  SEQUENCE commands.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  DEFINE RESIDUE <br>
+  2)  DEFINE RESIDUE  <i>res_type</i> [<i>:id</i>] [(<i>atom_names</i>)]  <br>
+<p>
+  Note: <br>
+  1)  The first form lists the current definition of residues. <br>
+  2)  EdPDB reads the DFRES definition from a file called
+      <i>pdbstd.dat</i> in the current directory or  the <i>$edp_data/</i>, 
+      when the information is needed. <br>
+  3)  The user's definition is always given priority over the
+      definition read from the <i>pdbstd.dat</i> file. <br>
+<p>
+  See also:
+  <a href="edp_m.html#file">FILE</a>,
+  <a href="edp_i.html#sequence">SEQUENCE</a> and
+  <a href="edp_c.html#sort">SORT</a>
+<p>
+   Examples: <br>
+  1) Define residue ALA. In the following example, the <i>ala</i> is the
+  residue type to be defined, <i>:a</i> means that in a sequence file a
+  residue of this type appears as a character <i>a</i>; and the following 
+  <i>n
+  ca c o cb</i> are the five atom names that the residue <i>ala</i> should
+  contain; it also indicates the order of the atoms appearing in a
+  sorted list. 
+<pre>
+      define residue ala :a n ca c o cb
+</pre>
+
+  2) Define residue SOL as <i>anything</i>. The default shortcut name is
+  <code>u</code> which stands for Unknown.
+<pre>
+      define residue sol 
+</pre>
+
+  3) List the current residue definitions
+<pre>
+      define residue
+</pre>
+
+  4) Make a pattern file of the hydrophobicity of the peptide. The
+  <i>:n</i> stands for a non-polar residue, and <i>:p</i> stands for a polar
+  residue.
+<pre>
+      define residue  ala :n
+      define residue  asp :p
+      define residue  cys :n
+      ...
+      define residue  tyr :n
+      initial
+      ca
+      sequence hydr_patt.seq
+</pre>
+
+
+<hr><a name="symmetry">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>     SYMMETRY        </h2>
+      Input one symmetry operator in the International
+  Crystallography Table format.
+<p>
+  Function: Definition, Information
+<p>
+  Syntax: <br>
+  1)  SYMMETRY <br>
+  2)  SYMMETRY  <i>symmetry_operator</i> <br>
+  3)  SYMMETRY  PUNCH <i>file_name</i> [O] <br>
+  4)  SYMMETRY  INITIALIZE <br>
+<p>
+  Note:  <br>
+  1)  The first form displays the current symmetry operators. The
+  second form inputs one symmetry operator. The third form is
+  similar to the first form, except a copy of the displayed symmetry
+  operators will be written to a text file. <br>
+  2)  CELL parameter information is required to input symmetry
+  operators. The symmetry information is accumulated with each
+  input symmetry card. In addition to the 'INITIALIZE' option, 
+  a CELL command also initializes the symmetry information. <br>
+  3) Normally, the return <a href="edp_g.html#status"> status </a> 
+  will be set to the number of symmetry operators. 
+<p>
+  See also: 
+  <a href="edp_d.html#cell">CELL</a>, 
+  <a href="edp_c.html#sdist">SDISTANCE</a>,
+  <a href="edp_c.html#movecenter">MOVECENTER</a> and 
+  <a href="edp_c.html#polar">POLAR</a>.
+<p>
+   Examples: <br>
+  1) Input the symmetry operators of space group P3(2)21. Each
+  symmetry operator card includes the leading keyword
+  SYMMETRY, and three character strings separated with space or
+  comma from each other. 
+<pre>
+      ! space group P3(2)21      
+      symmetry x,y,z
+      symmetry -y,x-y,z+2/3
+      symmetry y-x,-x,z+1/3
+      symmetry y,x,-z
+      symmetry -x,y-x,-z+2/3
+      symmetry x-y,-y,-z+1/3
+</pre>
+
+  2)  Display the current symmetry information, including the
+  symmetry operator number which is used to specify the operator in
+  other commands (eg. SDISTANCE).
+<pre>
+           symmetry
+</pre>
+  In the output, the operator marked with an
+  asterisk can be used as an elementary operator, ie. all other
+  operators can be created from a set of elementary operators. The
+  <i>ord</i> information tell that how many times the operator needs to
+  operate on itself to get a unitary operator. If an operator is labelled
+  as the product of two other operators, it indicates that the operator
+  has not been input and is listed just for information.
+<p>
+  3) Use elementary symmetry operators to create the operators for
+  the full space group. For example, the following commands create
+  a file of symmetry operators of space group P6.
+<pre>
+      cell 100 100 100 90.0 90.0 120.0 1
+      symmetry +y, -x+y, +z
+      symmetry punch P6.edp
+      cell , , , , , , ,
+           ! initialize the SYMMETRY information
+      @p6
+           ! input the P6 symmetry operators 
+</pre>
+
+  4) Create a P6 symmetry file for program 'O'.
+<pre>
+      cell 100 100 100 90.0 90.0 120.0 1
+      @p6
+      symmetry punch P6.sym o
+</pre>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->
+</font>
+</body>
+</html>

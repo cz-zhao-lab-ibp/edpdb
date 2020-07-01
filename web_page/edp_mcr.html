@@ -1,0 +1,459 @@
+<html>
+<head>  <title>EdPDB: Macros </title> </head>
+
+<body background="trebuche2.gif">
+<hr><a name="up"></a><a name="macros"> 
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1>        	Macros			</h1>
+In the  <i>edp_data</i> directory, one can find many macros which can be used
+directly to simplify the work or used as a template to build more sophisticated
+macros. The following are some examples:
+<ul>
+<li>	    <a href="edp_mcr.html#acc_edp">	acc.edp	</a>,
+<li>	    <a href="edp_mcr.html#avb_edp">	avb.edp	</a>,
+	    <a href="edp_mcr.html#sumw_edp">	sumw.edp </a>,
+<li>	    <a href="edp_mcr.html#chi_edp">	chi.edp	</a>,
+	    <a href="edp_mcr.html#set_chi_edp">	set_chi.edp     </a>,
+<li>	    <a href="edp_mcr.html#phipsi_edp">	phipsi.edp	</a>,
+	    <a href="edp_mcr.html#set_phipsi_edp">set_phipsi.edp</a>,
+<li>	    <a href="edp_mcr.html#helix_edp">	find_helices.edp</a>,
+	    <a href="edp_mcr.html#helix_edp">	find_strands.edp</a>,
+<li>	    <a href="edp_mcr.html#homodeling_edp"> homodeling.edp</a>,
+	    <a href="edp_mcr.html#match1ds_edp"> match1ds.edp	</a>,
+<li>	    <a href="edp_mcr.html#match1d_edp">	match1d.edp	</a>,
+	    <a href="edp_mcr.html#match3d_edp">	match3d.edp	</a>,
+	    <a href="edp_mcr.html#matchzn_edp">	matchzn.edp	</a> and
+<li>	    <a href="edp_mcr.html#symmetry_edp">symmetry.edp	</a>.
+</ul>
+<p>
+  The default file type of a command file is <i>.edp</i>. 
+  The <i>.edp</i> file saved using
+  the <code>QUIT SAVE</code> command may also be modified as a template
+  macro file. 
+  If one does not have a file in the current directory of an
+  identical name as that in the  <i><a href="edp_m.html#setenv_edp_data">edp_data</a></i> directory, the examples 
+  shown in this page can be used directly.&nbsp;
+<p>To list available macros in the default directory, (in unix) type
+<pre>  system ls $(edp_data)</pre>
+
+<hr><a name="acc_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      acc.edp </h2>
+      Calculate the solvent accessible area of the given residue in the
+  context of the rest part of the protein.
+<p>
+  Syntax: <br>
+      @acc  <i>res_id</i>
+<p>
+  <a href="./data/acc.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Calculate the solvent accessible area of residue 99.
+<pre>
+      @acc 99
+</pre>
+
+<hr><a name="avb_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      avb.edp </h2>
+      Calculate the average B of the each residue, its main chain
+  atoms and its side chain atoms, store these values in the x, y, z
+  fields of the CA atom.
+<p>
+  Syntax: <br>
+      @avb
+<p>
+  <a href="./data/avb.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Make a PDB format file of the B factor information.
+<pre>
+      @avb
+      write avb.pdb
+</pre>
+
+<hr><a name="chi_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>      chi.edp </h2>
+      Calculate the chi-I, chi-Ib (if exists) and chi-II of each residue,
+  store them in the x, y, z fields of the CA atom.
+<p>
+  Syntax: <br>
+      @chi
+<p>
+  <a href="./data/chi.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Make a PDB format file of the chi angle information.
+<pre>
+      @chi
+      write chi.pdb
+</pre>
+
+<hr><a name="helix_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>    find_helices.edp, find_strands.edp  </h2>
+      Calculate the phi, psi angles of each residue, and write a chain
+  mark <code>'h'</code> to those Ca atoms that have alpha conformation in 
+  five successive residues, 
+  or write a chain mark <code>'s'</code> to those Ca atoms that have beta 
+  conformation in five successive residues.
+<p>
+  Syntax: 
+<br>      @find_helices
+<br>      @find_strands
+<p>
+  <a href="./data/find_helices.edp">Source code</a>
+<p>
+
+<hr><a name="homodeling_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> homodeling.edp </h2>
+     Build a new protein molecule according to an existing homologous
+protein molecule and an a.a. sequence file.
+<p>
+  Syntax: 
+<br>      @homodeling <i>sequence_file</i> <i>chain_mark</i>
+<p>
+  <a href="./data/homodeling.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Build a new protein molecule (chain X) according to an existing homologous
+protein molecule (chain A) and an a.a. sequence file (new.seq).
+<pre>
+      ! read in molecules A which is a template for the new structure.
+      ! prepare a sequence file, new.seq, containing a single-letter a.a. 
+      !   sequence of the new protein, in lower cases and (100a1) format.
+      @homodeling new.seq a  
+</pre>
+
+<hr><a name="match1d_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> match1d.edp </h2>
+      Overlay one protein molecule to its homologous mate based on a sequence
+  alignment. Insertions/deletions are allowed between the 
+  two protein molecules.
+<p>
+  Syntax: 
+<br>      @match1d <i>chain_mark_1</i> <i>chain_mark_2</i>
+<p>
+  <a href="./data/match1d.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Overlay molecule B to molecule A.
+<pre>
+      ! read in molecules A and B.
+      ! match1d mainly does two things. first it calculates 
+      !  the rotation-translation matrix from one molecule (B)
+      !  to the other (A), named as b2a_.txt in this
+      !  example; second, it creates a PDB file, 
+      !  tmp.pdb of the rotated-translated molecule (B). 
+      !  the input PDB file(s) are reset to the oringinal ones
+      !  at the end of the procedure.
+      @match1d a b  
+</pre>
+
+<hr><a name="match1ds_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> match1ds.edp </h2>
+      Align the sequence of a PDB file with a protein sequence file, useful
+for checking the progress of a model building.
+<p>
+  Syntax: 
+<br>      @match1ds <i>sequence_file</i> <i>chain_mark</i>
+<p>
+  <a href="./data/match1ds.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Align mol A against target.seq.
+<pre>
+      ! read in molecules A.
+      @match1ds target.seq a  
+</pre>
+
+<hr><a name="match3d_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> match3d.edp </h2>
+      Overlay one protein molecule to its homologous mate based on secondary 
+  structure alignment. (It may not work for proteins which have very few
+  secondary structures). Insertions/deletions are allowed between the 
+  two protein molecules.
+<p>
+  Syntax: 
+<br>      @match3d <i>chain_mark_1</i> <i>chain_mark_2</i>
+<p>
+  <a href="./data/match3d.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Overlay molecule B to molecule A.
+<pre>
+      ! read in molecules A and B.
+      ! match3d mainly does two things. first it calculates 
+      !  the rotation-translation matrix from one molecule (B)
+      !  to the other (A), named as b2a_.txt in this
+      !  example; second, it creates a PDB file, 
+      !  tmp.pdb of the rotated-translated molecule (B). 
+      !  the input PDB file(s) are reset to the oringinal ones
+      !  at the end of the procedure.
+      @match3d a b  
+</pre>
+
+<hr><a name="matchzn_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> matchzn.edp </h2>
+      Overlay one protein molecule to its homologous mate, initiated by a 
+  two-segments superposition. Insertions/deletions are allowed between the 
+  two protein molecules.
+<p>
+  Syntax: 
+<br>      @matchzn <i>zone_1</i> <i>zone_2</i>
+<p>
+  <a href="./data/matchzn.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Overlay molecule B to molecule A.
+<pre>
+      ! read in molecules A and B.
+      ! matchzn mainly does two things. first it calculates 
+      !  the rotation-translation matrix from one molecule (B)
+      !  to the other (A), named as b2a_.txt in this
+      !  example; second, it creates a PDB file, 
+      !  tmp.pdb of the rotated-translated molecule (B). 
+      !  the input PDB file(s) are reset to the oringinal ones
+      !  at the end of the procedure.
+      @matchzn  a10-a15 b110-b115  
+</pre>
+
+
+<hr><a name="phipsi_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   phipsi.edp  </h2>
+      Calculate the phi, psi angles of each residue, store them in x, y
+  fields of the CA atom. The result can be output to a PDB format
+  file using WRITE command.
+<p>
+  Syntax: <br>
+      @phipsi
+<p>
+  <a href="./data/phipsi.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Make a PDB format file of the phipsi information.
+<pre>
+      @phipsi
+      write phipsi.pdb
+</pre>
+
+
+<hr><a name="set_chi_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> set_chi.edp </h2>
+      This macro can be used to set the side chain torsional angles
+  of one of the twenty natural amino acid residues.
+<p>  
+  Syntax: <br>
+      @set_chi residue_id chi_1 ...
+<p>
+  <a href="./data/set_chi.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Set side chain torsional angles of the residue 12 (e.g. Lys) to 
+-60.0, 180.0, 180.0, 180.0 degrees.
+<pre>
+      @set_chi 12 -60.0 180.0 180.0 180.0
+</pre>
+
+
+<hr><a name="set_phipsi_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> set_phipsi.edp </h2>
+      This macro can be used to set the backbone torsional angles
+  (phi and psi). It will affect the coordinates from the given 
+  residue to the end of the peptide.
+<p>  
+  Syntax: <br>
+      @set_phipsi <i>residue_id phi psi</i>
+<p>
+  <a href="./data/set_phipsi.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Set backbone phi-psi angles of residue 12 to -60.0, -40.0 degrees.
+<pre>
+      @set_phipsi 12 -60.0 -40.0
+</pre>
+
+<hr><a name="sumw_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>     sumw.edp  </h2>
+      Calculate the summation of W value for each residue, its main
+  chain atoms and its side chain atoms, and store them in the x, y, z
+  fields of the CA atom. 
+<p>
+  Syntax: <br>
+      @sumw
+<p>
+  <a href="./data/sumw.edp">Source code</a>
+<p>
+  Examples: <br>
+  1) Make a PDB format file of the solvent accessible area
+  information.
+<pre>
+      initialize ;  ca ;  more ;  access
+      @sumw
+      write saa.pdb
+</pre>
+
+<hr><a name="symmetry_edp">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> symmetry.edp    </h2>
+      This macro contains symmetry operators for most of the space
+  groups that a protein crystallographer may need. It may also be
+  useful as an example for using the GOTO/label:/RETURN
+  statements.
+<p>  
+  Syntax: <br>
+      @symmetry  <i>space_group_name</i>
+<p>
+  <a href="./data/sg.edp">Source code called by symmetry.edp</a>
+<p>
+  Examples: <br>
+  1) To input symmetry operators for space group P212121.
+<pre>
+      @symmetry  p212121
+</pre>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->
+</font>
+</body>
+</html>

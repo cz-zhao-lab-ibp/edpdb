@@ -1,0 +1,4 @@
+rtn deor  $(p1) $(p2) $(p3)
+rtn polar 0 0 0 $(p4) $(p5) $(p6)
+rtn orth  $(p1) $(p2) $(p3)
+

@@ -1,0 +1,6 @@
+! <beginning of complete_sg.edp>
+! this macro is called by sg.edp automatically. 
+symmetry punch $(sg).edp
+@$(sg).edp
+system rm $(sg).edp
+

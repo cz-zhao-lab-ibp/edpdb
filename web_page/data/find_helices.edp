@@ -1,0 +1,21 @@
+!< beginning of find_helices.edp>,   by X. Cai Zhang, modified on 010602
+! this is a phi-psi angle based macro to select helices.
+! also see: find_strands.edp
+! syntax: 
+! @find_helices.edp
+setenv -s verbose 0
+
+dfabcd c n ca c 0 1 1 1 f f t f -80. -30.
+initialize ; ca ; setc ' ' ; group ca ; abcd c
+dfabcd n ca c n 0 0 0 1 f t f f -75. -20.
+initialize ; load scr ; abcd b 
+initialize ; load scr ; setc h ; group hlx
+initialize ; { load ca | pattern hhhhh }
+swap hlx ; setc ' '
+swap hlx ; setc h ; group hlx
+rewind out
+
+setenv -r verbose
+list zone
+!<end of find_helices.edp>
+

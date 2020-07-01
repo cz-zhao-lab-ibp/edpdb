@@ -1,0 +1,20 @@
+Hi Cai,
+
+I hope you're doing well. I thought I'd mention to you that I just installed edpdb on a couple of linux machines. (I still use the program all the time, I can't do anything without it!)
+
+The machines are running Fedora Core 6. The executable I downloaded from your web page worked but I had to install the following libraries:
+
+compat-readline43-4.3-3.i386.rpm
+compat-libf2c-32-3.2.3-47.fc4.i386.rpm
+
+There are more recent versions of the libf2c library but they have some compatibility problem with fedora core 6. But edpdb works with these versions.
+I hope this will help somebody else that runs into the same problem.
+
+Cheers, Andy
+
+
+Andrew Hausrath
+hausrath@email.arizona.edu
+
+Dept . of Biochemistry and Molecular
+ Biophysics, University of Arizona

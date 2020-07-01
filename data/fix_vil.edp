@@ -1,0 +1,63 @@
+!! copyright 1999 by X. Cai Zhang
+! this macro does a brute force fix of 
+! all "wrong" chi-1 angles of Val, Ile & Leu.
+! @fix_vil !! no parameter required
+
+mkfile fix_chi.edp eof
+parameter fix bug id exit
+@set_chi $(fix) 
+rewind 
+eof
+
+sort dfres
+
+!fix_val
+initialize
+dfabcd n ca cb cg1 0 0 0 0 f t f f -120 120 
+{ca | residue val}
+abcd b 
+{load scr ; group bug}
+@fix_chi  , 180.0 
+
+!fix_ile
+initialize
+dfabcd n ca cb cg1 0 0 0 0 f t f f 0 240 
+{ca | residue ile}
+abcd b 
+{load scr ; group bug}
+@fix_chi  , -60.0 180.0
+
+!fix_leu
+initialize
+dfabcd n ca cb cg 0 0 0 0 f t f f 0 120 
+{ca | residue leu}
+abcd b 
+{load scr ; group bug}
+
+initialize
+dfabcd n ca cb cg 0 0 0 0 f t f f -120 0
+{ca | residue leu}
+abcd b 
+initial
+load scr
+dfabcd ca cb cg cd1 0 0 0 0 f t f f -120 120
+abcd b
+initialize
+load scr
+load bug
+group bug
+@fix_chi  ,  -60.0 180.0
+
+initialize
+dfabcd n ca cb cg 0 0 0 0 f t f f 120 240 
+{ca | residue leu}
+abcd b 
+initial
+load scr
+dfabcd ca cb cg cd1 0 0 0 0 f t f f 120 360
+abcd b
+{load scr ; group bug}
+@fix_chi  ,  180.0 60.0
+
+zone all
+

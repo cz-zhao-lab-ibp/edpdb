@@ -1,0 +1,53 @@
+!<beginning of hinge.edp>
+! hinge.edp   by X. Cai Zhang, 000602
+! calculate the hinge-bending angle between two domains of a protein molecule
+!  (while you got to have two structures of the same molecule to show 
+!  the angle change).
+
+! syntax:
+! @hinge zone11 zone12 zone21 zone22
+
+! example:
+! assume that you have two identical molecules labeled as A & B chains,
+! and you want to know the hinge bending of region X (say residues 1-50)
+! relative to the region Y (say residues 55-100) between the two molecules.
+! 
+! @hinge 'a1-a50' 'a55-a100' 'b1-b50' 'b55-b100' 
+
+!define the region to be overlaid (select main chain atoms for superposition)
+initialize
+{main | zone $(p1) ; group a_x}
+{main | zone $(p2) ; group a_y}
+{main | zone $(p3) ; group b_x}
+{main | zone $(p4) ; group b_y}
+
+!you may also use the CA atoms for superposition
+!{ca | zone $(p1) ; group a_x}
+!{ca | zone $(p2) ; group a_y}
+!{ca | zone $(p3) ; group b_x}
+!{ca | zone $(p4) ; group b_y}
+
+!superimpose the X region first 
+initialize
+load a_x 
+over b_x a2b_x.txt
+load a_y
+more chain
+rtn file a2b_x.txt
+
+!superimpose the Y region
+initialize
+load a_y
+over b_y a2b_y.txt
+
+!get the hinge-bending angle
+initialize
+axis a2b_y.txt 
+
+!you should get a list of analysis about the rotation-translation.
+!the rotation angle is the hinge-bending angle.
+!for a real hinge-bending motion, 
+! the hinge-bending angle should not be too small, 
+! and the screw length (ie. the translation part) should not be large.
+!<end of hinge.edp>
+

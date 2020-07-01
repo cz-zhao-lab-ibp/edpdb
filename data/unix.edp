@@ -1,0 +1,10 @@
+! unix.edp   by X. Cai Zhang, 000602
+! define unix system calls within edpdb
+! syntax: 
+! @unix.edp 
+
+alias rm system rm 
+alias ls system ls -lrt
+alias cp system cp
+alias mv system mv
+

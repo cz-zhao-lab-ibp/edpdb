@@ -1,0 +1,22 @@
+! <beginning of hlx-hlx.edp>
+! copyright by X. Cai Zhang, (021114)
+! This macro calculates the inter-helix angle and distance. 
+! 
+! This micro require v03a or higher version EDPDB to run this macro.
+
+! Syntax:
+! @hlx-hlx range1 range2
+! example: 
+! @helx-hlx 11-20 31-40 
+
+init; zone $(p1) ; more 0 -1 | ca ; group tmp7
+more 1  1 | ca   ; over tmp7 tmp_.txt ; axis tmp_.txt h1
+
+init; zone $(p2) ; more 0 -1 | ca ; group tmp8
+more 1  1 | ca   ; over tmp8 tmp_.txt ; axis tmp_.txt h2
+
+vector vv h1 h2
+
+
+
+

@@ -1,0 +1,68 @@
+<html>
+<head>  <title>EdPDB: Trouble Shooting </title> </head>
+
+<body background="trebuche2.gif">
+<hr><a name="top"><a name="troubleshooting">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a></a>
+
+<h1>Trouble Shooting</h1>
+The following commands (options) are useful for debugging.
+<blockquote>
+	<a href="edp_m.html#setenv_echo">     ECHO            </a> and
+	<a href="edp_m.html#setenv_vb">       VERBOSE         </a>.
+	<a href="edp_m.html#setenv_maxerr">   MAXERR         </a>.
+</blockquote>
+<p>
+  The first thing you may try is to set echo option to level 2 and verbose 
+option to a high level (say 6). These will let you know how the command 
+interpretor work and give you more output than normal.
+<p>
+  If the program stop 'unreasonably' after excuting a macro, it might be 
+because that the macro contains the REWIND or GOTO commands which increase the
+error counter invisibly. This is for preventing an infinitive loop but 
+could become annoying sometime. Reset maxerr to a large number before 
+running the macro.
+<p>
+  If you find the program crashes when it opens a non-existing file,
+you may need to recompile the program on your own computer. An alternative,
+but dirty fix is to copy all the files (e.g. PDB files and EDP files) 
+that you need to run the programs into your working directory.
+<p> 
+Also see <a href="edp_a.html#knownbugs"> KNOWN BUGS </a>.
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->.
+</font>
+</body>
+</html>

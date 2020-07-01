@@ -1,0 +1,97 @@
+<html>
+<header>
+<title>Matthews' coeffecient</title>
+<script language="JavaScript">
+function calculate () { 
+var a  = document.form1.cell_a.value;
+var b  = document.form1.cell_b.value;
+var c  = document.form1.cell_c.value;
+var al  = document.form1.cell_al.value;
+var be  = document.form1.cell_be.value;
+var ga  = document.form1.cell_ga.value;
+var mw  = document.form1.mw.value;
+var ns  = document.form1.ns.value;
+var nm  = document.form1.nm.selectedIndex + 1;
+
+var	cos_a=Math.cos(Math.PI/180*al);
+var	cos_b=Math.cos(Math.PI/180*be);
+var	cos_g=Math.cos(Math.PI/180*ga);
+
+var	volume=a*b*c*
+	Math.sqrt(1.0-Math.pow(cos_a,2)-Math.pow(cos_b,2)-Math.pow(cos_g,2)		
+	+2.0*cos_a*cos_b*cos_g);
+
+ 
+document.form1.out1.value= volume/(mw*1000*ns*nm);
+document.form1.out2.value= (1.0-1.23/document.form1.out1.value)*100
+document.form1.out3.value= volume
+}
+</script>
+</header>
+
+<BODY background="../../graphics/trebuche2.gif">
+<hr><a name="top">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="up"      onClick='document.location="../edp_c.html#vm"'>
+<input type="button" value="home"    onClick='document.location="../edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="../edp_ind.html"'>
+</form>
+</a>
+<table>
+<tr><td>
+<H2> Calculate Matthews Coeffecient (Vm)</h2>
+(Ref. Matthews, B.W. (1968) "Solvent content of protein crystals" 
+<i>J. Mol. Biol.</i> <b>33</b>: 491-497).
+</td>
+<td> <img src="bwm.gif" alt="[Dr. Matthews]" 
+width=72 height=72></td></tr></table>
+
+<form name="form1">
+<p>
+Cell parameters 
+<table><tr>
+<td><i>a</i> </td><td> <input type="text" size="8" name="cell_a"></td>
+<td><i>b</i> </td><td> <input type="text" size="8" name="cell_b"></td>
+<td><i>c</i> </td><td> <input type="text" size="8" name="cell_c"></td></tr>
+<tr>
+<td><i>alpha</i> </td><td> <input type="text" size="8" name="cell_al" value="90"></td>
+<td><i>beta</i>  </td><td> <input type="text" size="8" name="cell_be" value="90"></td>
+<td><i>gamma</i> </td><td> <input type="text" size="8" name="cell_ga" value="90"></td></tr>
+</table> 
+<table>
+<tr><td>Molecular weight in kD</td>
+    <td><input type="text" size="3" name="mw"></td></tr>
+<tr><td>Number of symmetry operators per unit cell</td>
+    <td><input type="text" size="3" name="ns"></td></tr>
+<tr><td>Number of protein molecules per assymatric unit</td> 
+    <td><select name="nm" onChange="calculate()">
+<option selected> 1
+<option> 2
+<option> 3
+<option> 4
+<option> 5
+<option> 6
+<option> 7
+<option> 8
+<option> 9
+<option> 10
+<option> 11
+<option> 12
+<option> 13
+<option> 14
+<option> 15
+<option> 16
+</select>
+</td></tr></table> 
+ 
+<input type="button" name="vm" value="Vm" onClick="calculate()">
+<input type="text" size="5" name="out1" value=""> (in A<sup>3</sup>/Da),  
+<input type="button" name="sc" value="solvent content" onClick="calculate()">
+<input type="text" size="5" name="out2" value=""> %&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" name="vol" value="cell volume" onClick="calculate()">
+<input type="text" size="8" name="out3" value=""> (A<sup>3</sup>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="reset" value="Reset" name="B1"> <br>
+</body>
+</html>

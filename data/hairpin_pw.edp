@@ -1,0 +1,38 @@
+! Example:
+!%edpdb 2IJE-coot-0.pdb 2II0-coot-0.pdb
+!@hairpin_pw s1178-s1218  a929-a972     ! 2IJE 2IIO 13.9
+!%edpdb 2IJE-coot-0.pdb  RalGPS1a_final.pdb
+!@hairpin_pw s1178-s1218  a202-a247     ! 2IJE RalA 10.2
+
+
+! define the hairpin
+parameter hp1 = $(p1)
+parameter hp2 = $(p2)
+
+init; zone $(hp1) ; group h1
+init; zone $(hp2) ; group h2
+parameter c_1 h1 chain 
+parameter c_2 h2 chain  
+init; chain $(c_1) $(c_2); write c12_.pdb ; close
+
+init; chain $(c_1)  ; exclude load h1 ; group r1
+init; chain $(c_2)  ; exclude load h2 ; group r2 
+
+init; load r1 r2 ; write r12_.pdb ; close 
+read r12_.pdb , initialize
+
+@match3d $(c_1) $(c_2)  
+
+read c12_.pdb , initialize  
+init; chain $(c_2) ; rtn file $(c_2)2$(c_1)_.txt
+
+init; zone $(hp1) ; group h1
+init; zone $(hp2) ; group h2
+
+init; load h1 h2 ; write h12_.pdb ; close
+read h12_.pdb , initialize 
+
+@match3d $(c_1) $(c_2)
+
+axis $(c_2)2$(c_1)_.txt
+ 

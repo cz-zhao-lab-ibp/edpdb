@@ -1,0 +1,24 @@
+     ! calculate a shell to block those openings. the output prb_.pdb file contains 
+     ! atoms P90 of a residue type PRB, which has a pseudo vdw radius 9.0 A
+     ! defined in the acc.txt file. 
+     init; write prb_.pdb 
+ca
+touch 9.0 1.0 
+close
+     ! choose three starting positions to probe the cavity shape
+read prb_.pdb 
+init; write cav_.pdb
+init; zone all; group a; setb 10
+init; atom o* ; setb 100
+init; atom n* ; setb 50 
+init; zone all    
+shape 20 a29  nh2 2000 , , 1024
+shape 20 a314 oe1 2000 
+shape 20 a21  oe2 2000 
+close 
+     ! calculate the volume of the probes which is an estimation of the cavity volume. 
+read cav_.pdb x initialize
+ch x; group x
+exclude; dist x 0 0.2 
+volume
+quit

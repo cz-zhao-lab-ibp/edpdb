@@ -1,0 +1,50 @@
+!<beginning of match1ds.edp>
+!! copyright by X. Cai Zhang (000602)
+
+! This macro does a simple sequence alignment 
+!   and sets the OCC field to the alignment score 
+!   (i.e. [-1.5,1.5] & -1.6 for deletion).
+! useful for displaying sequence homology.
+
+! Syntax:
+! @match1ds target_sequence chain_mark
+! example: to align chain a to the target_sequence (t.seq), type 
+! @match1ds t.seq a
+
+reset
+write pseudo_.pdb 'REMARK This pseudo pdb file is created by match1ds.edp.'
+seq2pdb $(p1) '(100a1)'
+close
+read pseudo_.pdb t
+
+! sequence homology search
+{ca | chain t ; group tmpa }
+initialize
+setenv -s verbose 4
+{ ca | chain $(p2) ; setw -1.6 | match1d tmpa suba -1.6 1.0 0.5 0.1 60}
+setenv verbose 0
+
+pause
+initialize
+{ ca | chain $(p2) ; group tmpa ; group tmpb}
+
+mkfile tmp_m1_.edp eof
+loop:
+initialize
+para occ tmpa w  exit
+para id  tmpb id exit
+zone $(id) ; more ; setw $(occ)
+goto loop
+eof
+
+setenv -s maxerr 1024 exit
+setenv -s echo 0
+@tmp_m1_
+setenv -r maxerr
+setenv -r echo 
+initialize
+chain $(p2)
+
+!<end of match1ds.edp>
+
+

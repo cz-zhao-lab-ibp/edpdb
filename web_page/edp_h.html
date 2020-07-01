@@ -1,0 +1,990 @@
+<html>
+<head>  <title>EdPDB: How To ....</title> </head>
+
+<body background="trebuche2.gif">
+<hr><a name="top"><a name="how-to">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a></a>
+
+<h1> 		How To .... 		</h1>
+<ul>
+<li>Start EdPDB, and Quit
+	<ul>
+	<li><a href="edp_h.html#start_edpdb">
+	   	      Start EdPDB			</a>
+	<li><a href="edp_h.html#abc">
+	   	      EdPDB 101			</a>
+	<li><a href="#a_quick_check"> 
+		      A quick check			</a>
+	<li><a href="#input_multiple_pdb_files">		
+		      Input multiple PDB files		</a>
+	<li><a href="#save_the_intermediate_result"> 
+                      Save the intermediate result	</a>
+	<li><a href="#list_the_currently_opened_files"> 
+		      List the currently opened files	</a>
+	<li><a href="#list_the_header_of_the_1st_input_PDB_file">
+		      List the header of the 1st input PDB file </a>
+	<li><a href="#restart">
+                      Restart without quitting		</a>
+	<li><a href="edp_ctr.html#quit">Quit			</a> 
+	</ul>
+
+<li> Calculate ... 
+	<ul>
+	<li><a href="#coordinate_transformation"> 
+		      Coordinate transformation		</a>
+	<li><a href="#superimpose_two_structures"> 
+		      Superimpose two structures	</a>
+	<li><a href="#matrix_manipulation"> 
+                      Matrix manipulation		</a>
+	<li><a href="#calculate_solvent_accessible_area"> 
+		      Calculate solvent accessible area	</a>
+	<li><a href="#calculate_buried_solvent_accessible_area">
+                      Calculate buried solvent accessible area </a>
+	<li>  <a href="edp_c.html#shape">
+		      Estimate cavity volume		</a>
+	<li><a href="#calculate_distance"> 
+		      Calculate distance		</a>
+	<li><a href="#calculate_angle"> 
+		      Calculate angle 			</a>
+	<li><a href="#calculate_torsional_angles"> 
+	              Calculate torsional angles	</a>
+	<li><a href="#disulfide_bridge_geometry_and_prediction"> 
+		      Disulfide bridge geometry and prediction</a>
+	<li><a href="edp_h.html#hinge_bending_angle"> 
+                      Hinge bending angle		</a>
+	<li><a href="edp_h.html#compare_solvent"> 
+                      Compare solvent molecules in homologous structures</a>
+	</ul>
+
+<li> Edit a PDB file
+	<ul>
+	<li><a href="#edit_the_pdb_records"> 
+		      Edit the PDB records		</a>
+	<li><a href="#standardize_the_pdb_file"> 
+		      Standardize the PDB file		</a>
+	<li><a href="#sort_the_pdb_file"> 
+		      Sort the PDB file 		</a>
+	</ul>
+
+<li> Apply the crystallographic symmetry
+	<ul>
+	<li><a href="#crystallographic_symmetry"> 
+		      Crystallographic symmetry		</a>
+	<li><a href="edp_c.html#sdist">
+		      Check the crystal packing		</a>
+	<li><a href="#rotation_function">
+		      Analyze the rotation function result 	</a>
+	</ul>
+
+<li> Others
+	<ul>
+        <li><a href="edp_mcr.html#match1ds_edp"> 
+                     Sequence alignment </a>,
+	<li><a href="edp_mcr.html#match1d_edp"> 
+	             Sequence homology based 3D superposition </a>,
+        <li><a href="edp_mcr.html#match3d_edp"> 
+                     Secondary structure based 3D superposition</a>,
+	<li><a href="#model_mutation">
+		      Model mutation			</a>
+	<li><a href="#fix_the_chirality_problem"> 
+		      Fix the chirality problem		</a>
+	<li><a href="#build_a_molecule"> 
+                      Build a molecule, eg. a substrate	</a>
+	<li><a href="#analyze_polar_eulerian_angles"> 
+                      Analyze polar/eulerian angles	</a>
+	</ul>
+</ul>
+
+<hr><a name="start_edpdb">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Start EdPDB </a></h2>
+      A good start is half way to success.
+<p>
+  Syntax:  <br>
+      % edpdb  <i>pdb_file1</i> [-c <i>chainmark_1</i>] 
+      [<i>pdb_file2</i> [-c <i>chainmark_2</i>]] [-i [<i>edp_file</i>]]
+<p>
+  Note: <br>
+  1)  A <i>chainmark</i> is a string of characters which are used to 
+      distinguish
+      different peptide chains. It is particularly useful when more
+      than one PDB files are read in and the peptide chains need to
+      be distinguished. If the <i>chainmark</i> is provided, 
+      whenever a new chain is found its chain
+      name will be replaced with a new character in the character
+      string. Otherwise, no substitution will be
+      made. If all of the characters in the string have already been
+      used, it recycles the string from the first character. A
+      string of mark characters of alphabetic order may be
+      abbreviated with a hyphen, `-'. For example, <code>a-f</code> 
+      is equivalent to <code>abcdef</code>. <br>
+  2)  The <i>edp_file</i> is the file name of a macro which can be used
+      to customize the initial configuration of the program. The default
+      file name is edpini.edp, if the qualifier <code>-i</code> is specified.<br>
+<p>
+   See also:  <a href="edp_ctr.html#quit">QUIT</a>
+<p>
+   Examples: <br>
+  1) Start EdPDB by reading a PDB file, pdb4lzm.pdb.
+<pre>
+      % edpdb pdb4lzm.pdb
+</pre>
+
+  2) Read two PDB files. One contains A, B, C and D four peptide
+  chains, and is called abcd_1.pdb. The other contains A, B, C and
+  D four peptide chains too, and is called abcd_2.pdb.
+<pre>
+      % edpdb abcd_1.pdb -c abcd abcd_2.pdb -c stuv
+</pre>
+  In this example, the peptide chains from the second PDB file will
+  be labelled as <code>S, T, U</code> and <code>V</code>.
+<p>
+  3) Customize EdPDB with a macro called edpini.edp. (See the example in the
+  <a href="edp_d.html#alias">ALIAS</a>
+  section).
+<pre>
+      % edpdb a.pdb -i edpini.edp
+</pre>
+
+<hr><a name="abc"> 
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+
+</form></a>
+<h2>	     EdPDB 101				</a></h2>
+<p>
+    EdPDB is a command driven program. Each function in EdPDB
+  is activated by a one-line input statement (a <i>command</i> or an 
+  <i>input
+  card</i>). An input card starts with a keyword (ie. the name of the
+  function) and includes parameters that may be required by the
+  function. The leading keyword can be abbreviated as long as there
+  is no ambiguity with other leading keywords. For example,
+  command RESET may be abbreviated as RESE, but can not be
+  abbreviated further (eg. RES) because of the existing command
+  RESIDUE. The input parameters are separated from each other by
+  function. The leading keyword can be abbreviated as long as there
+  is no ambiguity with other leading keywords. For example,
+  command RESET may be abbreviated as RESE, but can not be
+  abbreviated further (eg. RES) because of the existing command
+  RESIDUE. The input parameters are separated from each other by
+  spaces or a comma (not a space followed by a comma). At the
+  position where a parameter is expect, a comma may call the
+  default value for that parameter if it exists. In most cases the order
+  of the input parameters is organized so that required parameters
+  are input first and optional ones later. Once an input card is
+  entered the function is called immediately. For example, by typing
+  ANALYZE, the average, minimum, maximum, range, and standard
+  deviation of the x,y,z "coordinates", occupancy and B-factors of
+  the current ON atoms will be listed. The order of the input cards,
+  therefore, will determine the behavior of EdPDB.
+<p>
+    By default, all the characters in an input statement will be
+  converted to lower case before being interpreted, unless the
+  environmental parameter <a href="#edp_m.html#setenv_tl">tolower</a> is set to off.
+<p>
+    In an input statement, the text string within a pair of single
+  quotation marks (ie. ' ') may be considered as a single parameter.
+<p>
+    For more information on the general command syntax, see the
+  <a href="edp_g.html#command_interpretation">command interpretation</a>
+  section in the
+  glossary category.
+
+<hr><a name="a_quick_check">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   A quick check </h2>
+<pre>
+      ! Try this
+      initialize
+      zone all
+      zone 
+      residue
+      atom
+      sort dfres
+      analyze
+</pre>
+
+<hr><a name="input_multiple_pdb_files">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Input multiple PDB files </h2>
+  1) Read in two files which have the same chain names (eg. A,B,C and D)
+<pre>
+      read  file_a.pdb  abcd  initialize
+              ! input the first file, keeping the chain names
+      read  file_b.pdb  efgh
+              ! input the first file, change the chain names
+              ! to E,F,G and H
+</pre>
+  2) or start the program by typing
+<pre>
+      $ edpdb file_a.pdb abcd file_b.pdb efgh
+</pre>
+  See also:
+  <a href="edp_i.html#read">READ</a>
+ 
+<hr><a name="save_the_intermediate_result">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   Save the intermediate result </h2>
+  1) If the result can be listed with the LIST command, WRITE
+  command can be used to make an output file to save the result.
+<p>
+  2) If the result is listed on the terminal with a prompt saying "
+  return for more ... ", the result actually has a copy in a file of the
+  same file-name as the 1st input PDB file and a file type of <i>.out</i>.
+  To save this file, one has to terminate the program using the QUIT
+  command with the SAVE option.
+<p>
+  3) To save other intermediate results, one may either run EdPDB
+  in a batch job mode, or redirect the result to a file (eg. edpdb.log)
+  using the following command.
+<pre>
+      file log edpdb.log
+</pre>
+  See also: 
+  <a href="edp_m.html#file">FILE</a>
+
+<hr><a name="list_the_currently_opened_files"> 
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> List the currently opened files </h2>
+<pre>
+      file
+</pre>
+
+<hr><a name="list_the_header_of_the_1st_input_PDB_file">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> List the header of the 1st input PDB file </h2>
+<pre>
+      initialize
+      write junk.pdb header
+</pre>
+
+<hr><a name="restart">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Restart without quitting </h2>
+<pre>
+      reset
+</pre>
+
+<hr><a name="coordinate_transformation">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   Coordinate transformation </h2>
+  1) Assume the transformation matrix has been
+  stored in a file rtn_.txt
+<pre>
+      ! select the records on which the transformation are applied.
+      ...
+      rtn file rtn_.txt
+</pre>
+  See also: 
+    <a href="edp_c.html#rtn">RTN</a>
+
+<hr><a name="superimpose_two_structures">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Superimpose two structures </h2>
+  Overlay molecule A to molecule B, based on the least square
+  minimization between main-chain atoms of the two molecules.
+<pre>
+      { chain a | main ;  group mola }
+      { chain b | main ;  group molb }
+      initialize
+      load mola
+      overlay molb rtn_.txt
+      chain a
+      rtn file rtn_.txt
+</pre>
+More general aproaches can be done with the following macros:
+<a href="edp_mcr.html#match1d_edp">match1d.edp</a>,
+<a href="edp_mcr.html#match3d_edp">match3d.edp</a> and
+<a href="edp_mcr.html#matchzn_edp">matchzn.edp</a>.
+
+<p>  See also: 
+  <a href="edp_s.html#align3d">ALIGN3D</a>,
+  <a href="edp_c.html#match3d">MATCH3D</a> and
+  <a href="edp_c.html#overlay">OVERLAY</a>.
+
+<hr><a name="matrix_manipulation">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Matrix manipulation </h2>
+  1) Copy the transformation matrix in the file <i>rtn_a.dat</i> to a file
+  <i>rtn_b.dat</i>.
+<pre>
+      initialize
+      rtn file rtn_a.dat save rtn_b.dat
+</pre>
+  2) Calculate the inverse transformation of a given one, eg. in file
+  <i>rtn_.txt</i>, store it in another file, say <i>inv_rtn_.txt</i>.
+<pre>
+      initialize
+      rtn file rtn_.txt inve inv_rtn_.txt
+</pre>
+  3) Multiply the transformation matrix in the file <i>rtn_.txt</i> with the
+  matrix of symmetry operator #2, store the production in <i>rtn_.txt</i>.
+<pre>
+      initialize
+      rtn symm 2 0 0 0 mult rtn_.txt rtn_.txt
+                                
+</pre>
+  See also:   <a href="edp_c.html#rtn">RTN</a>
+
+<hr><a name="calculate_solvent_accessible_area">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Calculate solvent accessible area </h2>
+  An isolate protein molecule (eg. zone 1 - 164).
+<pre>
+      initialize
+      zone 1 - 164
+      access
+</pre>
+  See also: 
+  <a href="edp_c.html#access">ACCESS</a>
+
+<hr><a name="calculate_buried_solvent_accessible_area">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Calculate buried solvent accessible area  </h2>
+  1) The buried solvent accessible area (<i>SAA</i>) of molecule A by
+  molecule B equals the difference between the <i>SAA</i> of molecule A
+  in the presence and absence of the molecule B. Note that the
+  buried <i>SAA</i> of molecule A by molecule B is not necessary to
+  equal the buried <i>SAA</i> of molecule B by molecule A.
+<pre>
+      initialize
+      chain B
+      group molB 
+      initialize
+      chain A
+      access molB
+           ! get the SAA of molecule A
+           ! in the presence of molecule B
+      access
+           ! get the SAA of molecule A
+           ! in the absence of molecule B
+</pre>
+  See also: 
+  <a href="edp_c.html#access">ACCESS</a>
+
+<hr><a name="calculate_distance">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Calculate distance </h2>
+
+  1) List distances of atom pairs between two groups.
+  For example, the distances between oxygen atoms and nitrogen atoms
+  which are less 3.0 A and seperated by at least two residues.
+<pre>
+      { atom N* ;  group Natm }
+      { atom O* ;  group Oatm }
+      initialize
+      load Oatm
+      distance Natm 0.0 3.5 2
+</pre>
+   See also:
+  <a href="edp_s.html#nayb">NAYB</a>,
+  <a href="edp_s.html#naybr">NAYBR</a>,
+  <a href="edp_c.html#sdist">STISTANCE</a> and
+  <a href="edp_c.html#ab">AB</a>
+
+<hr><a name="calculate_angle">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Calculate angle </h2>
+  1) List all the C-alpha - C-beta - C-gamma angles.
+<pre>
+	dfabc ca cb cg 0 0 0
+	initialize
+	atom ca cb cg
+	abc
+</pre>
+  2) Calculate the angle that formed by atoms from different residues, eg.
+the C-O-OH angle, where C and O are the carbonyl carbon and the carbonyl
+oxygen atoms of an amino acid residue and OH is a water molecule.
+<pre>
+	dfbrg C O OH CA x 0 x 0  ,,,,  0.0 3.5 0.0 180.0 0.0 360.0 zwxy
+		! The 1st 'x 0' indicates that the C atom (atom_w) belongs
+		! to the same residue as the O atom (atom_x).
+		! The 2nd 'x 0' indicates that the CA atom (atom_z) also 
+		! belongs to the same residue as the O atom (atom_x).
+		! The O-OH distance, the C-O-OH angle and CA-C-O-OH torsion
+		! angle will be calculated.
+	initialize
+	atom C O OH
+	bridge
+</pre>
+   See also:
+  <a href="edp_c.html#abc">ABC</a> and
+  <a href="edp_c.html#bridge">BRIDGE</a>
+
+<hr><a name="calculate_torsional_angles"> 
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Calculate torsional angles </h2>
+  1) Calculate the phipsi torsional angles
+<pre>
+      @phipsi
+      write phipsi.lis
+</pre>
+  2) Calculate the chi (I,II) angles.
+<pre>
+      @chi
+      write chi.lis
+</pre>
+  3) Calculate the zeta angles to check chirality.
+<pre>
+      initialize
+      dfabcd ca n c cb
+      atom ca n c cb
+      abcd
+      quit save
+</pre>
+  See also:
+  <a href="edp_c.html#abcd">ABCD</a> command and   
+  <a href="edp_c.html#rtn_abcd">RTN ABCD</a> command.
+
+<hr><a name="disulfide_bridge_geometry_and_prediction">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Disulfide bridge geometry and prediction </h2>
+  1) Define a bridge of disulfide bond, and list out all the bridges.
+<pre>
+      dfbrg cb sg sg cb x 0 y 0
+      residue cys
+</pre>
+  2) Search for candidates of sites of engineered disulfide bridges.
+  The search criterion is the following. The two residues should be
+  20 residues apart in the amino acid sequence. The Cb-Cb distance
+  should be between 2.5 and 6.0 Å.  One of the Ca-Cb-Cb angle
+  should be between 80.0 and 180.0 degrees. (The Ca-Cb-Cb-Ca
+  torsional angle is unrestricted).
+<pre>
+      initialize
+      dfbrg ca cb cb ca x 0 y 0 t t t t 2.5 6.0 80 180 0 360 wxyz 20
+      atom ca cb
+      bridge
+</pre>
+
+<hr><a name="hinge_bending_angle">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Hinge bending angle </h2>
+
+  Analyze the hinge bending angle between two molecules A and
+  B, assuming that they have rigid body domains (residues 15 - 60)
+  and (residues 80 - 160).
+<pre>
+      { main | zone a15-a60 ;  group n_a }
+      { main | zone b15-b60 ;  group n_b } 
+      { main | zone a80-a160 ;  group c_a }
+      { main | zone b80-b160 ;  group c_b }
+      initialize ;  load n_a ;  overlay n_b match_n_domain.dat
+      initialize ;  chain a  ;  rtn file match_n_domain.dat
+      initialize ;  load c_a ;  overlay c_b match_c_domain.dat
+      initialize ;  axis match_c_domain.dat
+           ! the hinge bending angle will be listed
+           ! with the AXIS command as the rotation angle.
+</pre>
+
+
+<hr><a name="compare_solvent">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   Compare solvent molecules from homologous structures </h2>
+
+<pre>
+! for each protein molecule you may create 
+!  a PDB file containing the protein and the associated solvents 
+!  using a macro similar to the following
+
+cell 100 100 100 90 90 90 1
+!    ^^^^ your cell parameters 
+!    the last number is important if your cell is not
+!    orthogonal.
+@symmetry p212121
+!         ^^^ your space group
+
+initialize ;  zone a1 - a234 ;  group prta
+!                 ^^^^^^^^^ your protein zone
+system rm tmpa.pdb
+write tmpa.pdb
+!     ^^^^ your new pdb file name
+
+initialize 
+{ atom O2H | residue  SOL }
+!      ^^^ your solvent atom name(s) etc.
+
+sdistance prta 0.0 4.0 punch_all
+!                  ^^^ cutoff for a solvent molecule to be considered 
+!                      associated with one protein molecule
+quit
+
+
+! % edpdb tmpa.pdb -c a tmpb.pdb -c b  
+!                     ^             ^
+! define molecules    A  and        B
+
+! superimpose the two protein molecules using CA atoms
+{ ca | zone a1 - a234 ;  group prta }  ! select CA atoms from chain a
+!           ^^^ your protein zone
+
+initialize
+{ ca | zone b1 - b234 }  ! select CA atoms from chain b
+!           ^^^ your protein zone
+over prta b_to_a.dat
+!         ^^^^ matrix from molecule b to a
+
+initialize 
+chain b
+rtn file b_to_a.dat 
+!  apply the matrix to molecule b including its solvent molecules
+
+{ atom O2H | residue SOL | chain b ;  group solb }
+!      ^^^ your solvent atom name 
+
+initialize
+{ atom O2H | residue SOL | chain a } 
+!      ^^^ your solvent atom name
+distance solb 0 1.2 
+!               ^^^ your choice for two solvent molecules to be related. 
+quit save 
+!    check the tmpa.out file
+</pre>
+
+<hr><a name="edit_the_pdb_records">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Edit the PDB records </h2>
+<p>
+  1) Reset the entry number
+<pre>
+      sete
+</pre>
+  2) Split the chain name from the residue number in the input
+  residue id.
+<pre>
+      seti
+</pre>
+  See also: the <a href="edp_e.html">editing</a> category.
+
+<hr><a name="standardize_the_pdb_file"> 
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Standardize the PDB file </h2>
+  See also: 
+  <a href="edp_c.html#sort">SORT DFRES</a>,
+  <a href="edp_e.html#seti">SETI</a>,
+  <a href="edp_e.html#setc">SETC</a> and
+  <a href="edp_e.html#permute">PERMUTE</a>
+
+<hr><a name="sort_the_pdb_file">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Sort the PDB file </h2>
+  1) Sort the records according to B factors
+<pre>
+      zone all
+      sort B
+      list
+</pre>
+  2) Sort the records according to X coordinates
+<pre>
+      zone all
+      setw x
+      sort w
+      list
+</pre>
+  See also:
+  <a href="edp_c.html#sort">SORT</a> and
+  <a href="edp_e.html#setw">SETW</a>
+
+<hr><a name="crystallographic_symmetry">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Crystallographic symmetry </h2>
+  1) Input symmetry operators of space group P3(2)21 for T4
+  lysozyme enzyme.
+<pre>
+      initialize
+      cell 61.2 61.2 96.8 90 90 120 1
+      symmetry x, +y, +z
+      symmetry -y, x-y, +z+2/3
+      symmetry -x+y, -x, +z+1/3
+      symmetry +y, x, -z
+      symmetry -x, -x+y, -z+2/3
+      symmetry x-y, -y, -z+1/3
+</pre>
+  2) Check the crystal packing contacts between molecules A and B.
+<pre>
+      { chain A ;  group mola }
+      { chain B ;  group molb }
+      initialize
+      load mola
+      sdistance mola 0.0 4.0     ! check A-A contacts
+      sdistance molb 0.0 4.0     ! check A-B contacts
+      initialize
+      load molb
+      sdistance molb 0.0 4.0     ! check B-B contacts
+</pre>
+  3) The solution of a molecular replacement search may put the
+  protein molecule in an asymmetric unit which is far away from the
+  origin. The MOVECENTER command can bring the molecule
+  close to the origin (or any user specified asymmetric unit).
+<pre>
+     zone all
+     movecenter rtn_.txt  0.0 0.0 0.0 0.5 0.5 0.5
+     rtn file rtn_.txt
+</pre>
+  See also: 
+  <a href="edp_d.html#symmetry">SYMMETRY</a>,
+  <a href="edp_c.html#sdist">SDISTANCE</a> and
+  <a href="edp_c.html#movecenter">MOVECENTER</a>
+
+<hr><a name="rotation_function">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Analyse a rotation function result </h2>
+    1) Assume that the space group is P3(2)21; the positions of the 
+<em>cross</em> rotation function solution peaks are stored in a 
+PDB format file.
+<pre>
+	! First, input the polar angles using a PDB format file
+	cell 61.2 61.2 96.8 90.0 90.0 120.0 1
+		! input the cell parameters 
+	@p3221
+		! input the symmetry operators using a macro file
+	zone all
+	list	! take a look of the initial peaks
+	polar to_polar 
+		! standardize the angles
+	list	! take a look again
+	polar asymm 
+		! convert the peaks to one asymmetric unit
+	list	
+	polar unique 3.
+		! exclude redandent peaks
+	list
+	reset
+	zone all
+	polar move_to_o 1 ca
+		! apply a rotation such that the first peak,
+		! which is stored in the "CA" record of the residue "1",
+		! will move to the origin.
+	list
+</pre>
+    2) Assume that the space group is P3(2)21; the positions of the 
+<em>self</em> rotation function solution peaks are stored in a 
+PDB format file.
+<pre>
+	! First, input the polar angles using a PDB format file
+	cell 61.2 61.2 96.8 90.0 90.0 120.0 1
+		! input the cell parameters 
+	@p3221
+		! input the symmetry operators using a macro file
+	zone all
+	list	! take a look of the initial peaks
+	polar srf_red
+		! convert the peaks to one asymmetric unit
+	list	
+	polar unique 3.
+		! exclude redandent peaks
+	list
+</pre>
+
+<hr><a name="model_mutation">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Model mutation </h2>
+  1) Mutate residue at position 6 to Ile.
+<pre>
+      initialize
+      zone all
+      write backup.pdb   ! save the current file for safety
+      @mutate 6 ile      ! a macro to do the mutation one at a time
+           ! to run this macro, one may need to copy the aalib.pdb
+           ! to the current directory.
+</pre>
+  2) Set the chi-I and chi-II angles of residue 6 Ile to -60 and 170
+  degrees using a macro file, set_chi_ile.edp.
+<pre>
+      @set_chi_ile  6  -60 170
+</pre>
+  where set_chi_ile.edp contains the following.
+<pre>
+      ! set_chi_ile.edp
+      initialize
+      side    $(p1)
+      rtn abcd $(p1) n  $(p1) ca $(p1) cb  $(p1) cg1 $(p2)
+      exclude atom cg2
+      rtn abcd $(p1) ca $(p1) cb $(p1) cg1 $(p1) cd1 $(p3)
+</pre>
+  or simply
+<pre>
+      @set_chi 6 -60  170
+</pre>
+
+<hr><a name="fix_the_chirality_problem"> 
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2> Fix the chirality problem </h2>
+      To fix a chirality problem brucely, a mirror operation has to be applied
+  to some atoms.
+<p>
+  1) Change the Ca position of residue 164.
+<pre>
+      initialize
+      ca 164
+      rtn overlay 164 N C CB 0 0 0 , ,,, ,,, inve tmp.dat
+      rtn matrix  -1 0 0 0 1 0 0 0 1 0 0 0
+      rtn file tmp.dat
+</pre>
+<p>
+      See also: the macros
+  <a href="edp_mcr.html#fix_hand_edp">fix_hand.edp</a>.
+<p>
+  2) Change the position of the side chain of residue 164.
+<pre>
+      initialize
+      side 164
+      rtn overlay 164 N CA C 0 0 0 , ,,, ,,, inve tmp.dat
+      rtn matrix -1 0 0 0 1 0 0 0 1 0 0 0
+      rtn file tmp.dat
+</pre>
+                              
+<hr><a name="build_a_molecule">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Build a molecule, eg. a substrate </h2>
+<p>
+  1) To build a molecule from scratch, 
+      See also: the examples in the 
+  <a href="edp_c.html#newxyz">NEWXYZ</a>
+  section
+<p>
+  2) To build a molecule from pieces of fragments, see 
+  <a href="edp_c.html#rtn_overlay">RTN OVERLAY</a>
+  command.
+
+<hr><a name="analyze_polar_eulerian_angles">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>  Analyze polar/eulerian angles </h2>
+
+  Convert polar angles to eulerian ones, assuming the x,y,z fields
+  store the polar angles.
+<pre>
+      zone all
+      polar  to_euler
+</pre>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->
+</font>
+</body>
+</html>

@@ -1,0 +1,24 @@
+!< beginning of find_strands.edp>,   by X. Cai Zhang, 000602
+! this is a phi-psi angle based macro to select 'beta'-strands.
+! also see: find_helices.edp
+! syntax: 
+! @find_strands.edp
+setenv -s echo 0
+setenv -s interactive off
+
+dfabcd c n ca c 0 1 1 1 f f t f -180.0 0.0
+initialize ; ca ; sett ' ' 70 ; group ca ; abcd c
+dfabcd n ca c n 0 0 0 1 f t f f 40.0 180.0
+initialize ; load scr ; abcd b 
+initialize ; load scr ; sett s 70 ; group bst
+initialize ; { load ca | pattern sssss 70 }
+swap bst ; sett ' ' 70
+swap bst ; sett s   70; group bst
+
+rewind scr
+setenv -r interactive
+setenv -r echo
+list zone
+
+!<end of find_strands.edp>
+

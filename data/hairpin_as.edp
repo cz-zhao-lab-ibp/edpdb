@@ -1,0 +1,30 @@
+! define the hairpin
+parameter hp1 = s1178-s1218
+parameter hp2 = a929-a972
+
+init; zone $(hp1) ; group s1
+init; zone $(hp2) ; group a1
+parameter c_a a1 chain 
+parameter c_s s1 chain  
+
+init; chain $(c_a)  ; exclude load a1 ; group a2
+init; chain $(c_s)  ; exclude load s1 ; group s2 
+
+init; load a2 s2 ; write as_.pdb ; close 
+read as_.pdb , initialize
+
+@match3d $(c_a) $(c_s)  
+
+reset 
+init; chain $(c_s) ; rtn file s2a_.txt
+
+init; zone $(hp1) ; group s1
+init; zone $(hp2) ; group a1
+
+init; load a1 s1 ; write as_.pdb ; close
+read as_.pdb , initialize 
+
+@match3d $(c_a) $(c_s)
+
+axis s2a_.txt 
+ 

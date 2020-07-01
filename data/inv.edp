@@ -1,0 +1,4 @@
+! this macro inverses the Ca atom order within 
+! the selected region
+
+init; zone $(p1); setw ; sort -w; setw 1.0

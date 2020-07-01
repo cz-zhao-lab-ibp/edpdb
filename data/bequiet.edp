@@ -1,0 +1,10 @@
+setenv -s verbose 1 ; setenv -s echo 0
+! bequiet.edp   by X. Cai Zhang, 000602
+! keep the output simple. A macro of the opposite function is verbose.edp.
+! syntax: 
+! @bequiet.edp
+
+! you will not be able to read the above comments on-line,
+!  because you've teld the program to shutup.
+
+

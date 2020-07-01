@@ -1,0 +1,38 @@
+! this is an example macro for renaming water molecules according to a template file, template.pdb
+! assume the template pdb file contains more wat than the working file
+! assume the solvent molecules are labeled as "wat"
+
+initial; residue wat; analyze
+swap; gr prt; swap
+sdist prt 0 6. move 
+write tmp_.pdb; close
+initial; read tmp_.pdb x; ch x; setw 9.99; gr sol
+
+read template.pdb t
+initial
+{ resi wat | ch t ; setw 0.0; gr tmp }
+dist sol 0 1.0 , , copy
+exclude w < 9
+group tmp0
+write tmp_.pdb; close
+! tmp1 = template that match with the input 
+initial; read tmp_.pdb y; ch y; group tmp1
+
+init ;  load sol
+dist tmp1 0 0.1
+exclude w > 0.5
+gr sol1 ; setw 2.
+
+init; load tmp
+exclude load tmp0
+group tmp2
+
+initial
+{ load tmp2 | match sol1 sol2 }
+copy sol2
+
+load tmp0 ; setw 1.0; setc ' ' ; seti 301 1 
+write k1.pdb 
+close
+
+

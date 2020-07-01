@@ -1,0 +1,70 @@
+! aaa2a.edp   by X. Cai Zhang, 000602
+! change the chain_mark to the single letter a.a. name.
+! useful for a pattern search. 
+! also see: the 'pattern' command
+
+! syntax: 
+! @aaa2a.edp
+
+initialize
+residue ala
+setc a
+initialize
+residue cys
+setc c
+initialize
+residue asp
+setc d
+initialize
+residue glu
+setc e
+initialize
+residue phe
+setc f
+initialize
+residue gly
+setc g
+initialize
+residue his
+setc h
+initialize
+residue ile
+setc i
+initialize
+residue lys
+setc k
+initialize
+residue leu 
+setc l
+initialize
+residue met 
+setc m
+initialize
+residue asn 
+setc n
+initialize
+residue pro 
+setc p
+initialize
+residue gln 
+setc q
+initialize
+residue arg 
+setc r
+initialize
+residue ser
+setc s
+initialize
+residue thr 
+setc t
+initialize
+residue val 
+setc v
+initialize
+residue trp
+setc w 
+initialize
+residue tyr
+setc y
+initialize
+

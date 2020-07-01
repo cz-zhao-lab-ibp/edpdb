@@ -1,0 +1,780 @@
+<html>
+<head>  <title>EdPDB Control Commands</title> </head>
+
+<BODY background="trebuche2.gif">
+<hr><a name="top"></a><a name="control"> 
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="bottom"  onClick='document.location="#end"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<h1>       	Control			</h1>
+Available commands:<ul>
+<li>	    <a href="edp_ctr.html#macro_file">	@macro_file	</a>,
+<li>	    <a href="edp_ctr.html#close">		CLOSE	</a>,
+<li>	    <a href="edp_ctr.html#goto">		GOTO 	</a>,
+<li>	    <a href="edp_ctr.html#if">			IF 	</a>,
+<li>	    <a href="edp_ctr.html#label_statement">	label_statement: <a>,
+<li>	    <a href="edp_ctr.html#mkfile">		MKFILE	</a>,
+<li>	    <a href="edp_ctr.html#parameter">	PARAMETER	</a>,
+<li>	    <a href="edp_ctr.html#pause">		PAUSE	</a>,
+<li>	    <a href="edp_ctr.html#pipe">	pipe 		</a>,
+<li>	    <a href="edp_ctr.html#quit">		QUIT	</a>,
+<li>	    <a href="edp_ctr.html#reset">		RESET	</a>,
+<li>	    <a href="edp_ctr.html#return">		RETURN	</a>,
+<li>	    <a href="edp_ctr.html#rewind">		REWIND	</a> and
+<li>	    <a href="edp_ctr.html#system">		SYSTEM	</a>.
+</ul>
+<p>
+      Control commands are used to change the status of either the
+  program or the input-output files. For example it is possible for a
+  user to call a system command or to create a sub-process without
+  terminating EdPDB.
+<p>
+
+<hr><a name="macro_file">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+
+<h2>   @macro_file     </h2>
+      Read and execute commands from an existing macro file.
+<p>
+  Function: Control
+<p>
+  Syntax:  <br>
+     @<i>macro_file</i> [<i>parameters</i>]
+<p>
+  Note: <br>
+  1)  The <i>macro_file</i> is the file name of a macro. The default file
+      type is <i>.edp</i>. <br>
+  2)  A macro file can call other macro files. The number of nesting
+      levels can be up to 9. <br>
+  3)  If no directory information is used in the file name, `@' will
+      try to call the macro file in the current directory first. If
+      unsuccessful, the file in the default directory will be used if
+      exists. The default directory is defined with SETENV
+      command. <br>
+  6)  A macro file can be used to customize the initial configuration
+      of edpdb as a parameter of the -i option. <br>
+<p>
+  See also: 
+  <a href="edp_ctr.html#goto">GOTO</a>,
+  <a href="edp_ctr.html#if">IF</a>,
+  <a href="edp_ctr.html#mkfile">MKFILE</a>,
+  <a href="edp_ctr.html#return">RETURN</a> and
+  <a href="edp_m.html#setenv">SETENV</a> 
+
+<p>
+   Examples: <br>
+  1) The following is an example macro, <i>print.edp</i>, that output the
+  ON atoms to a printer.
+<pre>
+      ! print.edp: output the ON atoms to the laser printer
+      write tmp.pdb
+      close
+      system print/que=laser/delete tmp.pdb
+</pre>
+  2) Run a macro file, <i>test.edp</i>, in the directory [<i>user.edp_lib</i>].
+  The
+  two parameters will be passed to the macro to replace $(p1) and
+  $(p2).
+<pre>
+      @[user.edp_lib]test parameter_1 parameter_2
+</pre>
+  The user may define his/her own keyword to call this macro. For
+  example,
+<pre>
+      alias  my_command @[user.edp_lib]test
+      setenv echo 0
+      my_command parameter_1 parameter_2
+</pre>
+
+<hr><a name="close">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>        CLOSE   </h2>
+      Release the output PDB file opened by a WRITE command. 
+<p>
+  Function: Control
+<p>
+  Syntax: <br>
+      CLOSE
+<p>
+  Note: It is allowable to close an unopened file.
+<p>
+  See also: 
+  <a href="edp_i.html#append">APPEND</a> and
+  <a href="edp_i.html#write">WRITE</a>
+<p>
+   Examples: <br>
+  1) Print out the current ON atoms
+<pre>
+      write tmp.pdb
+      close
+      system print/delete tmp.pdb
+</pre>
+
+
+<hr><a name="goto">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>        GOTO    </h2>
+      Look for the first occurrence of a label statement in a macro
+  file that follows the GOTO statement (in a circular way) and
+  matches the given label. If the search succeeds, it sends the control
+  to the next command of the label statement. If it fails, it closes the
+  macro file and generates an error message.
+<p>
+  Function: Control
+<p>
+  Syntax: <br>
+      GOTO  <i>label</i>
+<p>
+  Note:  <br>
+    GOTO command can only used within a macro.
+<p>
+  See also: 
+  <a href="edp_ctr.html#label_statement">label_statement:</a> and
+  <a href="edp_g.html#pn">$(parameter)</a>
+<p>
+   Examples: <br>
+  1) In a macro, one may have the following structure. The program
+  will skip <i>command_set_1</i>, execute <i>command_set_2</i> and return to
+  the upper level command.
+<pre>
+      goto $(p1) ! $(p1) can be <i>label1</i>, <i>label2</i> or <i>label3</i>
+      label1:
+      ...(command_set_1)
+      return
+      label2:
+      ...(command_set_2)
+      return
+      label3:
+      ...(command_set_3)
+      return
+</pre>
+  2) Construct a loop running through 1 to 100
+<pre>
+      parameter i = 1
+      loop:
+      ...
+      parameter i + 1 100 exit
+      goto loop
+</pre>
+
+<hr><a name="if">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>  IF </h2>
+      Conditionally excute one command.
+<p>
+  Function: Control
+<p>
+  Syntax: <br>
+      IF ( [<i>-x</i>]  <i>parameter_name  operator value </i>) <i>command</i>
+<p>
+  Note:  <br>
+    <i>-x</i> is one of the following: -s (for a string), 
+    -r (a real number), and -i (an integer number). The default is -s.
+<br>
+    <i>parameter_name</i> is the name of a parameter which has been defined 
+    with the command <a href="edp_ctr.html#parameter">	PARAMETER </a>.
+<br>
+    <i>operator</i> is one of the following: == (equal), ^= (not equal),
+    &gt= (not less than), and &lt= (not greater than). 
+<p>
+  See also: 
+  <a href="edp_ctr.html#goto"> GOTO </a>.
+<p>
+   Examples: <br>
+  1) In the following program, the macro fix_leu will be skipped, and
+     the macro fix_val will be excuted.
+<pre>
+      parameter res = val
+      ...
+      if ( res == leu ) @fix_leu
+      ...
+      if ( res == val ) @fix_val
+</pre>
+
+<hr><a name="label_statement">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>      label_statement:        </h2>
+      Put a mark in a macro file for the GOTO command.
+<p>
+  function: Control
+<p>
+  Syntax: <br>
+      <i>label</i>:
+<p>
+  Note: A label starts with an alphabetic character and is followed
+  by a colon `:'. There is no space allowed within the label.
+  The label may contain up to 
+  <a href="edp_g.html#max_num_chars"> max_num_chars </a> characters.
+<p>
+  See also: 
+  <a href="edp_ctr.html#goto">GOTO</a> command and 
+  <a href="edp_g.html#pn">$(parameter)</a>
+<p>
+   Examples: <br>
+  1) In a macro, one may have the following structure. If the $(p1)
+  is assigned to <i>label2</i>, the program will skip <i>command_set_1</i>,
+  execute <i>command_set_2</i> and return to the upper level.
+<pre>
+      goto $(p1)
+      label1:
+      ...(command_set_1)
+      return
+      label2: ;  ...(command_set_2) 
+      return
+      ...
+</pre>
+
+<hr><a name="mkfile">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>       MKFILE  </h2>
+      Create an ascii file, eg. a macro.
+<p>
+  Function: Control
+<p>  
+  Syntax: <br>
+      MKFILE <i>file_name</i> [<i>eof</i>]
+<p>
+  Note: <br>
+  1)  <i>eof</i> is a character string to mark the end of the file.
+      The default is "eof". 
+<br>      
+  2)  MKFILE command closes the previous file open by MKFILE.
+<br>
+  3)  The default file type is ".edp".
+<p>
+  See also: 
+  <a href="edp_ctr.html#macro_file">@macro_file</a>
+
+<p>
+   Examples: <br>
+  1) Create a macro "test" and use it.
+<pre>
+     mkfile test eof
+     initialize
+     zone $(p1)
+     analyze
+     eof
+
+     @test 100
+     @test 120
+     @test 140
+</pre>
+      
+<hr><a name="parameter">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>    PARAMETER       </h2>
+      Define or show variables, include the pre-defined variable P1,
+  ... P8 and user-defined variables. The current version allows up to
+  20 variables, including the eight reserved ones. The name of each
+  variable contains up to eight characters. 
+<p>
+  Function: Control, Definition, Information
+<p>
+  Syntax: <br>
+  1)  PARAMETER [<i>Pn</i>] <br>
+  2)  PARAMETER  <i>Pn</i> = [<i>value</i>] <br>
+  3)  PARAMETER  <i>Pn</i> ? [<i>prompt_string</i>] [<i>default_value</i>] 
+           [(EXIT, REPORT) ] <br>
+  4)  PARAMETER <i>Pn</i> (+, -) <i>step_size</i> <i>limit</i> 
+           [(EXIT, REPORT)]  <br>
+  5)  PARAMETER <i>Pn</i> <i>group_id</i>  
+           (ENTRY, ATOM, RESIDUE, CHAIN, ID, X, Y, Z, W, B)
+           [(EXIT, REPORT) ] <br>
+  6)  $=(in-line parameter)<br>
+	   
+   
+<p>
+  Note: <br>
+  1)  The <i>Pn</i> is one of the <code>P1, ... P8</code> or a 
+      user-defined variable. If
+      defined, the value of <i>Pn</i> will replace the text string 
+      $(<i>Pn</i>) in
+      an input statement read from a macro file. <br>
+  2)  The first form shows the current definition of <i>Pn</i>. The default
+      is to show all currently defined variables.  <br>
+  3)  The second form assigns a value to <i>Pn</i>. The value is a
+      character string in general. If the character string contains a
+      space or comma, it should be enclosed with a pair of quotation
+      marks (or other delimiters). Assigning a null string (the default)
+      is equivalent to delete that parameter.  <br>
+  4)  The third form inquires a value for <i>Pn</i> when executed. The
+      default <i>prompt_string</i> is "<code>input</code> ". The 
+      <i>default_value</i> will be
+      assigned to <i>Pn</i> if the respond to the inquiry is a "return". The
+      default <i>default_value</i> is the current <i>Pn</i> value. EndOfFile
+      (i.e. control-D) will cause <code>EXIT</code> 
+      from the macro or an error status,
+      depending on the option specified. The default option is to
+      REPORT error.  <br>
+  5)  In the fourth form, the parameter <i>Pn</i> will be increased or
+      decreased by the <i>step_size</i> which usually is an integer; the
+      <i>limit</i> set the limit condition for the loop control; the default
+      choice at the end of the loop is to REPORT error. <br>
+ 6)   The fifth form gets a variable value from the first record of a
+      specified group and delete the record from the group. An
+      empty group gives a limit condition which causes either EXIT
+      or an error report. <br>
+  7) Program defined parameters include <ul> 
+<li>	<i>file1</i> (input pdb),
+<li>	<i>sg </i>(space group),
+<li>	<i>edp_data</i> (default directory for macros), 
+<li>	<i><a href="edp_g.html#status">status</a></i>, ...  
+</ul><br>
+  8) An in-line parameter can only be the last part of an input line or
+     of a command in a pipeline. If both exist, the latter one has a higher 
+     previlige. 
+     The text string after '$='
+     will replace any $ sign (after other parameter substitution(s)) 
+     in the input line. If the text string starts with a delimiter 
+     (no leadint white character), the text up to the next delimiter will be 
+     used. Otherwise, the whole text string, including leading 
+     white character(s), will be used in subsequent substitutions. 
+     Good for repeating similar lines. It can also be used
+     to input a parameter to a 
+     <a href="edp_d.html#alias">user-defined keyword</a>. 
+   
+<p>
+  Output <a href="edp_g.html#status">status</a>: 
+  -3 indicates that the loop control is off limit.
+<p>
+  See also: 
+  <a href="edp_ctr.html#macro_file">@macro_file</a>,
+  <a href="edp_g.html#pn">$(Pn)</a>, 
+  <a href="edp_d.html#alias">ALIAS</a>,
+  <a href="edp_ctr.html#if">IF</a>,
+  <a href="edp_m.html#setenv_delimiter">SETENV DELIMITER</a> and
+  <a href="edp_g.html#max_param"> maximum number of parameters</a>.
+
+<p>
+   Examples: <br>
+  1) List the current P1 parameter
+<pre>
+      parameter p1
+</pre>
+  2) Define P1 as number 5.
+<pre>
+      parameter p1 = 5
+</pre>
+  3) Define P2 as a text string (eg. <code>This is a test.</code>). 
+<pre>
+      setenv tolower off
+      parameter p2 = 'This is a test'
+</pre>
+  4) Inquiry RES_TYPE on the terminal, with <i>ala</i> as the default.
+<pre>
+      parameter res_type  ?  'res_type? ' 'ala'
+</pre>
+  It appears on the terminal as
+<pre>
+      res_type? [ala] _____
+</pre>
+  5) Construct a loop in a macro to handle residues 1 through 100,
+  one residue at a time. The parameter P1 should be initialized as 1,
+  when the macro is called.
+<pre>
+      ! beginning of the macro
+      ...
+      zone $(p1)
+      ...
+      parameter p1 + 1 100 exit
+      rewind
+</pre>
+  6) Construct a loop in a macro to handle chain a through z, one
+  chain at a time. The parameter P1 should be initialized as a, when
+  the macro is called.
+<pre>
+      ! loop thru a to z
+      parameter chain = a
+      loop:
+      chain $(chain)
+      ...
+      parameter chain + 1 z ; if ( -i status == -3 ) return
+      goto loop
+</pre>
+  7) Construct a loop in a macro to loop through every amino acid
+  residues.
+<pre>
+      ! loop thru every a.a. residues
+      { ca ;  group aa }
+      loop:
+      parameter doit aa id
+      zone $(doit)
+      ...
+      goto loop
+</pre>
+  8) List available macros in the default directory,
+<pre>
+      system ls $(edp_data)
+</pre>
+  9) An equivalent statement of 'initialize; chain a; group a'
+<pre>
+      initialize; chain $; group $; $=a
+</pre>
+  9) Define an alias 'selr' to select residues. 
+  For example, it can be used to select residues of names containing '???'.
+ (Note that 'residue ???' results in help-text on the 'residue' command.) 
+<pre>
+      alias sela text $ 14 $=
+      alias selr text $ 18 $=
+      alias selc text $ 22 $=
+      selr ??
+</pre>
+  10) Use the 'selr' alias from the above example to select GLY residues 
+  from chain B.
+<pre>
+      alias selr text $ 14 $=
+      init; ch $ | selr gly ; $=a 
+</pre>
+
+<hr><a name="pause">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>        PAUSE   </h2>
+    Pause the program, useful for saving the message on the
+  terminal screen when executing a macro file.
+  
+  Function: Control
+<p>
+  Syntax: <br>
+      PAUSE
+<p>
+  Note: <br>
+      The PAUSE command is deactivated by SETENV INTER NO
+  command. PAUSE will only work in interactive mode.
+<p>
+  See also: 
+  <a href="edp_ctr.html#parameter">PARAMETER</a>,
+  <a href="edp_m.html#setenv_inter">SETENV INTER</a> and
+  <a href="edp_ctr.html#macro_file">@macro_file</a>
+<p>
+   Examples: <br>
+  1)  In a macro, a PAUSE command can be used to display
+  interesting data, which otherwise will pass the terminal too
+  quickly. For example, a macro containing the following command
+  is handy for taking an overall look at a PDB file.
+<pre>
+      ! overall information ...
+      zone all
+      zone
+      pause
+      atom 
+      pause
+      residue 
+      pause
+      analyze
+      pause
+</pre>
+
+
+<hr><a name="pipe">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2> pipe    </h2>
+      A unix-like pipe mechanism is
+built in EdPDB for logical-OR & AND selections etc.  (This mechanism 
+is exclusive with the old from-phrase selection mechanism.)
+<p>  
+  Function: Control
+<p>
+  Syntax: 
+<br>1) { selection1 | selection2 | ... | selectionN }  
+<br>2)	command1 ;  command2 ;  ... ;  commandN
+<p>
+  Note:  
+<br>  1)  The first form is used for logical-AND selection. 
+(selection(i) usually is a selection command).
+<br>  2)  The second form is used for logical-OR selection.
+(command(i) can be either a selection command or an other command).
+<br>  3)  The symbol "{" saves the current ON atoms to the group "0000", 
+sets ALL to be the selection pool, and initializes the ON-atom buffer.
+<br>  4)  The symbol "}" reloads the group "0000" back to the ON-atom buffer. 
+(it is a safe practice to pair {} in a one line pipe command). 
+<br>  5)  The symbol "|" loads the current ON-atom buffer to the selection 
+pool, and initiallizes the ON-atom buffer.
+<br>  6)  The symbol "\" sets ALL to be the selection pool and does nothing to 
+ON-atom buffer. 
+<p>
+   Also see <a href="edp_g.html#command_interpretation">
+command interpretation</a>
+<p>
+   Examples: <br>
+  1) select CA atoms of PHE residues from chain A.
+<pre>
+      { ca | chain a | residue PHE }
+      list
+</pre>
+  2) select both CB atoms and main chain atoms (ie. N, CA, C and O)
+<pre>
+      atom cb ;  main 
+</pre>
+
+
+<hr><a name="quit">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2> QUIT    </h2>
+      Terminate EdPDB without writing a new PDB coordinate file.
+<p>  
+  Function: Control
+<p>
+  Syntax: <br>
+  1)  QUIT  [SAVE] <br>
+  2)  end_of_line (i.e. <i>control-d</i> for unix)
+<p>
+  Note:  <br>
+  1)  The optional SAVE will save both the <i>.edp</i> file which
+      contains a list of the completed commands and the <i>.out</i> file
+      which stores some intermediate result. Both of these two files
+      will be deleted with the default QUIT or EXIT commands. <br>
+  2)  The second form is the same as QUIT SAVE. <br>
+<p>
+   Examples: <br>
+  1) Output the ON atoms to a PDB file called new_coor.pdb,
+  terminate EdPDB and save the <i>.edp</i> file and the <i>.out</i> file. (Note
+  that the EXIT command will not save the <i>.edp</i> and <i>.out</i> files).
+<pre>
+      write new_coor.pdb
+      quit save
+</pre>
+
+
+<hr><a name="reset">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>        RESET   </h2>
+      Reread all records from the original PDB file(s). All prior
+  modifications to the records will not be save. The selection switch
+  is set to INCLUDE (ie. ON). The ON atom buffer is initialized to
+  empty.
+<p>
+  Function: Input, Control
+<p>
+  Syntax: <br>
+      RESET
+<p>
+  See also:
+  <a href="edp_s.html#initial">INITIAL</a> and
+  <a href="edp_i.html#read">READ</a>
+<p>
+   Examples: <br>
+  1) Erase any modification made to the records
+<pre>
+      reset
+</pre>
+
+
+<hr><a name="return">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>       RETURN  </h2>
+      Quit from a macro file. 
+<p>
+  Function: Control
+<p>
+  Syntax: <br>
+      RETURN
+<p>
+  Note: It has no effect as a top level command.
+<p>
+  See also: 
+  <a href="edp_ctr.html#goto">GOTO</a> and 
+  <a href="pn">$(Pn)</a>
+<p>
+   Examples: <br>
+  1) In a macro, one may have the following structure. The real
+  parameter of $(P1) determines which part of the macro will be
+  executed.
+<pre>
+      goto $(p1)
+      label1:
+      ...
+      return
+      label2:
+      ...
+      return
+      label3:
+      ...
+      return
+</pre>
+
+
+<hr><a name="rewind">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>       REWIND  </h2>
+      Rewind the working files
+<p>
+  Function: Control
+<p>
+  Syntax: <br>
+  1)  REWIND <br>
+  2)  REWIND (EDP, SCR, PDB) <br>
+<p>
+  Note: <br>
+  1)  The first form rewinds the currently executed (lowest level)
+      macro file. <br>
+  2)  According to the options chosen, the second form rewinds the
+      recording (<i>.edp</i>) file, the scratch (<i>.out</i>) file or the currently
+      opened PDB file, respectively. <br>
+<p>
+  See also: 
+  <a href="edp_m.html#file">FILE</a> and
+  <a href="edp_i.html#write">WRITE</a>
+<p>
+   Examples: <br>
+  1)  Create a macro, test.edp, of a loop structure.
+<pre>
+      ! test.edp : a loop macro
+      ...
+      parameter P1 + 1 $(p2) exit
+      rewind
+</pre>
+
+  One can run this macro 100 times, starting from (P1 = 1) and
+  ended when (P1 &gt 100).
+<pre>
+      @test 1 100
+</pre>
+
+<hr><a name="system">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form></a>
+<h2>       SYSTEM  </h2>
+      Execute a system command (eg. a c-shell command in a unix system) 
+  or create a subprocess without terminating EdPDB. 
+
+<p>
+  Function: Control
+<p>
+  Syntax: <br>
+      SYSTEM  [[WAIT] <i>system_command</i>]
+<p>
+  Note: <br>
+      If the option WAIT is chosen, EdPDB will wait until the
+  sub-process finishes. This can be used to synchronize related
+  calculations. (WAIT does not work in unix).
+<p>
+   Examples: <br>
+  1) Spawn a subprocess
+<pre>
+      system
+</pre>
+  2) Print out the ON atoms.
+<pre>
+      write tmp.pdb
+      close
+      system print/delete tmp.pdb
+</pre>
+
+<hr><a name="end">
+<form>
+<input type="button" value="back"    onClick="history.go(-1)">
+<input type="button" value="forward" onClick="history.go(1)">
+<input type="button" value="top"     onClick='document.location="#top"'>
+<input type="button" value="home"    onClick='document.location="edpdb.html"'>
+<input type="button" value="index"   onClick='document.location="edp_ind.html"'>
+</form>
+</a>
+
+<hr>
+<font size="1"> &copy <a href="../homepage.html"> X. Cai Zhang
+</a>. All Rights Reserved. <br><br>
+Crystallography Research Program<br>
+<A href="http://omrf.ouhsc.edu">
+Oklahoma Medical Research Foundation</A><br>
+825, N.E. 13th Street<br>
+Oklahoma City, OK 73104<br>
+U.S.A.<br><br>
+Phone: (405) 271-7402<br>
+email: <A href="mailto:zhangc@omrf.ouhsc.edu">
+   zhangc@omrf.ouhsc.edu </A><br><br>
+
+Last modified on <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan
+-->2003-09-09<!--webbot bot="Timestamp" endspan i-checksum="12556"
+-->
+</font>
+</body>
+</html>

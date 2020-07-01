@@ -1,0 +1,4 @@
+symmetry initialize
+symm X,Y,Z
+symm -X,Y+1/2,-Z
+

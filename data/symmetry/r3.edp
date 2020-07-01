@@ -1,0 +1,10 @@
+symmetry initialize
+symm x, +y, +z                     ! 1  (ord= 1)                              
+symm -y, x-y, +z                   ! 2* (ord= 3)            
+symm -x+y, -x, +z                  ! 3  (ord= 3)            
+symm x+1/3, +y+2/3, +z+2/3         ! 4* (ord= 3)                              
+symm x+2/3, +y+1/3, +z+1/3         ! 5  (ord= 3)                              
+symm -y+1/3, x-y+2/3, +z+2/3       ! 6  (ord= 3) s( 2)s( 4)                   
+symm -y+2/3, x-y+1/3, +z+1/3       ! 7  (ord= 3) s( 2)s( 5)                   
+symm -x+y+1/3, -x+2/3, +z+2/3      ! 8  (ord= 3) s( 2)s( 6)                   
+symm -x+y+2/3, -x+1/3, +z+1/3      ! 9  (ord= 3) s( 2)s( 7)                   

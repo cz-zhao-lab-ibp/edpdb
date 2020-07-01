@@ -1,0 +1,32 @@
+! <beginning of dm.edp> 
+! copyright by X. Cai Zhang, (010602) 
+! This macro searches for domain boundaries in the 3D structure 
+!  of a multiple domain protien by calculating "inter-domain" buried surface.
+! The location of minimum(s), but not the absolute values of buried surface area,
+!  are meaningful. 
+! Reference: Wodak and Janin (1981)Biochemistry 20:6544-52. 
+! This micro require v01a or higher version EdPDB to run this macro.
+ 
+! Syntax:
+! @dm chain_name  
+! Example: check the file "dm_.log" in your current-working-directory
+! @dm  c
+
+initialize ; chain $(p1) | ca ; gr bg ; setenv -s echo 0
+initialize
+
+mkfile dm_.edp 
+loop:
+parameter a0 bg id exit 
+{ ca | zone $(a0) }
+parameter a0 bg id exit ; setenv echo 2 
+{ ca | zone $(a0) ; setenv echo 0 }
+access bg  buried 4.0 0.5
+goto loop
+eof
+
+file log dm_.log
+@dm_.edp
+file log 
+setenv -r echo
+!<end of dm.edp>

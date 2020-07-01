@@ -1,0 +1,18 @@
+! sumw.edp  by X. Cai Zhang, modified on 010602
+! calculate summations of the OCC field over residue (stored in X),
+!  main chain (Y), and side chain (Z). this may be useful after storing
+!  information in the OCC field (e.g. using the 'access' command). 
+! all there results are stored
+!  in the CA atom records, assuming each residue has a CA atom (for protein, 
+!  this is a pretty good assumption, i think).
+! one may save this result using the 'write' command.
+! also see: avb.edp, rmsw.edp
+! syntax: 
+! @sumw.edp
+
+initialize ; ca ; blank ; more ; sumw x
+exclude side ; sumw y 
+more ; exclude main ; sumw z
+
+initialize ; ca ; setw 0.0 ; sete ; seta smw 
+list

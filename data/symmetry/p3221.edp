@@ -1,0 +1,7 @@
+symmetry initialize
+symm x,y,z
+symm -y,x-y,z+2/3
+symm y-x,-x,z+1/3
+symm y,x,-z
+symm -x,y-x,-z+2/3
+symm x-y,-y,-z+1/3

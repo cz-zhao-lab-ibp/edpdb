@@ -1,0 +1,9 @@
+!! this is an example of how to automatically deal with each and every residue.
+initialize ; ca  ; group a ; group b 
+a:
+initialize
+para occ a w  exit
+para id  b id exit
+zone $(id) ; more ; setb $(occ)
+goto a
+
