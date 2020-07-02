@@ -12,7 +12,7 @@ Zhang, X-J., and Brian W. Matthews. "EDPDB: a multifunctional tool for protein s
 ## The letter from author
 Dear EDPDB users,
 
-EDPDB program package consists of one program and a number of accessary files. An updated EDPDB homepage is kept at ~~~http://omega.omrf.uokhsc.edu/zhangc/edpdb/edpdb.html~~~ http://www.ibp.cas.cn/zhangkLab/zhangklabedpdb/index.html.
+EDPDB program package consists of one program and a number of accessary files. An updated EDPDB homepage is kept at ~~http://omega.omrf.uokhsc.edu/zhangc/edpdb/edpdb.html~~ http://www.ibp.cas.cn/zhangkLab/zhangklabedpdb/index.html.
 This EDPDB distribution is a Linux "tar" file, "edpdb_linux_06a.tar". It was created using the following command.
 
 ```
