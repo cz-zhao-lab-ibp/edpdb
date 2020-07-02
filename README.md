@@ -27,16 +27,8 @@ The excutable usually can run on a Linux system. If the program has to be recomp
 
 I encourage you to report any bugs, and/or fixes if available.
 
-With best regards
+With best regards,
 
-X. Cai Zhang
-
-----------
-X. Cai Zhang,  Ph.D.                 |
-Associate Member                     |
-Crystallography Program              | phone: (405) 271-7402
-Oklahoma Medical Research Foundation | fax  : (405) 271-7953
-825 Northeast 13th Street            | email: zhangc@omega.omrf.uokhsc.edu
-Oklahoma City, OK 73104, USA         | www:   http://omega.omrf.uokhsc.edu/zhangc/
+X. Cai Zhang,  Ph.D.
 
 
