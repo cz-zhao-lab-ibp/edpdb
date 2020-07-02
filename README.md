@@ -1,5 +1,7 @@
 # EdPDB
-EdPDB: A Multi-Functional Tool for Protein Structure Analysis
+EdPDB: A Multi-Functional Tool for Protein Structure Analysis.
+
+EdPDB is a program to handle PDB (Brookhaven Protein Databank) format coordinate file(s). With EdPDB, a PDB file may work as a small database, where information like distances, angles etc. within the file can be easily obtained.
 
 ## Usage
 Detailed usage can be found in http://www.ibp.cas.cn/zhangkLab/zhangklabedpdb/index.html
