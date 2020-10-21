@@ -37,7 +37,8 @@ X. Cai Zhang,  Ph.D.
 © X. Cai Zhang . All Rights Reserved. 
 
 Institute of Biophysics, CAS 
-email: zhangc@ibp.ac.cn 
+
+Email: zhangc@ibp.ac.cn 
 
 Last modified on 2020-10-21 .
 
