@@ -1,7 +1,7 @@
 # EdPDB
 EdPDB: A Multi-Functional Tool for Protein Structure Analysis.
 
-**We recommend all the users run EdPDB in a container. Please refer to the [edpdb_docker](https://github.com/cz-zhao-lab-ibp/edpdb_docker) page for detailed information. **
+__We recommend all the users run EdPDB in a container. Please refer to the [edpdb_docker](https://github.com/cz-zhao-lab-ibp/edpdb_docker) page for detailed information.__
 
 EdPDB is a program to handle PDB (Brookhaven Protein Databank) format coordinate file(s). With EdPDB, a PDB file may work as a small database, where information like distances, angles etc. within the file can be easily obtained.
 
