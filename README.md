@@ -6,7 +6,7 @@ __We recommend all the users run EdPDB in a container. Please refer to the [edpd
 EdPDB is a program to handle PDB (Brookhaven Protein Databank) format coordinate file(s). With EdPDB, a PDB file may work as a small database, where information like distances, angles etc. within the file can be easily obtained.
 
 ## Documentation
-The documentation of EdPDB can be found in [this page](http://175.24.30.189:8081/edpdb/).
+The documentation of EdPDB can be found in [this page](http://175.24.30.189:8080/edpdb/).
 
 ## Reference
 Zhang, X-J., and Brian W. Matthews. "EDPDB: a multifunctional tool for protein structure analysis." Journal of applied crystallography 28.5 (1995): 624-630.
